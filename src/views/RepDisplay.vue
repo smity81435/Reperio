@@ -20,12 +20,17 @@
 </template>
 <script>
 import D3Network from 'vue-d3-network'
+import { db } from '../api/Api.js'
+
 export default {
   components:{
     D3Network,
   },
   data(){
     return{
+      importList: [
+
+      ],
        nodeList1: [
         { id: 1,_color: '#6ec6ff'},
         { id: 2,_color: '#6ec6ff'},
@@ -64,6 +69,12 @@ export default {
       deg:10,
     }
   },
+  firestore(){
+    return{
+        importList: db.collection('answers')
+        
+    }
+  },
   computed:{
     options(){
       return{
@@ -76,15 +87,7 @@ export default {
     }
   },
   mounted(){
-    if(this.nodeList1.length > this.nodeList2.length){
-      this.group1.style["boxShadow"] = "0 0 5px #64ffda";
-    }else if(this.nodeList1.length < this.nodeList2.length){
-      this.group2.style["boxShadow"] = "0 0 5px #64ffda";
-    }else{
-
-    };
-
-
+      //console.log("this is the import list"+this.importList);
   }
   
 }
@@ -112,7 +115,7 @@ export default {
 .datagroup{
   width: 50vw;
   height: 50vw;
-  background: rgba(0,0,0,.3);
+  //background: rgba(0,0,0,.3);
   border-radius: 50%;
   margin: 10px;
 
