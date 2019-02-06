@@ -14,13 +14,13 @@
         <p class="nodecount count2">{{this.nodeList2.length}}</p>
       </div>
     </div>
-
   </div>
-  
 </template>
+
 <script>
+
 import D3Network from 'vue-d3-network'
-import { db } from '../api/Api.js'
+import * as Api from "@/api/Api.js"
 
 export default {
   components:{
@@ -29,29 +29,27 @@ export default {
   data(){
     return{
       importList: [
-
+        
       ],
-       nodeList1: [
-        { id: 1,_color: '#6ec6ff'},
-        { id: 2,_color: '#6ec6ff'},
-        { id: 3,_color: '#6ec6ff'},
-        { id: 4,_color: '#6ec6ff'},
-        { id: 5,_color: '#6ec6ff'},
-        { id: 6,_color: '#6ec6ff'},
+      nodeList1: [
+        // { id: 1,_color: '#6ec6ff'},
+        // { id: 2,_color: '#6ec6ff'},
+        // { id: 3,_color: '#6ec6ff'},
+        // { id: 4,_color: '#6ec6ff'},
+        // { id: 5,_color: '#6ec6ff'},
       ],
       nodeList2:[
-        { id: 1,_color: '#64ffda'},
-        { id: 2,_color: '#64ffda'},
-        { id: 3,_color: '#64ffda'},
-        { id: 4,_color: '#64ffda'},
-        { id: 5,_color: '#64ffda'},
-        { id: 6,_color: '#64ffda'},
-        { id: 7,_color: '#64ffda'},
-        { id: 8,_color: '#64ffda'},
-        { id: 9,_color: '#64ffda'},
-        { id: 10,_color: '#64ffda'},
-        { id: 11,_color: '#64ffda'},
-        { id: 12,_color: '#64ffda'},
+        // { id: 1,_color: '#64ffda'},
+        // { id: 2,_color: '#64ffda'},
+        // { id: 3,_color: '#64ffda'},
+        // { id: 4,_color: '#64ffda'},
+        // { id: 5,_color: '#64ffda'},
+        // { id: 6,_color: '#64ffda'},
+        // { id: 7,_color: '#64ffda'},
+        // { id: 8,_color: '#64ffda'},
+        // { id: 9,_color: '#64ffda'},
+        // { id: 10,_color: '#64ffda'},
+        // { id: 11,_color: '#64ffda'},
       ],
       links: [
         { sid: 1, tid: 2 },
@@ -69,10 +67,27 @@ export default {
       deg:10,
     }
   },
-  firestore(){
-    return{
-        importList: db.collection('answers')
-        
+  created(){
+    //this.$api.dispatch(initRealtimeListener);
+    Api.listen(this.nodeList1, this.nodeList2);
+  },
+    methods:{
+    pushAns(ans){
+      if(this.ans == 1){
+        nodeList1.push({
+          id: nodeList1.length+1,
+          _color: '#6ec6ff',
+        });
+        console.log("Node added to list 1.");
+      }else if(this.ans == 0){
+        nodeList2.push({
+          id: nodeList2.length+1,
+          _color: '#64ffda',
+        })
+        console.log("")
+      }else{
+        alert("There was an issue pushing the answer.");
+      }
     }
   },
   computed:{
@@ -87,7 +102,7 @@ export default {
     }
   },
   mounted(){
-      //console.log("this is the import list"+this.importList);
+      //console.log("this is the import list "+this.importList);
   }
   
 }
@@ -149,7 +164,6 @@ h1,a{
   //color: #1aad8d;
   text-decoration: none;
 }
-
 ul.menu {
   list-style: none;
   position: absolute;
@@ -161,6 +175,5 @@ ul.menu li{
   margin-top: 1em;
   position: relative;
 }
-
 </style>
 
