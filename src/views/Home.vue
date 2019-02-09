@@ -1,6 +1,7 @@
 <template>
 <div class="home" >
-    <h1 class="pageIdentifier">{{currentPage}}</h1>
+    <h1 id="reperio">REPERIO</h1>
+    <h2 class="pageIdentifier">{{currentPage}}</h2>
     <h2 class="about" @click="aboutClicked()">About Reperio</h2>
     <transition name="fade">
       <component 
@@ -34,7 +35,7 @@ export default {
   data() {
     return {
       currentAns: "",
-      currentPage: "Question of the Day",
+      currentPage: "QUESTION OF THE DAY",
       pageContent: 'Question',
       visible: true,
       isBlurred: false,
@@ -73,7 +74,18 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+#reperio{
+  color: rgb(131, 255, 224);
+  font-size: 50px;
+  font-weight: 300;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  margin: 0;
+  opacity: .4;
+
+}
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
@@ -82,6 +94,8 @@ export default {
 }
 .pageIdentifier{
   color: white;
+  font-size: 40px;
+  MARGIN-TOP: 100PX;
 }
 .about{
   position: fixed;

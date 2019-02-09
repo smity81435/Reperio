@@ -1,12 +1,12 @@
 <template>
   <div class="qotd">
     <div class="question" :class="{blur: isBlurred}">
-      <p>This is where the question of the day goes!</p>
+      <p>Would you rather???</p>
 
     </div>
-    <div class="answer">
-      <p class="answerButton"  @click="handleAns(one)">Answer 1</p>
-      <p class="answerButton"  @click="handleAns(two)">Answer 2</p>
+    <div class="Box" :class="{blur: isBlurred}">
+      <p class="answerButton"  @click="handleAns(one)">EAT GUANO</p>
+      <p class="answerButton"  @click="handleAns(two)">SNORT WASABI</p>
     </div>
     <transition name="fade">
         <Thanks
@@ -14,8 +14,6 @@
           :visible="thanksVisible"
         />
     </transition>
-
-   
   </div>
 </template>
 
@@ -70,32 +68,39 @@ export default {
 
 .qotd{
   border-radius: 5px;
-  background: rgba(0,0,0,.6);
+  background: rgba(54, 238, 245, 0.6);
   width: 80vw;
   margin: auto;
-  margin-top: 30%;
+  
   padding: 10px;
 
 }
 .question{
   font-size: 40px;
   color: white;
-  
-}
-.answer{
-  border-radius: 5px;
-  width: 50vw;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
+  font-weight: 700;
 
 }
+
+.Box{
+  position: relative;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  
+}
+
 .answerButton{
+  height: 40px;
   font-size: 36px;
   color: white;
   background: rgba(0,0,0,.6);
   padding: 20px;
   margin: 10px;
+  border-radius: 5px;
+  font-weight: 700;
   &:hover{
     cursor: pointer;
   }

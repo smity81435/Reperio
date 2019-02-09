@@ -6,12 +6,17 @@
         <h2 class="groupname groupname1">Eat Guano</h2>
         <d3-network class="nodeGroup1" ref='net' :net-nodes="nodeList1"  :options="options"
          />
-         <p class="nodecount count1">{{this.nodeList1.length}}</p>
+         <p class="nodecount count1"  
+            v-bind:style="
+              [(this.nodeList1.length >= this.nodeList2.length) ? {'color':'rgb(28, 255, 16)', 'text-shadow': '0px 0px 10px white', 'font-size':'50px'} : {'color':'rgb(211, 102, 102)'}]"
+            >{{this.nodeList1.length}}</p>
       </div>
       <div class="datagroup group2">
         <h2 class="groupname groupname2">Snort Wasabi</h2>
         <d3-network class="nodeGroup1" ref='net' :net-nodes="nodeList2"  :options="options" />
-        <p class="nodecount count2">{{this.nodeList2.length}}</p>
+        <p class="nodecount count2" v-bind:style="
+              [(this.nodeList2.length >= this.nodeList1.length) ? {'color':'rgb(28, 255, 16)', 'text-shadow': '0px 0px 10px white', 'font-size':'50px'} : {'color':'rgb(211, 102, 102)'}]"
+              >{{this.nodeList2.length}}</p>
       </div>
     </div>
   </div>
@@ -72,23 +77,7 @@ export default {
     Api.listen(this.nodeList1, this.nodeList2);
   },
     methods:{
-    pushAns(ans){
-      if(this.ans == 1){
-        nodeList1.push({
-          id: nodeList1.length+1,
-          _color: '#6ec6ff',
-        });
-        console.log("Node added to list 1.");
-      }else if(this.ans == 0){
-        nodeList2.push({
-          id: nodeList2.length+1,
-          _color: '#64ffda',
-        })
-        console.log("")
-      }else{
-        alert("There was an issue pushing the answer.");
-      }
-    }
+
   },
   computed:{
     options(){
@@ -102,6 +91,13 @@ export default {
     }
   },
   mounted(){
+    if(this.nodeList1.length > this.nodeList2.length){
+      num1.classList.add('winning');
+      num2.classList.remove('winning');
+    }else if(this.nodeList1.length < this.nodeList2.length){
+      num1.classList.remove('winning');
+      num2.classList.add('winning');
+    }
       //console.log("this is the import list "+this.importList);
   }
   
@@ -109,9 +105,10 @@ export default {
 </script>
 <style lang="scss">
 .nodecount{
-  color: white;
+  color: rgb(211, 102, 102);
   font-size: 36px;
   font-weight: 700;
+  transition: all 1s;
 }
 .questionheader{
   color: white;
@@ -174,6 +171,9 @@ ul.menu {
 ul.menu li{
   margin-top: 1em;
   position: relative;
+}
+.winning{
+  color: rgb(28, 255, 16);
 }
 </style>
 
