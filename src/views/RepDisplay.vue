@@ -4,21 +4,21 @@
     <div class="visualization">
       <div
         class="datagroup"
-        v-for="(count, index) in results"
+        v-for="(nodeList, index) in nodeLists"
         :key="index">
         <h2 class="groupname">{{responses[index]}}</h2>
         <d3-network
           class="nodegroup"
           ref="net"
-          :net-nodes="buildNodeList(count, index)"
+          :net-nodes="nodeList"
           :net-links="[]"
-          :options="options"/>
+          :options="getOptions(index)"/>
         <p
           :class="{
             nodecount: true,
-            winning: isWinning(count),
+            winning: isWinning(index),
           }">
-          {{ results[index] }}
+          {{ nodeList.length }}
         </p>
       </div>
     </div>
@@ -44,43 +44,47 @@ export default {
         
       ],
       // The number of responses for each option
-      results: [],
-      nodeSize:40,
-      canvas:false,
+      nodeLists: [],
       deg:10,
     }
   },
 
   methods: {
-    buildNodeList(count, index) {
-      var nodes = [];
-      for (var i = 0; i < count; i++) {
-        nodes.push({
-          id: i,
-          _color: colors[index],
-        });
-      }
-      return nodes;
+    addNode(index) {
+      const nodeList = this.nodeLists[index];
+      nodeList.push({
+        id: nodeList.length,
+        _color: colors[index],
+      });
     },
-    isWinning(count) {
-      return Math.max(...this.results) === count;
+    isWinning(index) {
+      var winningNumber = Math.max(...this.nodeLists.map(nodeList => nodeList.length));
+      return winningNumber === this.nodeLists[index].length;
     },
-  },
-  computed:{
-    options(){
-      return{
-        force: 500,
-        size:{ w:400, h:400},
-        nodeSize: this.nodeSize,
+    getOptions(index) {
+      var numNodes = this.nodeLists[index].length;
+      var nodeSize=30;
+      var force= 500;
+      if(numNodes >= 20 && numNodes <= 50){
+          nodeSize = 60-numNodes;
+          force = force-numNodes;
+        }else if(numNodes > 50){
+          nodeSize=15;
+          force = force/(numNodes/10);
+        }
+      return {
+        force: force,
+        size:{ w: 400, h: 400 },
+        nodeSize: nodeSize,
         nodeLabels: false,
-        canvas: this.canvas,
+        canvas: false,
       }
     }
   },
   mounted() {
     // Initialize number of responses in results data object
     for (var i = 0; i < this.responses.length; i++) {
-      this.results.push(0);
+      this.nodeLists.push([]);
     }
 
     // Update node lists every time an answer is received
@@ -89,13 +93,7 @@ export default {
       if (change.type === "added") {
         //console.log("New: ", change.doc.data());
         var node = change.doc.data();
-        if (node.ans < 0 || node.ans >= this.results.length) {
-          console.log('invalid answer number');
-          return;
-        }
-        // Add an option
-        this.results[node.ans] += 1;
-        this.$forceUpdate();
+        this.addNode(node.ans);
       }
 
       if (change.type === "modified") {
@@ -138,12 +136,10 @@ export default {
   margin: 10px;
 
 }
-.nodeGroup1{
+.nodegroup{
   animation: rotation 20s infinite linear;
 }
-.nodeGroup2{
-  animation: rotation 20s infinite linear;
-}
+
 @keyframes rotation {
 		from {
 				-webkit-transform: rotate(0deg);
