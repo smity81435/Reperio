@@ -35,7 +35,7 @@
 <script>
 import D3Network from 'vue-d3-network'
 import * as Api from "@/api/Api.js"
-const colors = ['#F54657', '#1CFF88','#1CFF88','#1CFF88','#1CFF88','#1CFF88'];
+const colors = ['#F54657', '#1CFF88','#28CCB6','#FF58A6','#9332FF','#FFF541'];
 const responses= ['Drive','Walk','Bus','Bike/Skate','Uber/Lyft','Other'];
 export default {
   components:{
@@ -68,16 +68,16 @@ export default {
       var numNodes = this.nodeLists[index].length;
       var nodeSize=30;
       var force= 500;
-      if(numNodes >= 20 && numNodes <= 50){
-          nodeSize = 60-numNodes;
-          force = force-numNodes;
-        }else if(numNodes > 50){
-          nodeSize=15;
-          force = force/(numNodes/10);
+      if(numNodes >= 10 && numNodes <= 30){
+          nodeSize = 25;
+          force = 200;
+        }else if(numNodes > 30){
+          nodeSize=20;
+          force = 100;
         }
       return {
         force: force,
-        size:{ w: 200, h: 400 },
+        size:{ w: 210, h: 400 },
         nodeSize: nodeSize,
         nodeLabels: false,
         canvas: false,
@@ -142,6 +142,8 @@ export default {
 }
 .nodegroup{
   animation: rotation 20s infinite linear;
+  overflow: visible !important;
+  
 }
 
 @keyframes rotation {
