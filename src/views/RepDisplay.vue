@@ -72,8 +72,8 @@ export default {
           nodeSize = 25;
           force = 200;
         }else if(numNodes > 30){
-          nodeSize=20;
-          force = 100;
+          nodeSize= 100/(numNodes/10);
+          force = 200/(numNodes/25);
         }
       return {
         force: force,
