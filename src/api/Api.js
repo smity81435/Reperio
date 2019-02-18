@@ -25,15 +25,15 @@ export function initialize() {
 }
 
 export function addAnswer(newAns){
-  return db.collection("answers").add(newAns);
+  return db.collection("answersweek2").add(newAns);
 }
 
 export function listen(callback){
-    db.collection("answers").onSnapshot(snapshot => {
+    db.collection("answersweek2").onSnapshot(snapshot => {
         snapshot.docChanges().forEach((change) => {
             callback(change);
         });
-        console.log(importList);
+        //console.log(importList);
     });
 }
 

@@ -1,12 +1,20 @@
 <template>
   <div class="display">
-    <h1 class="questionheader">Would you rather??</h1>
+    <h1 class="questionheader">How do you get to campus every day?</h1>
     <div class="visualization">
       <div
-        class="datagroup"
         v-for="(nodeList, index) in nodeLists"
+        :class="{
+          datagroup: true,
+          winnit: isWinning(index),
+          }"
         :key="index">
-        <h2 class="groupname">{{responses[index]}}</h2>
+        <h2 
+          :class="{
+            groupname: true,
+            winner: isWinning(index),
+          }"
+        >{{responses[index]}}</h2>
         <d3-network
           class="nodegroup"
           ref="net"
@@ -24,15 +32,11 @@
     </div>
   </div>
 </template>
-
 <script>
-
 import D3Network from 'vue-d3-network'
 import * as Api from "@/api/Api.js"
-
-const colors = ['#6ec6ff', '#64ffda'];
-const responses= ['Eat Guano','Snort Wasabi'];
-
+const colors = ['#F54657', '#1CFF88','#1CFF88','#1CFF88','#1CFF88','#1CFF88'];
+const responses= ['Drive','Walk','Bus','Bike/Skate','Uber/Lyft','Other'];
 export default {
   components:{
     D3Network,
@@ -41,14 +45,13 @@ export default {
     return {
       responses: responses,
       importList: [
-        
       ],
       // The number of responses for each option
       nodeLists: [],
       deg:10,
+      winner:false,
     }
   },
-
   methods: {
     addNode(index) {
       const nodeList = this.nodeLists[index];
@@ -59,7 +62,7 @@ export default {
     },
     isWinning(index) {
       var winningNumber = Math.max(...this.nodeLists.map(nodeList => nodeList.length));
-      return winningNumber === this.nodeLists[index].length;
+      return winningNumber ===  this.nodeLists[index].length;
     },
     getOptions(index) {
       var numNodes = this.nodeLists[index].length;
@@ -74,7 +77,7 @@ export default {
         }
       return {
         force: force,
-        size:{ w: 400, h: 400 },
+        size:{ w: 200, h: 400 },
         nodeSize: nodeSize,
         nodeLabels: false,
         canvas: false,
@@ -86,21 +89,19 @@ export default {
     for (var i = 0; i < this.responses.length; i++) {
       this.nodeLists.push([]);
     }
-
     // Update node lists every time an answer is received
     Api.listen((change) => {
-      console.log(change);
+      //console.log(change);
       if (change.type === "added") {
         //console.log("New: ", change.doc.data());
         var node = change.doc.data();
         this.addNode(node.ans);
       }
-
       if (change.type === "modified") {
-        console.log("Modified: ", change.doc.data());
+        //console.log("Modified: ", change.doc.data());
       }
       if (change.type === "removed") {
-        console.log("Removed: ", change.doc.data());
+        //console.log("Removed: ", change.doc.data());
       }
     });
     //console.log("this is the import list "+this.importList);
@@ -116,10 +117,14 @@ export default {
 }
 .questionheader{
   color: white;
+  font-size: 50px;
+  text-shadow: 0px 0px 10px black;
 }
 .groupname{
   color: white;
   font-size: 2em;
+  text-shadow: 0px 0px 10px black;
+
 }
 .visualization{
   //background: black;
@@ -129,12 +134,11 @@ export default {
   margin: auto;
 }
 .datagroup{
-  width: 50vw;
-  height: 50vw;
-  //background: rgba(0,0,0,.3);
-  border-radius: 50%;
+  background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0));
+  border-radius: 5px;
   margin: 10px;
-
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .nodegroup{
   animation: rotation 20s infinite linear;
@@ -182,6 +186,13 @@ ul.menu li{
   color: rgb(28, 255, 16);
   font-size: 50px;
   text-shadow: 0px 0px 10px white;
+}
+.winner{
+  transition: all 1s;
+  font-size: 3em;
+}
+.winnit{
+  background: linear-gradient(rgb(41, 223, 102),rgba(0,0,0,0));
 }
 </style>
 

@@ -12,7 +12,6 @@
       :currentAns="currentAns"
       :onGoBack="()=>goBackHome()"
       :onAnswerClick="(newAns)=>answerClicked(newAns)"
-      
       />
     </transition>
       
@@ -35,7 +34,7 @@ export default {
   data() {
     return {
       currentAns: "",
-      currentPage: "QUESTION OF THE DAY",
+      currentPage: "QUESTION OF THE WEEK",
       pageContent: 'Question',
       visible: true,
       isBlurred: false,
@@ -76,11 +75,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 #reperio{
-  color: rgb(131, 255, 224);
-  font-size: 50px;
+  background: -webkit-linear-gradient(rgb(212, 0, 255), rgb(1, 255, 157));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 100px;
   font-weight: 300;
   position: fixed;
-  top: 10px;
+  bottom: 50px;
   left: 10px;
   margin: 0;
   opacity: .4;
@@ -93,20 +94,22 @@ export default {
   opacity: 0;
 }
 .pageIdentifier{
+  text-shadow: 0px 0px 15px black;
   color: white;
   font-size: 40px;
-  MARGIN-TOP: 100PX;
+  margin-top: 30px;
+  font-weight: 900;
 }
 .about{
   position: fixed;
-  bottom: 0;
+  bottom: 65px;
   right: 20px;
   color: white;
   opacity: 1;
   background: rgba(0,0,0,.6);
   padding: 20px;
-  border-radius: 5px;
-
+  border-radius: 30px;
+  font-weight: 300;
 }
 
 
