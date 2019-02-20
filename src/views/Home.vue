@@ -54,8 +54,12 @@ export default {
     },
     answerClicked(newAns){
       console.log("answer clicked: "+newAns);
+      var dtg = new Date();
+      var time = dtg.toUTCString();
+      console.log(time);
       const ans = {
         ans: newAns,
+        time: time,
       }
       Api.addAnswer(ans).then((docref)=>{
         console.log("answer pushed to firebase");

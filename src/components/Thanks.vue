@@ -1,6 +1,6 @@
 <template>
-<transition name="fade" mode="in-out">
-    <div class="thanks" v-show='visible'>
+  <transition name="fade" mode="in-out">
+    <div class="thanks" v-if='visible'>
       <h1>{{response}}</h1>
     </div>
   </transition>
@@ -38,7 +38,7 @@
 <style lang="scss" >
 
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 2s;
+  transition: opacity 1s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

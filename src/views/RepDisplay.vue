@@ -1,6 +1,14 @@
 <template>
   <div class="display">
     <h1 class="questionheader">How do you get to campus every day?</h1>
+    <transition name="fade" mode="in-out">
+      <div class="newResponse"
+        v-if='newResponseShow'
+        :opacity="modalopacity"
+      >
+        <p>New Response Received!</p>
+      </div>
+    </transition>
     <div class="visualization">
       <div
         v-for="(nodeList, index) in nodeLists"
@@ -43,6 +51,8 @@ export default {
   },
   data(){
     return {
+      modalopacity: 1,
+      newResponseShow: false,
       responses: responses,
       importList: [
       ],
@@ -55,10 +65,16 @@ export default {
   methods: {
     addNode(index) {
       const nodeList = this.nodeLists[index];
-      nodeList.push({
-        id: nodeList.length,
-        _color: colors[index],
-      });
+      this.newResponseShow = true;
+      setTimeout(()=>{
+        this.newResponseShow = false;
+        setTimeout(()=>{
+            nodeList.push({
+              id: nodeList.length,
+              _color: colors[index],
+          });
+        }, 1000);
+      },5000);
     },
     isWinning(index) {
       var winningNumber = Math.max(...this.nodeLists.map(nodeList => nodeList.length));
@@ -195,6 +211,39 @@ ul.menu li{
 }
 .winnit{
   background: linear-gradient(rgb(41, 223, 102),rgba(0,0,0,0));
+}
+.newResponse{
+  
+  transition: all 1s;
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: linear-gradient(rgba(87, 244, 255, 0.8),rgba(33, 177, 158, 0.8));
+  width: 55vw;
+  height: 20vh;
+  margin: auto;
+  padding: auto;
+  border-radius: 10px;
+  border: 1px solid white;
+  
+  box-shadow: 0px 0px 100px 75px rgba(255, 91, 233, 0.6);
+  p{
+    color: white;
+    font-size: 60px;
+    font-weight: 700;
+    opacity: 1;
+    
+  }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1.3s ease;
+}
+.fade-enter, .fade-leave-to
+/* .component-fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
 

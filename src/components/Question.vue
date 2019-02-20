@@ -5,20 +5,18 @@
       <p>How do you get to campus every day?</p>
     </div>
     <div class="Box" :class="{blur: isBlurred}">
-      <p  class="answerButton button is-primary" @click="handleAns(one)">Drive</p>
-      <p class="answerButton button is-primary"  @click="handleAns(two)">Walk</p>
-      <p class="answerButton button is-primary"  @click="handleAns(three)">Bus</p>
-      <p class="answerButton button is-primary"  @click="handleAns(four)">Bike&#47;Skate</p>
-      <p class="answerButton button is-primary"  @click="handleAns(five)">Uber&#47;Lift</p>
-      <p class="answerButton button is-primary"  @click="handleAns(six)">Other</p>
+      <p  class="answerButton button is-primary" :disabled="thanksVisible" @click="handleAns(one)">Drive</p>
+      <p class="answerButton button is-primary"  :disabled="thanksVisible" @click="handleAns(two)">Walk</p>
+      <p class="answerButton button is-primary"  :disabled="thanksVisible" @click="handleAns(three)">Bus</p>
+      <p class="answerButton button is-primary"  :disabled="thanksVisible" @click="handleAns(four)">Bike&#47;Skate</p>
+      <p class="answerButton button is-primary"  :disabled="thanksVisible" @click="handleAns(five)">Uber&#47;Lift</p>
+      <p class="answerButton button is-primary"  :disabled="thanksVisible" @click="handleAns(six)">Other</p>
     </div>
     <p class="notes"></p>
-    <transition name="fade">
         <Thanks
           class="modal"
           :visible="thanksVisible"
         />
-    </transition>
     </div>
   </div>
 </template>
