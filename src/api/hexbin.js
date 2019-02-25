@@ -18,7 +18,7 @@ var radius = d3.scaleSqrt()
 .domain([0, 12])
 .range([0, 10]);
 
-// Per https://github.com/topojson/us-atlas
+//Per https://github.com/topojson/us-atlas
 var projection = d3.geoAlbersUsa()
 .scale(1280)
 .translate([480, 300]);
