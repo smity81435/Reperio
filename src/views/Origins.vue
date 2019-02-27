@@ -22,12 +22,11 @@
         />
     </div>
   </div>
-  
 </template>
 <script>
 import { GChart } from 'vue-google-charts'
 import * as Api from "@/api/Api.js"
-
+//initialize database for the chart
 var initialChartData = [
   ['category','capacity','count'],
   ['Staff','West Coast',2],
@@ -102,6 +101,7 @@ var initialChartData = [
   ['International','Location',1],
   ['International','Convenience',1],
   ['International','Other Reason',1]
+
 ];
 
 export default {
@@ -146,54 +146,54 @@ export default {
     }
   },
   methods:{
-    onChartReady(chart,google){
+    onChartReady(chart){
       chart.draw(this.chartData, this.chartOptions);
     },
-    addNode(role,origin,reason,chart,google) {
-      this.newResponseShow = true;
+    addNode(role,origin,reason) {  //ADD NODE FUNCTION 
+      this.newResponseShow = true;//turn on modal
       setTimeout(()=>{
-        this.newResponseShow = false;
-        console.log(role + " " + " " + origin + " " + reason);
+
+        this.newResponseShow = false; //turn off modal
+        //search for first link and increase link size
         for(var i= 0; i < this.chartData.length; i ++){
             if( this.chartData[i][0]===role && this.chartData[i][1]===origin){
               this.chartData[i][2]++;
             }
         }
+        //search for next link and increase link size
         for(var z= 0; z < this.chartData.length; z ++){
             if( this.chartData[z][0]===origin && this.chartData[z][1]===reason){
               this.chartData[z][2]++;
             }
         }
-        this.gChartData = this.chartData.slice(0);
-        //this.chart.draw(data,options);
-      },5000);
+        this.gChartData = this.chartData.slice(0); //update chart data with this data
+      },5000); //modal delay here
     },
   },
+
   computed:{
+
   },
+
   watch: {
     chartData: () => {
-      console.log('chartData changed');
+      //console.log('chartData changed');
     },
   },
   mounted(){
     // Update node lists every time an answer is received
-    Api.listen((change) => {
+    Api.listen((change) => {  //LISTENER FOR NEW DATA
       //console.log(change);
-      if (change.type === "added") {
+      if (change.type === "added") { //if node is added to Firestore
         //console.log("New: ", change.doc.data());
         var node = change.doc.data();
         this.addNode(node.role, node.origin, node.reason);
-        
       }
-      if (change.type === "modified") {
-        //console.log("Modified: ", change.doc.data());
-      }
-      if (change.type === "removed") {
-        //console.log("Removed: ", change.doc.data());
-      }
+      // if (change.type === "modified") {
+      // }
+      // if (change.type === "removed") {
+      // }
     });
-    //console.log("this is the import list "+this.importList);
   }
 }
 </script>
