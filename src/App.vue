@@ -13,7 +13,8 @@ export default {
 </script>
 <style lang="scss">
 body{
-  background: url("./assets/tabback.png")no-repeat center center;
+  background: radial-gradient(black, rgb(46, 46, 46));
+  //background: url("./assets/tabback.png")no-repeat center center;
   background-attachment: fixed;
   background-size: cover;
 }
