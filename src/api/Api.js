@@ -25,11 +25,11 @@ export function initialize() {
 }
 
 export function addAnswer(newAns){
-  return db.collection("answersweek2").add(newAns);
+  return db.collection("answersweek3").add(newAns);
 }
 
 export function listen(callback){
-    db.collection("answersweek2").onSnapshot(snapshot => {
+    db.collection("answersweek3").onSnapshot(snapshot => {
         snapshot.docChanges().forEach((change) => {
             callback(change);
         });

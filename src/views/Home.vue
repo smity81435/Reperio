@@ -2,7 +2,7 @@
 <div class="home" >
     <h1 id="reperio">REPERIO</h1>
     <h2 class="pageIdentifier">{{currentPage}}</h2>
-    <h2 class="about" @click="aboutClicked()">About Reperio</h2>
+    <h2 class="about" @click="aboutClicked()">?</h2>
     <transition name="fade">
       <component 
       :class="{blur: isBlurred}"
@@ -54,14 +54,7 @@ export default {
     },
     answerClicked(newAns){
       console.log("answer clicked: "+newAns);
-      var dtg = new Date();
-      var time = dtg.toUTCString();
-      console.log(time);
-      const ans = {
-        ans: newAns,
-        time: time,
-      }
-      Api.addAnswer(ans).then((docref)=>{
+      Api.addAnswer(newAns).then((docref)=>{
         console.log("answer pushed to firebase");
 
       }).catch(function(error){
@@ -79,6 +72,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #reperio{
+  z-index: -5;
   background: -webkit-linear-gradient(rgb(212, 0, 255), rgb(1, 255, 157));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -100,8 +94,9 @@ export default {
 .pageIdentifier{
   text-shadow: 0px 0px 15px black;
   color: white;
-  font-size: 40px;
-  margin-top: 30px;
+  font-size: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   font-weight: 900;
 }
 .about{
