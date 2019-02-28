@@ -1,29 +1,6 @@
 # reperio
 
-## Project setup
-```
-npm install
-```
+Reperio is a project By Douglas Smith, built to experiment with the combination of Vue.js, Google's Firestore Realitime database, and various data visualizations. 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+For any questions or comments please contact Douglas: 
+smithdouglas25@gmail.com
