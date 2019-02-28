@@ -21,6 +21,7 @@
           @ready="onChartReady"
         />
     </div>
+    <div class="qr"></div>
   </div>
 </template>
 <script>
@@ -198,6 +199,16 @@ export default {
 }
 </script>
 <style lang="scss">
+.qr{
+  width: 15vw;
+  height: 15vw;
+  background: url('../assets/qr.png')no-repeat;
+  position: absolute;
+  background-size: contain;
+  bottom: 0px;
+  right: 0px;
+
+}
 .all{
   h1{
     color: white;
