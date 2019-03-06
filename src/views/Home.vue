@@ -2,7 +2,7 @@
 <div class="home" >
     <h1 id="reperio">REPERIO</h1>
     <h2 class="pageIdentifier">{{currentPage}}</h2>
-    <h2 class="about" @click="aboutClicked()">?</h2>
+    <h2 class="about" @click="aboutClicked()"><strong>?</strong></h2>
     <transition name="fade">
       <component 
       :class="{blur: isBlurred}"
@@ -100,6 +100,7 @@ export default {
   font-weight: 900;
 }
 .about{
+  z-index: 9999;
   position: fixed;
   bottom: 65px;
   right: 20px;
@@ -109,6 +110,7 @@ export default {
   padding: 20px;
   border-radius: 30px;
   font-weight: 300;
+
 }
 
 

@@ -1,4 +1,5 @@
 
+/*
 var svg = d3.select("svg"),
 width = +svg.attr("width"),
 height = +svg.attr("height");
@@ -59,3 +60,4 @@ d[0] = p[0], d[1] = p[1];
 d.date = parseDate(d.date);
 return d;
 }
+*/

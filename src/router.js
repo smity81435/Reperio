@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import RepDisplay from './views/RepDisplay.vue'
 import BivariateHexMap from './views/BivariateHexMap.vue'
 import HorizontalChart from './views/HorizontalChart.vue'
+import Birthdates from './views/Birthdates.vue'
 import Origins from './views/Origins.vue'
 
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/origins',
       name: "origins",
       component: Origins,
+    },
+    {
+      path: '/birthdates',
+      name: "birthdates",
+      component: Birthdates,
     }
   ]
 })

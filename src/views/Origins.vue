@@ -199,6 +199,7 @@ export default {
 }
 </script>
 <style lang="scss">
+
 .qr{
   width: 15vw;
   height: 15vw;
@@ -207,19 +208,24 @@ export default {
   background-size: contain;
   bottom: 0px;
   right: 0px;
-
 }
+
+
 .all{
   h1{
     color: white;
     font-weight: 700;
   }
 }
+
+
 .vis{
   width: 90vw;
   margin: auto;
   margin-top: 100px;
 }
+
+
 .phantom{
   margin: 0;
   padding: 0;
@@ -229,5 +235,7 @@ export default {
   font-size: 100px;
   text-shadow: 0px 0px 3px rgba(118,118,118,.3);
 }
+
+
 </style>
 
