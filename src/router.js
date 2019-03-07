@@ -10,6 +10,8 @@ import Origins from './views/Origins.vue'
 
 
 Vue.use(Router)
+Vue.use(require('vue-moment'))
+
 
 export default new Router({
   routes: [

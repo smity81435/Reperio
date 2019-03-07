@@ -48,7 +48,6 @@ export default {
     aboutClicked(){
       // Click test
       // alert("About Clicked");
-
       // this.currentPage="About";
       this.pageContent = "About";
     },
@@ -56,7 +55,6 @@ export default {
       console.log("answer clicked: "+newAns);
       Api.addAnswer(newAns).then((docref)=>{
         console.log("answer pushed to firebase");
-
       }).catch(function(error){
         console.log(error);
       });
@@ -73,7 +71,7 @@ export default {
 <style lang="scss" scoped>
 #reperio{
   z-index: -5;
-  background: -webkit-linear-gradient(rgb(212, 0, 255), rgb(1, 255, 157));
+  background: -webkit-linear-gradient(rgb(90, 142, 167), rgb(0, 0, 0));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 100px;

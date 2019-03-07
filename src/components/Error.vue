@@ -20,7 +20,7 @@
     },
     data(){
       return{
-        response: "Please Select Each Field",
+        response: "Please Choose a Date",
       };
     },
     methods:{
@@ -49,16 +49,16 @@
     bottom: 0px;
     left: 0px;
     right: 0px;
-    box-shadow: 0px 0px 300px 300px rgba(0, 0, 0, .8);
-    width: 60vw;
+    box-shadow: 0px 0px 100px 50px rgba(179, 24, 24, 0.8);
+    width: 70vw;
     height: 100px;
     background: linear-gradient(rgb(241, 107, 125),rgb(185, 36, 36));
-    border-radius: 5px;
+    border-radius: 15px;
     color: rgb(255, 255, 255);
     font-weight: 700;
     margin: auto;
     transition: all 1s;
-    padding: 20px;
+    padding: auto;
     padding-bottom: 30px;
   }
 </style>

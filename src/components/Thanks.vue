@@ -44,21 +44,26 @@
   opacity: 0;
 }
   .thanks{
-    position: fixed ;
+    position: absolute;
     top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;
-    box-shadow: 0px 0px 300px 300px rgba(0, 0, 0, .8);
+    box-shadow: 0px 0px 300px 300px rgba(255, 255, 255, 0.8);
+    border: 5px solid white;
     width: 60vw;
-    height: 100px;
-    background: linear-gradient(rgb(107, 241, 148),rgb(78, 190, 111));
-    border-radius: 5px;
+    height:200px;
+    
+    background: linear-gradient(rgb(159, 250, 186),rgb(78, 190, 111));
+    border-radius: 15px;
     color: rgb(255, 255, 255);
+    text-shadow: 0px 0px 10px rgba(34, 34, 34, .7);
     font-weight: 700;
     margin: auto;
+    margin-top: 30vh;
     transition: all 1s;
     padding: 20px;
     padding-bottom: 30px;
+    z-index: 9999;
   }
 </style>
