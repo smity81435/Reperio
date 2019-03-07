@@ -50,9 +50,9 @@ export default {
     }
     //initialChartData.push([1935,150,10]);
     for(let o = 0; o < 20; o++){
-      let year = Math.random()*(2019-1950)+1950;
-      let date = Math.random()*(364-1)+1;
-      let v = Math.random()*(5-1)+1;
+      let year = Math.floor(Math.random()*(2002-1970)+1970);
+      let date = Math.floor(Math.random()*(364-1)+1);
+      let v = 5;
       initialChartData.push([year,date,v]);
     }
     
@@ -169,7 +169,7 @@ export default {
             symbolSize: function(val){
               return val[2]*4;
             },
-            animationDelat: function(idx){
+            animationDelay: function(idx){
               return idx*5;
             }
 
@@ -190,10 +190,14 @@ export default {
         this.newResponseShow = false; //turn off modal
         //search for first link and increase link size
         var hit=false;
-        console.log("This is it:" + this.tempData);
+        //console.log("This is it:" + this.tempData);
         for(var i= 0; i < this.tempData.length; i ++){
             if( this.tempData[i][0]===year && this.tempData[i][1]===julian){
-              this.tempData[i][2]++;
+              console.log("MATCH!");
+               let count = initialChartData[i][2];
+              initialChartData.splice(i-1,1,[year,julian,count+2]);
+              //initialChartData[i][2]+=2;
+              //console.log(initialChartData[i][2]);
               hit = true;
             }
         }

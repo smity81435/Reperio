@@ -263,10 +263,10 @@ input.pickerbox{
   color: grey;
 }
 .cal{
-  width: 60vw;
+  width: 60vw !important;
   //border:2px solid orange;
   //background: red;
-  background: rgba(102, 232, 255, 0.795);
+  background: rgba(102, 232, 255, 0.795) !important;
   border-radius: 20px;
   color: white;
 }
