@@ -38,7 +38,6 @@ export function listen(callback){
 }
 
 export var db;
-
 // exports.updateUser = functions.firestore
 //     .document('users/{userId}')
 //     .onUpdate((change, context) => {
