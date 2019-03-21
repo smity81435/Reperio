@@ -13,10 +13,7 @@ export default {
 </script>
 <style lang="scss">
 body{
-  background: radial-gradient(black, rgb(46, 46, 46));
-  //background: url("./assets/tabback.png")no-repeat center center;
-  background-attachment: fixed;
-  background-size: cover;
+
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -28,6 +25,8 @@ body{
   bottom: 0px;
   left: 0px;
   right: 0px;
+  background: linear-gradient(rgba(255,255,255,.6),rgb(238, 234, 255));
+
  // color: #2c3e50;
 }
 #nav {

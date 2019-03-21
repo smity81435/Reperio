@@ -6,7 +6,7 @@ import BivariateHexMap from './views/BivariateHexMap.vue'
 import HorizontalChart from './views/HorizontalChart.vue'
 import Birthdates from './views/Birthdates.vue'
 import Origins from './views/Origins.vue'
-
+import Emotions from './views/Emotion.vue'
 
 
 Vue.use(Router)
@@ -43,6 +43,11 @@ export default new Router({
       path: '/birthdates',
       name: "birthdates",
       component: Birthdates,
+    },
+    {
+      path: '/emotions',
+      name: "emotions",
+      component: Emotions,
     }
   ]
 })

@@ -125,7 +125,6 @@ export default {
         to: new Date(1919,0,1),
         from: new Date(2019,0,1),
       },
-
       month: "January",
       day: "1",
       year: 2000,
@@ -188,7 +187,7 @@ export default {
 <style lang="scss">
 .statement{
   margin-bottom: -50px;
-  color: rgb(102, 232, 255);
+  color: rgba(0, 162, 255, 0.658);
   font-size: 40px;
 }
 .notes{
@@ -210,21 +209,24 @@ export default {
   padding: auto;
 }
 
-.all{
-  //width: 90vw;
-  margin: auto;
-  p{
-    margin: 0px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-}
+// .all{
+//   //width: 90vw;
+//   margin: auto;
+//   p{
+//     margin: 0px;
+//     margin-top: 20px;
+//     margin-bottom: 20px;
+//   }
+// }
 .question{
   font-size: 25px;
-  color: white;
+  color:rgba(140, 0, 255, 0.452);
   font-weight: 700;
   margin: 0;
-  text-shadow: 0px 0px 15px black;
+  h1{
+    color: rgba(140, 0, 255, 0.452)!important;
+  }
+  //text-shadow: 0px 0px 15px black;
 
 }
 .datepick{
@@ -240,19 +242,19 @@ export default {
 }
 input.pickerbox{
   border-radius: 20px;
-  color: white;
+  color: rgba(140, 0, 255, 0.452);
   
   &::placeholder{
-    color: white;
+    color: rgba(140, 0, 255, 0.452);
   }
-  border: 5px solid rgba(102, 232, 255, 1);
+  border: 5px solid rgba(140, 0, 255, 0.452);
   width: 100%;
   height: 100%;
   font-size: 30px;
   text-align: center;
-  background: transparent;
+  background: white;
   //color: rgba(0, 217, 255, 0.877);
-  box-shadow: 0px 0px 40px 20px rgba(102, 232, 255, 0.795);
+  box-shadow: 0px 5px 5px 3px rgba(0,0,0,.3);
   font-weight: 600;
   font-family: Avenir;
 }
@@ -266,9 +268,10 @@ input.pickerbox{
   width: 60vw !important;
   //border:2px solid orange;
   //background: red;
-  background: rgba(102, 232, 255, 0.795) !important;
-  border-radius: 20px;
-  color: white;
+  background: white !important;
+  border-radius: 10px;
+  color: rgba(140, 0, 255, 0.452);
+  box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
 }
 
 
@@ -286,7 +289,7 @@ input.pickerbox{
 .answerButton{
   //height: 40px;
   font-size: 36px;
-  color: white;
+  color: rgba(0, 162, 255, 0.712);
   background: linear-gradient(30deg, rgb(255, 101, 255),rgb(130, 35, 255),rgb(0, 153, 255));
   padding: 20px;
   padding-top: 8px;
@@ -300,13 +303,13 @@ input.pickerbox{
   }
 }
 
-ul {
-  list-style-type: none;
-}
+// ul {
+//   list-style-type: none;
+// }
 
-li {
-  display: inline-block;
-}
+// li {
+//   display: inline-block;
+// }
 
 .blur{
     filter: blur(4px);
@@ -405,14 +408,14 @@ li {
   z-index: 9999;
   width: 50%;
   margin: auto !important;
-  background: linear-gradient(lightgreen, green);
+  background:rgba(255,255,255,.8);
   padding: 10px;
   font-size: 30px;
-  color: white;
+  color: rgba(140, 0, 255, 0.452);
   font-weight: 700;
   border-radius: 10px;
-  border: 1px solid white;
-  box-shadow: 0px 5px 10px 5px rgba(0,0,0,.6);
+  border: 5px solid rgba(140, 0, 255, 0.452);
+  box-shadow: 0px 5px 5px 3px rgba(0,0,0,.3);
   
 }
 </style>
