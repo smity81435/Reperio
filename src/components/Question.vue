@@ -1,11 +1,31 @@
+
 <template>
+<!-- For the sake of individuals who wish to use this project to create their own visualizations, I have done my best not to delete any of the code needed to manipulate the question screen. To optimise performance, delete whatever you dont need. -->
+
   <div class="qotd">
     <div class="all" :class="{blur: isBlurred}">
     <div class="question" >
-      <h1>When were you born?</h1>
-      <p class="statement">I was born on <br> {{ pickeddate | moment("dddd, MMMM Do YYYY")}} </p>
+      <h1 class="questheader">How are you feeling right now?</h1>
+      <div class="feeling">
+        <input type="radio" name="emotion" id="amazing" value="Amazing" v-model="emotion">
+        <label for="amazing">AMAZING</label>
+
+        <input type="radio" name="emotion" id="good" value="Good" v-model="emotion">
+        <label for="good">GOOD</label>
+
+        <input type="radio" name="emotion" id="ok" value="OK" v-model="emotion">
+        <label for="ok">OK</label>
+
+        <input type="radio" name="emotion" id="notgreat" value="Not Great" v-model="emotion">
+        <label for="notgreat">NOT GREAT</label>
+
+        <input type="radio" name="emotion" id="awful" value="Awful" v-model="emotion">
+        <label for="awful">AWFUL</label>
+      </div>
+
+      <!-- <p class="statement">I was born on <br> {{ pickeddate | moment("dddd, MMMM Do YYYY")}} </p> -->
       <!-- <p>formatted date: {{fixeddate}}</p> -->
-      <datepicker
+      <!-- <datepicker
         :class= "{blur: isBlurred}"
         class="datepick"
         :initialView = " 'year' "
@@ -17,7 +37,7 @@
         :format = 'format'
         v-model = 'pickeddate'
         
-      />
+      /> -->
 
     <!-- <p class="ask">I am roughly from (the): {{origin}}</p>
     <div class="place" :class="{blur: isBlurred}">
@@ -75,10 +95,8 @@
     </div> -->
 
     <p class="subbut" :disabled="thanksVisible" @click="handleAns(pickeddate)">Submit</p>
-
-    <!-- <p class="notes"></p> -->
-
-
+    <p class="subbut dispcontrols" @click="handleControls()">Display Controls</p>
+    
     </div>
         <Thanks
           class="modal"
@@ -87,7 +105,6 @@
         <Error
           class="modal"
           :visible="errorVisible"
-        
         />
   </div>
 </template>
@@ -107,27 +124,31 @@ export default {
     onAnswerClick:{
       type: Function,
       default: ()=> {},
+    },
+    onControlClick:{
+      type: Function,
+      default: ()=>{},
     }
   },
   components:{
-    Datepicker,
     Thanks,
     Error,
   },
   data(){
     return{
-      format: "dd MMMM yyyy",
-      fixeddate: "",
-      monthname: true,
-      pickeddate: "",
-      dateholder: "Click here to pick a date",
-      disdates: {
-        to: new Date(1919,0,1),
-        from: new Date(2019,0,1),
-      },
-      month: "January",
-      day: "1",
-      year: 2000,
+      // format: "dd MMMM yyyy",
+      // fixeddate: "",
+      // monthname: true,
+      // pickeddate: "",
+      // dateholder: "Click here to pick a date",
+      // disdates: {
+      //   to: new Date(1919,0,1),
+      //   from: new Date(2019,0,1),
+      // },
+      // month: "January",
+      // day: "1",
+      // year: 2000,
+      emotion: "",
       // reason:"",
       // origin: "",
       // role:"",
@@ -146,12 +167,12 @@ export default {
 
   },
   methods:{
-    customFormatter(date){
-      return moment(date).format('MMMM DD YYYY');
+    handleControls(){
+      this.onControlClick();
     },
-    handleAns(pickeddate){
+    handleAns(emotion){
       console.log("clicked");
-      if(pickeddate==""){
+      if(emotion==""){
         this.isBlurred = true;
         this.errorVisible= true;
         setTimeout(()=>{
@@ -159,36 +180,42 @@ export default {
           this.isBlurred=false;
         }, 3000);
       }else{
-        var dtg = new Date();
-        var time = dtg.toUTCString();
-        var julian = moment(pickeddate).format("DDD");
-        var year = moment(pickeddate).format("YYYY");
-        console.log(julian);
+        var dtg = moment().format("MMM Do YY");
+        var time = moment().format("H");
+        var week = moment().format("W");
+        var weekday = moment().format("d");
+
         var newAns= {
-          julian: julian,
-          year: year,
-          time: time,
+          dtg: dtg,
+          hour: time,
+          week: week,
+          day: weekday,
+          emotion: emotion,
         }
         this.isBlurred=true;
         this.thanksVisible=true;
         setTimeout(()=>{
-          this.pickeddate=""
+          this.emotion=""
           this.thanksVisible= false;
           this.isBlurred=false;
         },4000);
         //alert(newAns.year + " " + newAns.julian);
         this.onAnswerClick(newAns);
       }
-    }
+    },
   },
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.statement{
-  margin-bottom: -50px;
-  color: rgba(0, 162, 255, 0.658);
+// .statement{
+//   color: rgba(0, 162, 255, 0.658);
+//   font-size: 40px;
+// }
+.questheader{
   font-size: 40px;
+  margin-top: 150px;
+  color: rgb(183, 0, 255)!important;
 }
 .notes{
   color: white;
@@ -218,61 +245,51 @@ export default {
 //     margin-bottom: 20px;
 //   }
 // }
-.question{
-  font-size: 25px;
-  color:rgba(140, 0, 255, 0.452);
-  font-weight: 700;
-  margin: 0;
-  h1{
-    color: rgba(140, 0, 255, 0.452)!important;
-  }
-  //text-shadow: 0px 0px 15px black;
 
-}
-.datepick{
-  width: 60vw;
-  height: 10vh;
+// .datepick{
+//   width: 60vw;
+//   height: 10vh;
 
-  margin: auto;
+//   margin: auto;
 
-  padding: 40px;
-  margin-top: 100px;
-  margin-bottom: 130px;
+//   padding: 40px;
+//   margin-top: 100px;
+//   margin-bottom: 130px;
   
-}
-input.pickerbox{
-  border-radius: 20px;
-  color: rgba(140, 0, 255, 0.452);
+// }
+// input.pickerbox{
+//   border-radius: 20px;
+//   color: rgba(140, 0, 255, 0.452);
   
-  &::placeholder{
-    color: rgba(140, 0, 255, 0.452);
-  }
-  border: 5px solid rgba(140, 0, 255, 0.452);
-  width: 100%;
-  height: 100%;
-  font-size: 30px;
-  text-align: center;
-  background: white;
-  //color: rgba(0, 217, 255, 0.877);
-  box-shadow: 0px 5px 5px 3px rgba(0,0,0,.3);
-  font-weight: 600;
-  font-family: Avenir;
-}
-.prev disabled{
-  color: grey;
-}
- .next disabled{
-  color: grey;
-}
-.cal{
-  width: 60vw !important;
-  //border:2px solid orange;
-  //background: red;
-  background: white !important;
-  border-radius: 10px;
-  color: rgba(140, 0, 255, 0.452);
-  box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
-}
+//   &::placeholder{
+//     color: rgba(140, 0, 255, 0.452);
+//   }
+//   border: 5px solid rgba(140, 0, 255, 0.452);
+//   width: 100%;
+//   height: 100%;
+//   font-size: 30px;
+//   text-align: center;
+//   background: white;
+//   //color: rgba(0, 217, 255, 0.877);
+//   box-shadow: 0px 5px 5px 3px rgba(0,0,0,.3);
+//   font-weight: 600;
+//   font-family: Avenir;
+// }
+// .prev disabled{
+//   color: grey;
+// }
+//  .next disabled{
+//   color: grey;
+// }
+// .cal{
+//   width: 60vw !important;
+//   //border:2px solid orange;
+//   //background: red;
+//   background: white !important;
+//   border-radius: 10px;
+//   color: rgba(140, 0, 255, 0.452);
+//   box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
+// }
 
 
 // .Box{
@@ -286,22 +303,22 @@ input.pickerbox{
 //   justify-content: center;
 // }
 
-.answerButton{
-  //height: 40px;
-  font-size: 36px;
-  color: rgba(0, 162, 255, 0.712);
-  background: linear-gradient(30deg, rgb(255, 101, 255),rgb(130, 35, 255),rgb(0, 153, 255));
-  padding: 20px;
-  padding-top: 8px;
-  border: 1px solid white;
-  margin: 40px;
-  border-radius: 40px;
-  font-weight: 700;
-  box-shadow: 3px 5px 14px 5px rgba(0,0,0,.6);
-  &:hover{
-    cursor: pointer;
-  }
-}
+// .answerButton{
+//   //height: 40px;
+//   font-size: 36px;
+//   color: rgba(0, 162, 255, 0.712);
+//   background: linear-gradient(30deg, rgb(255, 101, 255),rgb(130, 35, 255),rgb(0, 153, 255));
+//   padding: 20px;
+//   padding-top: 8px;
+//   border: 1px solid white;
+//   margin: 40px;
+//   border-radius: 40px;
+//   font-weight: 700;
+//   box-shadow: 3px 5px 14px 5px rgba(0,0,0,.6);
+//   &:hover{
+//     cursor: pointer;
+//   }
+// }
 
 // ul {
 //   list-style-type: none;
@@ -314,25 +331,25 @@ input.pickerbox{
 .blur{
     filter: blur(4px);
 }
-.role{
-  width: 70vw;
-  top: 20vh;
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr ;
-  margin: auto;
-  label{
-    width: 125px;
-    background: linear-gradient(30deg, rgba(0, 107, 230, 0.644),rgba(0, 112, 218, 0.726),rgb(0, 153, 255));
-    color: rgba(244, 244, 255, 0.774);
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 20px;
-    border: 1px solid white;
-    box-shadow: 0px 5px 5px 5px rgba(0,0,0,.6);
-    font-size: 25px;
-  }
-}
+// .role{
+//   width: 70vw;
+//   top: 20vh;
+//   display: grid;
+//   grid-template-rows: 1fr 1fr 1fr 1fr;
+//   grid-template-columns: 1fr 1fr 1fr ;
+//   margin: auto;
+//   label{
+//     width: 125px;
+//     background: linear-gradient(30deg, rgba(0, 107, 230, 0.644),rgba(0, 112, 218, 0.726),rgb(0, 153, 255));
+//     color: rgba(244, 244, 255, 0.774);
+//     margin-top: 20px;
+//     padding: 20px;
+//     border-radius: 20px;
+//     border: 1px solid white;
+//     box-shadow: 0px 5px 5px 5px rgba(0,0,0,.6);
+//     font-size: 25px;
+//   }
+// }
 //I am from the:
 // .place{
 //   display: grid;
@@ -383,18 +400,18 @@ input.pickerbox{
 // }
 
 //radio hide
-// input[type=radio]{
-//   display: none;
-// }
+input[type=radio]{
+  display: none;
+}
 
 //input checked
-// input[type="radio"]:checked+label{
-//    background: linear-gradient(rgba(115, 255, 110, 0.884),rgba(54, 255, 131, 0.767));
-//    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.671);
-//    text-shadow: 0px 0px 5px rgba(0,0,0,.6);
-//    color: rgba(255, 255, 255, 0.979);
+input[type="radio"]:checked+label{
+  
+   background: linear-gradient(rgba(238, 110, 255, 0.884),rgba(215, 54, 255, 0.767));
+   box-shadow: 0px 0px 10px 10px rgba(215, 215, 215, 0.8);
    
-// }
+   color: rgba(255, 255, 255, 0.979);
+}
 
 
 // .ask{
@@ -406,16 +423,71 @@ input.pickerbox{
 
 .subbut{
   z-index: 9999;
-  width: 50%;
+  width: 25vw;
   margin: auto !important;
+  margin-top:20px !important;
   background:rgba(255,255,255,.8);
   padding: 10px;
   font-size: 30px;
   color: rgba(140, 0, 255, 0.452);
   font-weight: 700;
   border-radius: 10px;
-  border: 5px solid rgba(140, 0, 255, 0.452);
+  border: 3px solid rgba(140, 0, 255, 0.452);
   box-shadow: 0px 5px 5px 3px rgba(0,0,0,.3);
+  &:hover{
+    cursor: pointer;
+  }
   
 }
+label{
+  transition: all 1s;
+  background: rgba(246, 223, 255, 0.5);
+  border: 2px solid rgb(183, 0, 255);
+  box-shadow:inset 0px 0px 5px 5px rgba(215, 215, 215, 1);
+  width: 30vw;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.feeling{
+  font-weight: 700;
+  color: rgba(140, 0, 255, 0.452);
+  font-size: 35px;
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // display: grid;
+  // grid-template-columns: 1fr;
+}
+.dispcontrols{
+  position: absolute;
+  bottom: 100px;
+  left: 20px;
+  font-size: 20px;
+  box-shadow: none;
+}
+@media only screen and (max-width: 600px) {
+  .questheader{
+    font-size: 25px;
+    font-weight: 300;
+    width: 75vw;
+    margin: auto;
+    
+    
+  }
+  .feeling{
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  .subbut{
+    font-size: 25px;
+    padding: 5px;
+  }
+
+}
+
 </style>

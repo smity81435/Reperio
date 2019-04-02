@@ -48,6 +48,6 @@ export default new Router({
       path: '/emotions',
       name: "emotions",
       component: Emotions,
-    }
+      },
   ]
 })

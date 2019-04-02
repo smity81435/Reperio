@@ -47,8 +47,9 @@
     top: 10px;
     left: 10px;
     font-size: 30px;
+    font-weight: 700;
     padding: 15px;
-    background: rgba(32, 253, 131, 0.938);
+    background: rgba(190, 32, 253, 0.938);
     color: rgb(255, 255, 255);
     box-shadow: 0px 0px 5px 5px rgba(0,0,0,.5);
     

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view
+
+    />
   </div>
 </template>
 <script>
@@ -8,13 +10,19 @@ import * as Api from "@/api/Api.js";
 
 Api.initialize();
 export default {
+  data(){
+    return{
+
+    }
+  },
+  methods:{
+
+  }
   
 }
 </script>
 <style lang="scss">
-body{
 
-}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
