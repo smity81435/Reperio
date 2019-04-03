@@ -106,7 +106,7 @@ export default {
       this.nodeLists.push([]);
     }
     // Update node lists every time an answer is received
-    Api.listen((change) => {
+    Api.listenCommute((change) => {
       //console.log(change);
       if (change.type === "added") {
         //console.log("New: ", change.doc.data());
@@ -125,6 +125,12 @@ export default {
 }
 </script>
 <style lang="scss">
+.display{
+  background: linear-gradient(rgb(6, 120, 173),rgba(0,0,0,.8));
+  width: 100vw;
+  height: 100vh;
+  padding-top: 50px;
+}
 .nodecount{
   color: rgb(211, 102, 102);
   font-size: 36px;

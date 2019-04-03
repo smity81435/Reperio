@@ -1,6 +1,6 @@
 <template>
-  <div class="all">
-    <p class="phantom">REPERIO</p>
+  <div class="allSankey">
+    <p class="phantomTop">REPERIO</p>
     <h1>Where are you from? <br> &amp; <br> What brought you here?</h1>
     <transition name="fade" mode="in-out">
       <div class="newResponse"
@@ -183,7 +183,7 @@ export default {
   },
   mounted(){
     // Update node lists every time an answer is received
-    Api.listen((change) => {  //LISTENER FOR NEW DATA
+    Api.listenOrigins((change) => {  //LISTENER FOR NEW DATA
       //console.log(change);
       if (change.type === "added") { //if node is added to Firestore
         //console.log("New: ", change.doc.data());
@@ -199,6 +199,16 @@ export default {
 }
 </script>
 <style lang="scss">
+.phantomTop{
+  font-size: 100px;
+  position:absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 0;
+  margin: 0;
+  
+
+}
 
 .qr{
   width: 15vw;
@@ -211,7 +221,11 @@ export default {
 }
 
 
-.all{
+.allSankey{
+  background: linear-gradient(rgba(0,0,0,.8),black);
+  width: 100vw;
+  height: 100vh;
+  padding-top: 30px;
   h1{
     color: white;
     font-weight: 700;
@@ -222,11 +236,14 @@ export default {
 .vis{
   width: 90vw;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 20vh;
 }
 
 
 .phantom{
+  width: 100vw;
+  height: 100vh;
+  background:linear-gradient(black, rgba(0,0,0,.8));
   margin: 0;
   padding: 0;
   position: absolute;

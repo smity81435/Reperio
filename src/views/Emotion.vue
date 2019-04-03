@@ -1,6 +1,6 @@
 <template>
   <div class="all">
-    <p class="phantom">REPERIO</p>
+    <p class="phantomTitle">REPERIO</p>
     <h1 class="dispheader">How are you feeling right now?</h1>
     <transition name="fade" mode="in-out">
       <div class="newResponse"
@@ -13,6 +13,7 @@
     <div class="vizes"
       :is="currentViz"
       :day="day"
+      :dayPick="dayPick"
     >
     </div>
     <div class="qr"></div>
@@ -24,6 +25,7 @@ import {eventBus} from '../main.js'
 import Daychart from '@/components/Daychart'
 import Weekcharts from '@/components/Weekcharts'
 import * as Api from '../api/Api.js'
+import moment from 'moment'
 
 //export
 export default {
@@ -37,7 +39,8 @@ export default {
   data(){
     return {
       currentViz:"Daychart",
-      day: 0,
+      day: parseInt(moment().format("D")),
+      dayPick: null,
       modalopacity: 1,
       newResponseShow: false,
     }
@@ -51,7 +54,7 @@ export default {
       //console.log(change);
       var node = doc.data();
       this.currentViz = node.currentViz;
-      this.day = node.day;
+      this.dayPick = node.day;
             // if (change.type === "removed") {
       // }
     });
@@ -70,6 +73,17 @@ export default {
     justify-content: center;
     width: 80vw;
     margin: auto;
+  }
+  .phantomTitle{
+    color: rgb(204, 115, 204);
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-weight: 700;
+    opacity: .3;
+    font-size: 100px;
+    margin: 0;
+    padding: 0;
   }
 </style>
 

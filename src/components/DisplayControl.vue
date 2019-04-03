@@ -5,7 +5,7 @@
       <h2 class="live">Current Display:<br> {{pickedViz}}</h2>
       <!-- TODAY -->
       <input type="radio" name="control" id="today" checked="checked" value="Today's Chart" v-model="pickedViz"  >
-      <label for="today" @click="handleVizPick('Daychart',0)" >Today: {{today}}</label>
+      <label for="today" @click="handleVizPick('Daychart',todayDay)" >Today: {{today}}</label>
       <!-- WEEK OVERVIEW -->
       <input type="radio" name="control" id="overview" value="Week Overview" v-model="pickedViz">
       <label for="overview" @click="handleVizPick('Weekcharts',7)">Week Overview</label>
@@ -56,7 +56,9 @@ export default {
     return{
       pickedViz: "Today's Chart",
       today: moment().format("dddd MMMM Do YY"),
+      todayDay: moment().format("D"),
       yesterday1: moment().subtract(1, 'days').format("dddd MMMM Do"),
+      YDD1: moment().subtract(1,'days').format("D"),
       yesterday2: moment().subtract(2, 'days').format("dddd MMMM Do"),
       yesterday3: moment().subtract(3, 'days').format("dddd MMMM Do"),
       yesterday4: moment().subtract(4, 'days').format("dddd MMMM Do"),

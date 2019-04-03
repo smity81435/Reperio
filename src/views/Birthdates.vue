@@ -6,12 +6,12 @@
       >
         <p>New Response Received!</p>
       </div>
-    <p class="phantom">REPERIO</p>
+    <!-- <p class="phantom">REPERIO</p> -->
     <h1 class="dispQ">When is your Birthday?</h1>
     <transition name="fade" mode="in-out">
 
     </transition>
-    <div class="vis">
+    <div class="visPolar">
       <v-chart
       :options="polar"
       :class="{blur: newResponseShow}"
@@ -77,9 +77,6 @@ export default {
       //gChartData: initialChartData.slice(0),
       polar: {
         color: ['rgba(140, 0, 255, 0.2)'],
-        title: {
-          text: 'Birthdays'
-        },
         polar: {
           center: ['50%', '50%']
         },
@@ -255,7 +252,7 @@ export default {
   mounted(){
     
     // Update node lists every time an answer is received
-    Api.listen((change) => {  //LISTENER FOR NEW DATA
+    Api.listenBirthday((change) => {  //LISTENER FOR NEW DATA
       //console.log(change);
       if (change.type === "added") { //if node is added to Firestore
         //console.log("New: ", change.doc.data());
@@ -286,7 +283,7 @@ export default {
     color: rgba(0, 162, 255, 0.712);
   }
 
-  .vis{
+  .visPolar{
     width: 90vw;
     height: 90vh;
     position: absolute;

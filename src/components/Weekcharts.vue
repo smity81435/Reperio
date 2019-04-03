@@ -71,7 +71,6 @@ export default {
       yesterday5: moment().subtract(4, 'days').format("dddd MMM Do"),
       yesterday6: moment().subtract(5, 'days').format("dddd MMM Do"),
       option2:{
-        height: 100,
         legend: {
          data: emotions,
         },
@@ -95,7 +94,7 @@ export default {
             large: true,
             symbolSize: 5,
             data: data2[0],
-            color: "rgba(0,0,0,1)",
+            //color: "green",
           },
           {
             name: 'Good',
@@ -103,7 +102,7 @@ export default {
             large: true,
             symbolSize: 5,
             data: data2[1],
-            color: "rgba(0,0,0,1)",
+            //color: "blue",
           },
           {
             name: 'OK',
@@ -111,15 +110,15 @@ export default {
             large: true,
             symbolSize: 5,
             data: data2[2],
-            color: "rgba(0,0,0,1)",
+            //color: "yellow",
           },
           {
             name: 'Not Great',
-            type: 'scatter',
+            type: 'orange',
             large: true,
             symbolSize: 5,
             data: data2[3],
-            color: "rgba(0,0,0,1)",
+            //color: "rgba(197, 30, 30, 0.986)",
           },
           {
             name: 'Awful',
@@ -127,7 +126,7 @@ export default {
             large: true,
             symbolSize: 5,
             data: data2[4],
-            color: "rgba(0,0,0,1)",
+            //color: "rgba(0,0,0,1)",
           }
         ],
       },
@@ -378,17 +377,27 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 .sidevis{
-  width: 40%;
+  width: 90vw;
+  height: 100%;
   //position: absolute;
   padding: 20px 20px;
   ul{
+    display:flex;
+    justify-content: space-evenly;
     list-style: none;
     padding-left: 0px;
+    li{
+      width: 20vw;
+    }
   }
 }
+
 .sidechart{
   height: 200px;
+  color:rgba(197, 30, 30, 0.986);
 }
+
   
 </style>

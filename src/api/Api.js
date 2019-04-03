@@ -39,6 +39,33 @@ export function changeViz(selection,day){
     });
 }
 
+export function listenBirthday(callback){
+    db.collection("week4").onSnapshot(snapshot => {
+        snapshot.docChanges().forEach((change) => {
+            callback(change);
+        });
+        //console.log(importList);
+    });
+}
+
+export function listenCommute(callback){
+    db.collection("answersweek2").onSnapshot(snapshot => {
+        snapshot.docChanges().forEach((change) => {
+            callback(change);
+        });
+        //console.log(importList);
+    });
+}
+
+export function listenOrigins(callback){
+    db.collection("answersweek3").onSnapshot(snapshot => {
+        snapshot.docChanges().forEach((change) => {
+            callback(change);
+        });
+        //console.log(importList);
+    });
+}
+
 export function listen(callback){
     db.collection("emotions").onSnapshot(snapshot => {
         snapshot.docChanges().forEach((change) => {
