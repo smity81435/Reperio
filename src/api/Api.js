@@ -40,7 +40,7 @@ export function changeViz(selection,day){
 }
 
 export function listen(callback){
-    db.collection("week4").onSnapshot(snapshot => {
+    db.collection("emotions").onSnapshot(snapshot => {
         snapshot.docChanges().forEach((change) => {
             callback(change);
         });

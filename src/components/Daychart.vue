@@ -17,7 +17,7 @@ import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
 
 //global data
-var data = [[0,2,3],[2,1,4],[3,3,5],[4,2,6],];
+var data = [[0,2,3],[0,23,3]];
 var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
         '7a', '8a', '9a','10a','11a',
         '12p', '1p', '2p', '3p', '4p', '5p',
@@ -40,7 +40,7 @@ export default {
   },
   data(){
     return{
-      tempData:[["AMAZING",4,2,23,1],],
+      tempData: initialChartData.slice(0),
       today: moment().format('MMMM Do YYYY'),
       option:{
         visualMap: {
@@ -74,9 +74,9 @@ export default {
         },
         series:{
             type: 'bar3D',
-            data: data.map(function (item) {
+            data: initialChartData.map(function (item) {
                 return {
-                    value: [item[1], item[0], item[2]]
+                    value: [item[3], item[0], item[4]]
                 }
             }),
             //shading: 'color',
@@ -108,10 +108,8 @@ export default {
   methods:{
     displayNotification(dtg) {
       var time = dtg;
-      this.$snotify.success({
-        body: time,
-        title: 'New Response!',
-        config: {}
+      this.$snotify.success(time,'New Response!',{
+        timeout: 5000,
       });
     },
     addNode(emotion,dtg,day,hour,month) {  //ADD NODE FUNCTION 
@@ -140,12 +138,13 @@ export default {
     },
   },
   mounted(){
-    Api.vizListen((change) => {  //LISTENER FOR NEW DATA
-      if (change.type === "added") { //if node is added to Firestore
-        console.log("New: ", change.doc.data());
+    Api.listen((change) => {  //LISTENER FOR NEW DATA
+        //console.log("New: ", change.doc.data());
         var node = change.doc.data();
+        node.day = Number(node.day);
+        node.hour=Number(node.hour);
+        node.month=Number(node.month);
         this.addNode(node.emotion,node.dtg,node.day,node.hour,node.month);
-      }
     });
   },
 }

@@ -193,13 +193,14 @@ export default {
         };
         this.isBlurred=true;
         this.thanksVisible=true;
+        this.onAnswerClick(newAns);
         setTimeout(()=>{
           this.emotion=""
           this.thanksVisible= false;
           this.isBlurred=false;
         },4000);
         //alert(newAns.year + " " + newAns.julian);
-        this.onAnswerClick(newAns);
+        
       }
     },
   },
