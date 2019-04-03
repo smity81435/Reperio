@@ -94,7 +94,7 @@
       <label for="oth">Other</label>
     </div> -->
 
-    <p class="subbut" :disabled="thanksVisible" @click="handleAns(pickeddate)">Submit</p>
+    <p class="subbut" :disabled="thanksVisible" @click="handleAns(emotion)">Submit</p>
     <p class="subbut dispcontrols" @click="handleControls()">Display Controls</p>
     
     </div>
@@ -180,18 +180,17 @@ export default {
           this.isBlurred=false;
         }, 3000);
       }else{
-        var dtg = moment().format("MMM Do YY");
-        var time = moment().format("H");
-        var week = moment().format("W");
-        var weekday = moment().format("d");
-
-        var newAns= {
+        var dtg = moment().format("MMM Do LT");
+        var hour = moment().format("H");
+        var day = moment().format("D");
+        var month = moment().format("M");
+        var newAns={
           dtg: dtg,
-          hour: time,
-          week: week,
-          day: weekday,
+          hour: hour,
+          month: month,
+          day: day,
           emotion: emotion,
-        }
+        };
         this.isBlurred=true;
         this.thanksVisible=true;
         setTimeout(()=>{

@@ -5,22 +5,22 @@
       <h2 class="live">Current Display:<br> {{pickedViz}}</h2>
       <!-- TODAY -->
       <input type="radio" name="control" id="today" checked="checked" value="Today's Chart" v-model="pickedViz"  >
-      <label for="today" @click="handleVizPick('Daychart')" >Today: {{today}}</label>
+      <label for="today" @click="handleVizPick('Daychart',0)" >Today: {{today}}</label>
       <!-- WEEK OVERVIEW -->
       <input type="radio" name="control" id="overview" value="Week Overview" v-model="pickedViz">
-      <label for="overview" @click="handleVizPick('Weekcharts')">Week Overview</label>
+      <label for="overview" @click="handleVizPick('Weekcharts',7)">Week Overview</label>
       <!-- 1-day OVERVIEW -->
       <input type="radio" name="control" id="yes1" v-bind:value="yesterday1" v-model="pickedViz">
-      <label for="yes1" @click="handleVizPick('Daychart1')">{{yesterday1}}</label>
+      <label for="yes1" @click="handleVizPick('Daychart',1)">{{yesterday1}}</label>
       <!-- 2-days OVERVIEW -->
       <input type="radio" name="control" id="yes2" v-bind:value="yesterday2" v-model="pickedViz">
-      <label for="yes2" @click="handleVizPick('Daychart2')">{{yesterday2}}</label>
+      <label for="yes2" @click="handleVizPick('Daychart',2)">{{yesterday2}}</label>
       <!-- 3-days OVERVIEW -->
       <input type="radio" name="control" id="yes3" v-bind:value="yesterday3" v-model="pickedViz"> 
-      <label for="yes3" @click="handleVizPick('Daychart3')">{{yesterday3}}</label>
+      <label for="yes3" @click="handleVizPick('Daychart',3)">{{yesterday3}}</label>
       <!-- 4-days OVERVIEW -->
       <input type="radio" name="control" id="yes4" v-bind:value="yesterday4" v-model="pickedViz">
-      <label for="yes4" @click="handleVizPick('Daychart4')">{{yesterday4}}</label>
+      <label for="yes4" @click="handleVizPick('Daychart',4)">{{yesterday4}}</label>
     </div>
   <p class="subbut backbutt" @click="handleHome()">Home</p>
   </div>
@@ -28,6 +28,7 @@
 <script>
 import moment from 'moment'
 import {eventBus} from '../main.js'
+import * as Api from '../api/Api.js'
 
 export default {
   name: 'DisplayControl',
@@ -44,11 +45,8 @@ export default {
     }
   },
   methods:{
-    handleVizPick(pick){
-      console.log("Display Control Sends: "+pick);
-      eventBus.$emit('vizPicked',pick);
-
-      //this.onSwitch(pick);
+    handleVizPick(pick,day){
+      Api.changeViz(pick,day);
     },
     handleHome(){
       this.onControlClick();
@@ -64,6 +62,9 @@ export default {
       yesterday4: moment().subtract(4, 'days').format("dddd MMMM Do"),
     }
   },
+  computed:{
+
+  }
 
   
 }
@@ -73,9 +74,7 @@ label{
   font-weight: 700;
   width: 50vw;
 }
-input[type="radio"]:checked+label{
 
-}
 .backbutt{
   position: absolute;
   top: 100px; 

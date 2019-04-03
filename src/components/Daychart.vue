@@ -1,5 +1,6 @@
 <template>
   <div class="mainvis">
+      <vue-snotify></vue-snotify>
       <h2>{{today}}</h2>
       <v-chart
       :options="option"
@@ -12,6 +13,8 @@ require('echarts-gl');
 import ECharts from 'vue-echarts'
 import moment from 'moment'
 import * as Api from "@/api/Api.js"
+import Snotify from 'vue-snotify'
+import 'vue-snotify/styles/material.css'
 
 //global data
 var data = [[0,2,3],[2,1,4],[3,3,5],[4,2,6],];
@@ -21,14 +24,23 @@ var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
         '6p', '7p', '8p', '9p', '10p', '11p'];
 var emotions = ['Amazing', 'Good', 'OK',
         'Not Great', 'Awful'];
+var initialChartData=[["AMAZING",4,2,23,1],];
 
 export default {
   name: 'Daychart',
   components:{
     'v-chart':ECharts,
   },
+  props:{
+    day:{
+      type: Number,
+      requried: true,
+      default: 0,
+    }
+  },
   data(){
     return{
+      tempData:[["AMAZING",4,2,23,1],],
       today: moment().format('MMMM Do YYYY'),
       option:{
         visualMap: {
@@ -94,40 +106,47 @@ export default {
     }
   },
   methods:{
-    // addNode(emotion,time,day) {  //ADD NODE FUNCTION 
-    //   this.newResponseShow = true;//turn on modal
-    //   setTimeout(()=>{
-    //     this.newResponseShow = false; //turn off modal
-    //     var hit=false;
-
-    //     for(var i= 0; i < this.tempData.length; i ++){
-    //         if( this.tempData[i][0]===year && this.tempData[i][1]===julian){
-    //           console.log("MATCH!");
-    //            let count = initialChartData[i][2];
-    //           initialChartData.splice(i-1,1,[year,julian,count+2]);
-    //           hit = true;
-    //         }
-    //     }
-    //     if( hit === false){
-    //       var node = [year, julian, 5];
-    //       initialChartData.push(node);
-    //     }
-    //     this.tempData = initialChartData.slice(0);
-    //   },5000); //modal delay here
-    // },
+    displayNotification(dtg) {
+      var time = dtg;
+      this.$snotify.success({
+        body: time,
+        title: 'New Response!',
+        config: {}
+      });
+    },
+    addNode(emotion,dtg,day,hour,month) {  //ADD NODE FUNCTION 
+      this.newResponseShow = true;//turn on modal
+      var thisMonth = moment().format("M");
+      var thisDay = moment().format("D");
+      setTimeout(()=>{
+        this.newResponseShow = false; //turn off modal
+        var hit=false;
+        for(var i= 0; i < this.tempData.length; i ++){
+            if( this.tempData[i][0]===emotion && this.tempData[i][1]===month && this.tempData[i][2]===day && this.tempData[3] === hour){
+              console.log("MATCH!");
+              let count = initialChartData[i][4];
+              initialChartData.splice(i-1,1,[emotion,month,day,hour,count+1]);
+              hit = true;
+            }
+        }
+        if( hit === false){
+          var count = 1;
+          var node = [emotion,month, day, hour, count];
+          initialChartData.push(node);
+        }
+        this.tempData = initialChartData.slice(0);
+        this.displayNotification(dtg);
+      },5000); //modal delay here
+    },
   },
   mounted(){
-    // Api.listen((change) => {  //LISTENER FOR NEW DATA
-    //   if (change.type === "added") { //if node is added to Firestore
-    //     //console.log("New: ", change.doc.data());
-    //     var node = change.doc.data();
-    //     this.addNode(node.emotion, node.time,node.day);
-    //   }
-    //   // if (change.type === "modified") {
-    //   // }
-    //   // if (change.type === "removed") {
-    //   // }
-    // });
+    Api.vizListen((change) => {  //LISTENER FOR NEW DATA
+      if (change.type === "added") { //if node is added to Firestore
+        console.log("New: ", change.doc.data());
+        var node = change.doc.data();
+        this.addNode(node.emotion,node.dtg,node.day,node.hour,node.month);
+      }
+    });
   },
 }
 </script>

@@ -25,7 +25,18 @@ export function initialize() {
 }
 
 export function addAnswer(newAns){
-  return db.collection("week4").add(newAns);
+  return db.collection("emotions").add(newAns);
+}
+
+export function changeViz(selection,day){
+    db.collection("dataview").doc("viz").set({
+        currentViz: selection,
+        day: day,
+    }).then(()=>{
+        console.log("update pushed: "+selection+", "+day);
+    }).catch(error =>{
+        console.error("Error writing document: ", error);
+    });
 }
 
 export function listen(callback){
@@ -34,6 +45,11 @@ export function listen(callback){
             callback(change);
         });
         //console.log(importList);
+    });
+}
+export function vizListen(callback){
+    db.collection("dataview").doc("viz").onSnapshot(doc =>{
+        callback(doc);
     });
 }
 

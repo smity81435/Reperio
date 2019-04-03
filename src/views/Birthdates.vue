@@ -35,15 +35,12 @@ import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/scatter'
 import 'echarts/lib/component/polar'
 import moment from 'moment'
-
 import * as Api from "@/api/Api.js"
 
 //initialize database for the chart
-
 var initialChartData = [
 
 ];
-
 export default {
   components:{
     'v-chart':ECharts,

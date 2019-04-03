@@ -11,7 +11,8 @@
       </div>
     </transition>
     <div class="vizes"
-      :is="this.pick"
+      :is="currentViz"
+      :day="day"
     >
     </div>
     <div class="qr"></div>
@@ -22,6 +23,7 @@
 import {eventBus} from '../main.js'
 import Daychart from '@/components/Daychart'
 import Weekcharts from '@/components/Weekcharts'
+import * as Api from '../api/Api.js'
 
 //export
 export default {
@@ -34,19 +36,26 @@ export default {
   },
   data(){
     return {
-      pick: "Daychart",
+      currentViz:"Daychart",
+      day: 0,
       modalopacity: 1,
       newResponseShow: false,
     }
   },
   created(){
 
+
   },
   mounted(){
-    eventBus.$on('vizPicked', pick => {
-      this.pick = pick;
-      console.log("got it: "+this.pick);
+    Api.vizListen((doc) => {  //LISTENER FOR NEW DATA
+      //console.log(change);
+      var node = doc.data();
+      this.currentViz = node.currentViz;
+      this.day = node.day;
+            // if (change.type === "removed") {
+      // }
     });
+    
   }
 }
 </script>
