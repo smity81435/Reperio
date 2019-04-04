@@ -180,15 +180,10 @@ export default {
           this.isBlurred=false;
         }, 3000);
       }else{
-        var dtg = moment().format("MMM Do LT");
-        var hour = moment().format("H");
-        var day = moment().format("D");
-        var month = moment().format("M");
+        var dtg = new Date(moment().format("YYYY/MM/DD/HH:mm:ss"));
+        console.log(dtg);
         var newAns={
           dtg: dtg,
-          hour: hour,
-          month: month,
-          day: day,
           emotion: emotion,
         };
         this.isBlurred=true;

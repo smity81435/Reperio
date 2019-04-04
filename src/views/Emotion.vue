@@ -21,9 +21,8 @@
 </template>
 <script>
 //imports
-import {eventBus} from '../main.js'
+
 import Daychart from '@/components/Daychart'
-import Weekcharts from '@/components/Weekcharts'
 import * as Api from '../api/Api.js'
 import moment from 'moment'
 
@@ -34,7 +33,7 @@ export default {
   },
   components:{
     Daychart,
-    Weekcharts,
+
   },
   data(){
     return {
@@ -46,8 +45,6 @@ export default {
     }
   },
   created(){
-
-
   },
   mounted(){
     Api.vizListen((doc) => {  //LISTENER FOR NEW DATA

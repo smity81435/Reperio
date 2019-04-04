@@ -66,7 +66,7 @@ export function listenOrigins(callback){
     });
 }
 
-export function listen(callback){
+export function listenEmotions(callback){
     db.collection("emotions").onSnapshot(snapshot => {
         snapshot.docChanges().forEach((change) => {
             callback(change);
