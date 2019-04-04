@@ -11,7 +11,7 @@
       </div>
     </transition>
     <div class="vizes"
-      :is="currentViz"
+      :is="Daychart"
       :day="day"
       :dayPick="dayPick"
     >
@@ -37,7 +37,7 @@ export default {
   },
   data(){
     return {
-      currentViz:"Daychart",
+      Daychart: "Daychart",
       day: parseInt(moment().format("D")),
       dayPick: null,
       modalopacity: 1,
@@ -47,13 +47,10 @@ export default {
   created(){
   },
   mounted(){
-    Api.vizListen((doc) => {  //LISTENER FOR NEW DATA
+    Api.vizListen((doc) => {  //LISTENER FOR DISPLAY CONTROLS
       //console.log(change);
       var node = doc.data();
-      this.currentViz = node.currentViz;
-      this.dayPick = node.day;
-            // if (change.type === "removed") {
-      // }
+      // this.dayPick = node.day;
     });
     
   }

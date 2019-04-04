@@ -96,7 +96,7 @@ export default {
     });
   },
   mounted(){
-  d3.select("#eventchart").data([this.bloopList]).call(chart);
+  d3.select("#eventchart").data([chartData]).call(chart);
   },
 }
 </script>
