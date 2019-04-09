@@ -180,8 +180,16 @@ export default {
           this.isBlurred=false;
         }, 3000);
       }else{
-        var dtg = new Date(moment().format("YYYY/MM/DD/HH:mm:ss"));
-        console.log(dtg);
+       //Here we are building the date time group to be pushed to firebase. 
+        var y = moment().format("YYYY");
+        var mo = moment().format("MM");
+        var d= moment().format("DD");
+        var h = moment().format("HH");
+        var m = moment().format("mm");
+        var s = moment().format("ss");
+        // '2019/04/03/22:22:31'
+        var dtg = [y,mo,d,h,m,s];
+        console.log("front side: "+dtg);
         var newAns={
           dtg: dtg,
           emotion: emotion,
@@ -194,8 +202,6 @@ export default {
           this.thanksVisible= false;
           this.isBlurred=false;
         },4000);
-        //alert(newAns.year + " " + newAns.julian);
-        
       }
     },
   },

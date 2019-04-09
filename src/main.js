@@ -15,6 +15,9 @@ const store = new Vuex.Store({
   state:{
     currentViz: 'Daychart',
     day: 0,
+    dataCount: 666,
+    mostCommon: 'Amazing',
+    lastResponse: 'Awful',
   },
   mutations:{
     setViz(state,payload){

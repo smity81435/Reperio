@@ -12,6 +12,8 @@ Api.initialize();
 export default {
   data(){
     return{
+      dataCount: 0,
+      mostCommon: '',
 
     }
   },
@@ -33,7 +35,7 @@ export default {
   bottom: 0px;
   left: 0px;
   right: 0px;
-  background: linear-gradient(rgba(255,255,255,.6),rgb(238, 234, 255));
+  background: linear-gradient(rgba(255,255,255,.6),rgba(96, 155, 114, 0.507));
 
  // color: #2c3e50;
 }
