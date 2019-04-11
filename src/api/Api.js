@@ -1,12 +1,7 @@
 /* eslint-disable */
 import firebase from 'firebase'
-
-
-
-
 var db;
 var importList;
-
 export function initialize() {
     // Initialize Firebase
     var config = {
@@ -23,22 +18,18 @@ export function initialize() {
         timestampsInSnapshots: true,
     });
 }
-
 export function addAnswer(newAns){
   return db.collection("emotions").add(newAns);
 }
-
-export function changeViz(selection,day){
+export function changeViz(selection){
     db.collection("dataview").doc("viz").set({
         currentViz: selection,
-        day: day,
     }).then(()=>{
-        console.log("update pushed: "+selection+", "+day);
+        console.log("update pushed: "+selection);
     }).catch(error =>{
         console.error("Error writing document: ", error);
     });
 }
-
 export function listenBirthday(callback){
     db.collection("week4").onSnapshot(snapshot => {
         snapshot.docChanges().forEach((change) => {

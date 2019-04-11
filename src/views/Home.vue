@@ -2,7 +2,15 @@
 <div class="home" >
     
     <h2 class="pageIdentifier">{{currentPage}}</h2>
-    <h2 class="about" @click="aboutClicked()">About Reperio</h2>
+    <div class="bottomButtons" 
+      v-if="buttonShow" 
+      :disabled="this.$store.state.controlsDisabled">
+      <p class="about" 
+        @click="aboutClicked()"
+        :onGoBack="()=>goBackHome()"
+      >About Reperio</p>
+      <p class="dispcontrols" @click="onControlClick()">Display Controls</p>
+    </div>
     <transition name="fade">
       <component 
       :class="{blur: isBlurred}"
@@ -44,21 +52,26 @@ export default {
       pageContent: 'Question',
       visible: true,
       isBlurred: false,
+      buttonShow: true,
       // isBlurred: false,
     };
   },
   methods: {
     onControlClick(){
+      this.buttonShow = !this.buttonShow;
       this.currentPage = this.currentPage ==  "TODAY'S QUESTION" ? "DISPLAY CONTROLS" : "TODAY'S QUESTION";
       this.pageContent = this.pageContent == "Question" ? "DisplayControl" : "Question";
     },
     goBackHome(){
+      this.buttonShow=true;
       this.pageContent="Question";
+      this.currentPage="TODAY'S QUESTION";
     },
     aboutClicked(){
+      this.buttonShow=false;
       // Click test
-      // alert("About Clicked");
-      // this.currentPage="About";
+       //alert("About Clicked");
+      this.currentPage="ABOUT";
       this.pageContent = "About";
     },
     answerClicked(newAns){
@@ -94,10 +107,7 @@ export default {
   opacity: 20%;
 }
 .about{
-  z-index: 9999;
-  position: fixed;
-  bottom: 50px;
-  right: 20px;
+
   color: rgba(140, 0, 255, 0.452);
   border: 3px solid rgba(140, 0, 255, 0.452);
   opacity: 1;
@@ -107,8 +117,33 @@ export default {
   font-weight: 700;
   font-size: 20px;
 }
+.dispcontrols {
+  font-size: 20px;
+  box-shadow: none;
+  padding: 10px;
+  background: white;;
+  color: rgb(73, 184, 121);
+  font-weight: 700;
+  border-radius: 10px;
+  border: 3px solid rgb(73, 184, 121);
+}
+.bottomButtons{
+  transition: all 1s;
+  z-index: 999;
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 100px;
+  left: 0px;
+  right: 0px;
+  width: 80vw;
+  margin: auto;
+  p{
+    box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
+  }
+}
 @media only screen and (max-width: 600px){
-  .pageIdentifier{
+  .bottomButtons{
     display: none;
   }
   .about{

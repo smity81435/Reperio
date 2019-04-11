@@ -1,35 +1,32 @@
 <template>
   <div>
-    
     <div class="controlpanel">
       <h2 class="live">Current Display:<br> {{pickedViz}}</h2>
       <!-- TODAY -->
-      <input type="radio" name="control" id="today" checked="checked" value="Today's Chart" v-model="pickedViz"  >
-      <label for="today" @click="handleVizPick('Daychart',todayDay)" >Today: {{today}}</label>
+      <input type="radio" name="control" id="today" checked="checked" value="Today's Chart" v-model="pickedViz">
+      <label class="displabel" for="today" @click="handleVizPick('Today')">Today: {{today}}</label>
+      <!-- 1-day OVERVIEW -->
+      <input type="radio" name="control" id="yes1" value="Last 6 Hours" v-model="pickedViz">
+      <label class="displabel" for="yes1" @click="handleVizPick('6 Hours')">Last 6 hours</label>
       <!-- WEEK OVERVIEW -->
       <input type="radio" name="control" id="overview" value="Week Overview" v-model="pickedViz">
-      <label for="overview" @click="handleVizPick('Weekcharts',7)">Week Overview</label>
-      <!-- 1-day OVERVIEW -->
-      <input type="radio" name="control" id="yes1" v-bind:value="yesterday1" v-model="pickedViz">
-      <label for="yes1" @click="handleVizPick('Daychart',1)">{{yesterday1}}</label>
+      <label class="displabel" for="overview" @click="handleVizPick('This Week')">This Week</label>
       <!-- 2-days OVERVIEW -->
-      <input type="radio" name="control" id="yes2" v-bind:value="yesterday2" v-model="pickedViz">
-      <label for="yes2" @click="handleVizPick('Daychart',2)">{{yesterday2}}</label>
+      <input type="radio" name="control" id="yes2" value="This Month" v-model="pickedViz">
+      <label class="displabel" for="yes2" @click="handleVizPick('This Month')">This Month</label>
       <!-- 3-days OVERVIEW -->
-      <input type="radio" name="control" id="yes3" v-bind:value="yesterday3" v-model="pickedViz"> 
-      <label for="yes3" @click="handleVizPick('Daychart',3)">{{yesterday3}}</label>
-      <!-- 4-days OVERVIEW -->
-      <input type="radio" name="control" id="yes4" v-bind:value="yesterday4" v-model="pickedViz">
-      <label for="yes4" @click="handleVizPick('Daychart',4)">{{yesterday4}}</label>
+      <input type="radio" name="control" id="yes3" value="All Data" v-model="pickedViz">
+      <label class="displabel" for="yes3" @click="handleVizPick('All Data')">All Data</label>
+      <p class="subbut backbutt" @click="handleHome()">Back</p>
     </div>
-  <p class="subbut backbutt" @click="handleHome()">Home</p>
+    
   </div>
 </template>
 <script>
 import moment from 'moment'
 import {eventBus} from '../main.js'
 import * as Api from '../api/Api.js'
-
+import { setTimeout } from 'timers';
 export default {
   name: 'DisplayControl',
   components:{
@@ -39,50 +36,51 @@ export default {
       type: String,
       required: true,
     },
-    onControlClick:{
+    onGoBack:{
       type: Function,
       default: ()=> {},
     }
   },
   methods:{
-    handleVizPick(pick,day){
-      Api.changeViz(pick,day);
+    handleVizPick(pick){
+      var today = "Today";
+      Api.changeViz(pick);
+      setTimeout(()=>{Api.changeViz(today)},15000);
     },
     handleHome(){
-      this.onControlClick();
+      this.onGoBack();
     }
   },
   data(){
     return{
       pickedViz: "Today's Chart",
       today: moment().format("dddd MMMM Do YY"),
-      todayDay: moment().format("D"),
-      yesterday1: moment().subtract(1, 'days').format("dddd MMMM Do"),
-      YDD1: moment().subtract(1,'days').format("D"),
-      yesterday2: moment().subtract(2, 'days').format("dddd MMMM Do"),
-      yesterday3: moment().subtract(3, 'days').format("dddd MMMM Do"),
-      yesterday4: moment().subtract(4, 'days').format("dddd MMMM Do"),
     }
   },
   computed:{
-
-  }
-
-  
+  }  
 }
 </script>
 <style lang="scss" scoped>
+.displabel{
+  background: white;
+  color: rgba(140, 0, 255, 0.452);
+}
+input[type=radio]:checked+label{
+  background: linear-gradient(rgb(162, 128, 224), rgb(135, 102, 196), rgb(180, 150, 235));
+}
+.live{
+  color:rgba(140, 0, 255, 0.452)
+}
 label{
   font-weight: 700;
   width: 50vw;
 }
-
 .backbutt{
-  position: absolute;
-  top: 100px; 
-  left: 20px;
-  width: 100px;
+  
   box-shadow: none;
+  border: 3px solid rgba(140, 0, 255, 0.452);
+  color: rgba(140, 0, 255, 0.452);
 }
 .controlpanel{
   font-size: 25px;
@@ -97,6 +95,5 @@ label{
   margin: auto;
   display: flex;
   flex-direction: column;
-}
-  
+} 
 </style>

@@ -18,6 +18,11 @@ const store = new Vuex.Store({
     dataCount: 666,
     mostCommon: 'Amazing',
     lastResponse: 'Awful',
+    controlsDisabled: false,
+    responsesCount:[0,0,0,0,0],
+    currentDisplay:"Today",
+    startTime: new moment('2019/04/03/22:22:00'),
+    endTime: new moment(),
   },
   mutations:{
     setViz(state,payload){

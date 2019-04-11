@@ -12,8 +12,6 @@ Api.initialize();
 export default {
   data(){
     return{
-      dataCount: 0,
-      mostCommon: '',
 
     }
   },
