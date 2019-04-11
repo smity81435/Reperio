@@ -48,6 +48,7 @@ export default {
       setTimeout(()=>{Api.changeViz(today)},15000);
     },
     handleHome(){
+      console.log("clicked BACK!!!");
       this.onGoBack();
     }
   },

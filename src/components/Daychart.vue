@@ -85,7 +85,7 @@ var chart = eventDrops({
     blurDeviation: 10,
   },
   range: {
-    start: this.$store.state.startTime,
+    start: times[0],
     end: times[1],
   },
   drop: {
@@ -191,8 +191,7 @@ export default {
         default:
           console.log("Date Set Fail");
       }
-      d3.select('#eventchart').html('');
-      d3.select('#eventchart').data([this.cloneData(this.chartData)]).call(chart);
+      //d3.select('#eventchart').draw(config,scale);
       //console.log(this.$store.state.currentDisplay);
     });
   },
