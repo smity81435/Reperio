@@ -70,29 +70,35 @@ var colors = [
 // $Sunrise-Projector-5-hex: #C84C5A;
 var times = [new moment('2019/04/03/22:22:00'),new moment()];
 
-var chart = eventDrops({
-  color: d3.schemeSet1,
-  axis: {
-    fontSize: 16,
-  },
-  line: {
-    height: 50,
-    color: (line, index) => {
-      return colors[index];
+// The initial time range the chart draws
+const defaultRange = {
+  start: times[0],
+  end: times[1],
+};
+
+// Build chart configuration object
+const buildChartConfig = function(range = defaultRange) {
+  return eventDrops({
+    color: d3.schemeSet1,
+    axis: {
+      fontSize: 16,
     },
-  },
-  metaballs: {
-    blurDeviation: 10,
-  },
-  range: {
-    start: times[0],
-    end: times[1],
-  },
-  drop: {
-    date: d => d.date,
-    radius: 10,
-  },
-});
+    line: {
+      height: 50,
+      color: (line, index) => {
+        return colors[index];
+      },
+    },
+    metaballs: {
+      blurDeviation: 10,
+    },
+    range: range,
+    drop: {
+      date: d => d.date,
+      radius: 10,
+    },
+  });
+};
 
 //global data
 export default {
@@ -112,6 +118,10 @@ export default {
     };
   },
   methods: {
+    redrawChart(chartConfig) {
+      d3.select('#eventchart').data([this.cloneData(this.chartData)]).call(chartConfig);
+    },
+
     displayNotification(dtg) {
       var time = dtg;
       this.$snotify.success(time, 'New Response!', {
@@ -143,7 +153,9 @@ export default {
       //console.log('adding one in ' + emotion);
       //console.log(this.chartData);
       d3.select('#eventchart').html('');
-      d3.select('#eventchart').data([this.cloneData(this.chartData)]).call(chart);
+
+      var chart = buildChartConfig();
+      this.redrawChart(chart);
       //this.displayNotification(emotion);
     },
     cloneData(chartData) {
@@ -168,36 +180,46 @@ export default {
       this.$store.state.dataCount = this.localCount;
     });
     Api.vizListen((change)=>{
+      var startDate;
+
       var dispNode = change.data();
       this.$store.state.currentDisplay = dispNode.currentViz;
       switch(dispNode.currentViz){
         case "Today":
-          console.log(chart.scale().domain());
-          //chart.scale().domain(d3.extent([new moment().startOf('day'),new moment()]));
-          times[0]=new moment().startOf('day');
-          console.log(chart.scale().domain());
+          startDate = new moment().startOf('day');
           break;
         case "6 Hours":
-          chart.x.domain(d3.extent([new moment().subtract(6,'hours'),new moment()]));
+          startDate = new moment().subtract(6,'hours');
           break;
         case "This Week":
-          chart.scale().domain(d3.extent([new moment().startOf('week'),new moment()]));
+          startDate = new moment().startOf('week');
           break;
         case "This Month":
-          chart.scale().domain(d3.extent([new moment().startOf('month'),new moment()]));
+          startDate = new moment().startOf('month');
           break;
         case "All Data":
-          chart.scale().domain(d3.extent([new moment('2019/04/03/22:22:00'),new moment()]));
+          startDate = new moment('2019/04/03/22:22:00');
         default:
           console.log("Date Set Fail");
       }
-      //d3.select('#eventchart').draw(config,scale);
-      //console.log(this.$store.state.currentDisplay);
+
+      // delete existing chart
+      d3.select('#eventchart').html('');
+      
+      // build new chart with updated range
+      var chart = buildChartConfig({
+        start: startDate,
+        end: new moment(),
+      });
+      this.redrawChart(chart);
     });
   },
   mounted(){
     var chartData = this.cloneData(initialChartData);
-    d3.select("#eventchart").data([chartData]).call(chart);
+    d3.select("#eventchart").data([chartData]);
+
+    var chart = buildChartConfig();
+    this.redrawChart(chart);
   },
 }
 </script>
