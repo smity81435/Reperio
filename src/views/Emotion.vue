@@ -9,6 +9,10 @@
       </div>
        <p>Current Display: {{this.$store.state.currentDisplay}} </p>
     </div>
+    <div class="quotebox">
+      <p class="quotetext"><q>{{this.quote}}</q></p>
+      <p class="quoteauthor">-{{this.author}}</p>
+    </div>
     <div class="bottomStats">
       <div class="statTab">
         <p class="statTitle">Total Interactions</p>
@@ -57,9 +61,16 @@ export default {
       dayPick: null,
       modalopacity: 1,
       newResponseShow: false,
+      quote: "",
+      author: "",
     }
   },
   created(){
+     Api.quoteListen((change)=>{
+      var node = change.doc.data();
+      this.quote= node.quote;
+      this.author=node.author;
+    });
   },
   mounted(){
 
@@ -141,6 +152,23 @@ export default {
   background: white;
   box-shadow: 0px 5px 5px 3px rgba(0, 0, 0, .2);
 
+}
+.quotebox{
+  background: white;
+  width: 50vw;
+  font-weight: 600;
+  font-size: 24px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
+}
+.quotetext{
+  font-size: 28px;
+  color: rgba(0,0,0,.8);
+}
+.quoteauthor{
+  color: rgb(53, 141, 115);
 }
 
 </style>

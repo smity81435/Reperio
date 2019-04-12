@@ -65,6 +65,14 @@ export function listenEmotions(callback){
         //console.log(importList);
     });
 }
+export function quoteListen(callback){
+    db.collection("quotes").onSnapshot(snapshot => {
+        snapshot.docChanges().forEach((change) => {
+            callback(change);
+        });
+        //console.log(importList);
+    });
+}
 export function vizListen(callback){
     db.collection("dataview").doc("viz").onSnapshot(doc =>{
         callback(doc);

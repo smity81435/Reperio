@@ -156,7 +156,7 @@ export default {
 
       var chart = buildChartConfig();
       this.redrawChart(chart);
-      //this.displayNotification(emotion);
+      this.displayNotification(emotion);
     },
     cloneData(chartData) {
       var newChartData = [];
@@ -217,7 +217,6 @@ export default {
   mounted(){
     var chartData = this.cloneData(initialChartData);
     d3.select("#eventchart").data([chartData]);
-
     var chart = buildChartConfig();
     this.redrawChart(chart);
   },
