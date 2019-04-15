@@ -133,7 +133,7 @@ export default {
   display: flex;
   justify-content: space-around;
   position: absolute;
-  bottom: 100px;
+  bottom: 80px;
   left: 0px;
   right: 0px;
   width: 80vw;

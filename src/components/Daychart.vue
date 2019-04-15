@@ -68,7 +68,8 @@ var colors = [
 // $Sunrise-Projector-3-hex: #A5C77F;
 // $Sunrise-Projector-4-hex: #FFD484;
 // $Sunrise-Projector-5-hex: #C84C5A;
-var times = [new moment('2019/04/03/22:22:00'),new moment()];
+// var times = [new moment('2019/04/03/22:22:00'),new moment().add(2,'hours')];
+var times = [new moment().startOf('day').add(8,'hours'),new moment().add(2,'hours')];
 
 // The initial time range the chart draws
 const defaultRange = {
@@ -181,12 +182,11 @@ export default {
     });
     Api.vizListen((change)=>{
       var startDate;
-
       var dispNode = change.data();
       this.$store.state.currentDisplay = dispNode.currentViz;
       switch(dispNode.currentViz){
         case "Today":
-          startDate = new moment().startOf('day');
+          startDate = new moment().startOf('day').add(8,'hours');
           break;
         case "6 Hours":
           startDate = new moment().subtract(6,'hours');
@@ -209,7 +209,7 @@ export default {
       // build new chart with updated range
       var chart = buildChartConfig({
         start: startDate,
-        end: new moment(),
+        end: new moment().add(2,'hours'),
       });
       this.redrawChart(chart);
     });

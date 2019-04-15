@@ -200,6 +200,9 @@ export default {
 //   color: rgba(0, 162, 255, 0.658);
 //   font-size: 40px;
 // }
+.all{
+  margin-top: -50px;
+}
 
 
 .questheader {

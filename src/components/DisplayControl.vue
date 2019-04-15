@@ -43,9 +43,12 @@ export default {
   },
   methods:{
     handleVizPick(pick){
-      var week = "This Week";
+      var today = "Today";
       Api.changeViz(pick);
-      setTimeout(()=>{Api.changeViz(week)},60000);
+      setTimeout(()=>{
+        this.pickedViz = "Today"
+        Api.changeViz(today)
+      },60000);
     },
     handleHome(){
       console.log("clicked BACK!!!");

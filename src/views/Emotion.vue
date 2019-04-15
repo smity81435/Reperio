@@ -118,8 +118,8 @@ export default {
 .dispheader {
   z-index: -999;
   position: absolute;
-  left: 10px;
-  top: 0px;
+  left: 50px !important;
+  top: 100px !important;
   font-size: 80px;
   color: rgba(140, 0, 255, 0.2) !important;
   margin: 0;
@@ -133,6 +133,7 @@ export default {
   font-weight: 700;
   margin: 50px auto;
   margin-top: 10vh;
+  padding-top: 10px;
 
 }
 
@@ -151,6 +152,7 @@ export default {
 .vizbox {
   background: white;
   box-shadow: 0px 5px 5px 3px rgba(0, 0, 0, .2);
+  margin-top: 250px;
 
 }
 .quotebox{
@@ -158,7 +160,7 @@ export default {
   width: 50vw;
   font-weight: 600;
   font-size: 24px;
-  margin: 40px auto;
+  margin: 80px auto;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
