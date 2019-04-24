@@ -19,12 +19,11 @@
       <label class="displabel" for="yes3" @click="handleVizPick('All Data')">All Data</label>
       <p class="subbut backbutt" @click="handleHome()">Back</p>
     </div>
-    
   </div>
 </template>
 <script>
 import moment from 'moment'
-import {eventBus} from '../main.js'
+// import {eventBus} from '../main.js'
 import * as Api from '../api/Api.js'
 import { setTimeout } from 'timers';
 export default {
@@ -51,7 +50,7 @@ export default {
       },60000);
     },
     handleHome(){
-      console.log("clicked BACK!!!");
+      //console.log("clicked BACK!!!");
       this.onGoBack();
     }
   },

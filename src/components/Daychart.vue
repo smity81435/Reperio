@@ -13,7 +13,7 @@ global.d3 = d3;
 import eventDrops from 'event-drops'
 import moment from 'moment'
 import * as Api from "@/api/Api.js"
-import Snotify from 'vue-snotify'
+//import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
 
 var initialChartData = [{
@@ -129,7 +129,7 @@ export default {
         timeout: 3000,
       });
     },
-    findLargest(obj) {
+    findLargest() {
       var highest = -1;
       var highIndex = -1;
 
@@ -203,7 +203,7 @@ export default {
           startDate = new moment('2019/04/03/22:22:00');
           break;
         default:
-          console.log("Date Set Fail");
+          //console.log("Date Set Fail");
       }
 
       // delete existing chart

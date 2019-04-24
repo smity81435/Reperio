@@ -45,10 +45,11 @@ export default {
   },
   methods:{
     getOptions(index) {
+      var numNodes =0;
       if(index==0){
-        var numNodes = this.nodeListOne.length;
+        numNodes = this.nodeListOne.length;
       }else{
-        var numNodes = this.nodeListTwo.length;
+        numNodes = this.nodeListTwo.length;
       }
       var nodeSize=30;
       var force= 500;

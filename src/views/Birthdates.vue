@@ -20,7 +20,6 @@
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/scatter'
 import 'echarts/lib/component/polar'
-import moment from 'moment'
 import * as Api from "@/api/Api.js"
 
 //initialize database for the chart
@@ -104,7 +103,7 @@ export default {
             type: 'category',
             interval:30,
             fontSize: 30,
-            formatter: function(value, index){
+            formatter: function(value){
               var text = "";
               if(value >= 0 && value <31){
                 text = "January";
@@ -204,7 +203,7 @@ export default {
         //console.log("This is it:" + this.tempData);
         for(var i= 0; i < this.tempData.length; i ++){
             if( this.tempData[i][0]===year && this.tempData[i][1]===julian){
-              console.log("MATCH!");
+              //console.log("MATCH!");
                let count = initialChartData[i][2];
               initialChartData.splice(i-1,1,[year,julian,count+2]);
               //initialChartData[i][2]+=2;

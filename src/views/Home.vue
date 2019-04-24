@@ -76,9 +76,9 @@ export default {
     },
     answerClicked(newAns){
       //console.log("answer clicked: "+newAns);
-      Api.addAnswer(newAns).then((docref)=>{
+      Api.addAnswer(newAns).then(()=>{
         // console.log("answer pushed to firebase");
-      }).catch(function(error){
+      }).catch(function(){
         //console.log(error);
       });
       //Click Test

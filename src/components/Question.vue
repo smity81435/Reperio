@@ -101,7 +101,7 @@
 </template>
 <script>
 
-import Datepicker from 'vuejs-datepicker';
+//import Datepicker from 'vuejs-datepicker';
 import Error from '@/components/Error.vue'
 import Thanks from '@/components/Thanks.vue'
 import moment from 'moment'
@@ -156,7 +156,7 @@ export default {
   },
   methods: {
     handleAns(emotion) {
-      console.log("clicked");
+      //console.log("clicked");
       if (emotion == "") {
         this.isBlurred = true;
         this.$store.state.controlsDisabled = true;
@@ -176,7 +176,7 @@ export default {
         var s = moment().format("ss");
         // '2019/04/03/22:22:31'
         var dtg = [y, mo, d, h, m, s];
-        console.log("front side: " + dtg);
+        //console.log("front side: " + dtg);
         var newAns = {
           dtg: dtg,
           emotion: emotion,
