@@ -38,6 +38,7 @@
         </p>
       </div>
     </div>
+    <h2 class="totalCount">Total Interactions: {{totalInteractions}}</h2>
   </div>
 </template>
 <script>
@@ -51,6 +52,7 @@ export default {
   },
   data(){
     return {
+      totalInteractions: 0,
       modalopacity: 1,
       newResponseShow: false,
       responses: responses,
@@ -64,6 +66,7 @@ export default {
   },
   methods: {
     addNode(index) {
+      this.totalInteractions++;
       const nodeList = this.nodeLists[index];
       this.newResponseShow = true;
       setTimeout(()=>{
@@ -125,8 +128,17 @@ export default {
 }
 </script>
 <style lang="scss">
+.totalCount{
+  color:  rgb(17, 236, 116);
+  position: fixed;
+  bottom: 50px;
+  left: 0px;
+  right: 0px;
+
+}
 .display{
-  background: linear-gradient(rgb(6, 120, 173),rgba(0,0,0,.8));
+  background: url('../assets/tabback.png')no-repeat center center;
+  background-size: cover;
   width: 100vw;
   height: 100vh;
   padding-top: 50px;

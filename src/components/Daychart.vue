@@ -126,7 +126,7 @@ export default {
     displayNotification(dtg) {
       var time = dtg;
       this.$snotify.success(time, 'New Response!', {
-        timeout: 5000,
+        timeout: 3000,
       });
     },
     findLargest(obj) {
@@ -154,8 +154,10 @@ export default {
       //console.log('adding one in ' + emotion);
       //console.log(this.chartData);
       d3.select('#eventchart').html('');
-
-      var chart = buildChartConfig();
+      var chart = buildChartConfig({
+        start: new moment().startOf('day').add(8,'hours'),
+        end: new moment().add(2,'hours'),
+      });
       this.redrawChart(chart);
       this.displayNotification(emotion);
     },
@@ -192,13 +194,14 @@ export default {
           startDate = new moment().subtract(6,'hours');
           break;
         case "This Week":
-          startDate = new moment().startOf('week');
+          startDate = new moment().subtract(6,'days');
           break;
         case "This Month":
           startDate = new moment().startOf('month');
           break;
         case "All Data":
           startDate = new moment('2019/04/03/22:22:00');
+          break;
         default:
           console.log("Date Set Fail");
       }

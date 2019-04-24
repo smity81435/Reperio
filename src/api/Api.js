@@ -47,6 +47,14 @@ export function listenCommute(callback){
         //console.log(importList);
     });
 }
+export function listenTwoCharts(callback){
+    db.collection("answers").onSnapshot(snapshot => {
+        snapshot.docChanges().forEach((change) => {
+            callback(change);
+        });
+        //console.log(importList);
+    });
+}
 
 export function listenOrigins(callback){
     db.collection("answersweek3").onSnapshot(snapshot => {

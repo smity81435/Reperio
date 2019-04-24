@@ -2,6 +2,7 @@
   <div class="allSankey">
     <p class="phantomTop">REPERIO</p>
     <h1>Where are you from? <br> &amp; <br> What brought you here?</h1>
+    <h2 class="count">Interactions: {{totalInteractions}}</h2>
     <transition name="fade" mode="in-out">
       <div class="newResponse"
         v-if='newResponseShow'
@@ -21,7 +22,7 @@
           @ready="onChartReady"
         />
     </div>
-    <div class="qr"></div>
+    <!-- <div class="qr"></div> -->
   </div>
 </template>
 <script>
@@ -116,6 +117,7 @@ export default {
           this.onChartReady();
         },
       },
+      totalInteractions: 0,
       modalopacity: 1,
       newResponseShow: false,
       chartData: initialChartData.slice(0),
@@ -151,6 +153,7 @@ export default {
       chart.draw(this.chartData, this.chartOptions);
     },
     addNode(role,origin,reason) {  //ADD NODE FUNCTION 
+      this.totalInteractions++;
       this.newResponseShow = true;//turn on modal
       setTimeout(()=>{
 
@@ -199,6 +202,9 @@ export default {
 }
 </script>
 <style lang="scss">
+.count{
+  color: rgb(17, 236, 116);
+}
 .phantomTop{
   font-size: 100px;
   position:absolute;
@@ -210,15 +216,15 @@ export default {
 
 }
 
-.qr{
-  width: 15vw;
-  height: 15vw;
-  background: url('../assets/qr.png')no-repeat;
-  position: absolute;
-  background-size: contain;
-  bottom: 0px;
-  right: 0px;
-}
+// .qr{
+//   width: 15vw;
+//   height: 15vw;
+//   background: url('../assets/qr.png')no-repeat;
+//   position: absolute;
+//   background-size: contain;
+//   bottom: 0px;
+//   right: 0px;
+// }
 
 
 .allSankey{
@@ -236,7 +242,7 @@ export default {
 .vis{
   width: 90vw;
   margin: auto;
-  margin-top: 20vh;
+  margin-top: 10vh;
 }
 
 

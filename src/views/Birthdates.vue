@@ -1,33 +1,19 @@
 <template>
   <div class="all">
-      <div class="popUp"
-        v-if='newResponseShow'
-        :opacity="modalopacity"
-      >
-        <p>New Response Received!</p>
-      </div>
-    <!-- <p class="phantom">REPERIO</p> -->
-    <h1 class="dispQ">When is your Birthday?</h1>
-    <transition name="fade" mode="in-out">
-
-    </transition>
+    <div class="popUp" v-if='newResponseShow' :opacity="modalopacity">
+      <p>New Response Received!</p>
+    </div>
     <div class="visPolar">
-      <v-chart
-      :options="polar"
-      :class="{blur: newResponseShow}"
-      />
-
-
+      <h1 class="dispQ">When is your Birthday?</h1>
+      <v-chart :options="polar" :class="{blur: newResponseShow}"/>
+      <div class="stats">
+        <ul class="statlist">
+          <li class="total">Interactions: {{tempData.length}}</li>
+          <li class="mpm">Most Common Entry: {{moment().dayOfYear(tempData[this.checkHighest(this.tempData)][1]).format("MMMM Do")}}</li>
+          <li class="last">Last Entry: {{moment().dayOfYear(this.mostRecent).format("MMMM Do") + " " + this.mostRecentYear}}</li>
+        </ul>
+      </div>
     </div>
-    <div class="stats">
-      <ul class="statlist">
-        <li class="total">Total Count: {{tempData.length}} Responses</li>
-        <li class="mpm">Most Common Entry: {{moment().dayOfYear(tempData[this.checkHighest(this.tempData)][1]).format("MMMM Do")}}</li>
-        
-        <li class="last">Last Entry: {{moment().dayOfYear(this.mostRecent).format("MMMM Do") + " " + this.mostRecentYear}}</li>
-      </ul>
-    </div>
-    <div class="qr"></div>
   </div>
 </template>
 <script>
@@ -76,7 +62,7 @@ export default {
       //chartData: initialChartData.slice(0),
       //gChartData: initialChartData.slice(0),
       polar: {
-        color: ['rgba(140, 0, 255, 0.2)'],
+        color: ['rgba(0, 255, 115, 0.445)'],
         polar: {
           center: ['50%', '50%']
         },
@@ -89,7 +75,7 @@ export default {
           show: true,
           showMinLabel: true,
           showMaxLabel: false,
-          color: '#47D1FF',
+          color: 'pink',
           fontWeight: 'bold',
           fontFamily: 'Avenir',
           fontSize:30,
@@ -99,7 +85,7 @@ export default {
           splitLine:{
             show: true,
             lineStyle: {
-              color: "#47D1FF",
+              color: "lavender",
               type: 'solid',
             }
           },
@@ -110,7 +96,7 @@ export default {
             show:true,
             symbol: 'arrow',
             lineStyle:{
-              color: '#47D1FF',
+              color: 'white',
               type:'solid',
             }
           },
@@ -147,7 +133,7 @@ export default {
               }
               return text;
             },
-            color: 'rgba(0, 162, 255, 0.712)',
+            color: 'rgba(0, 255, 115, 1)',
             margin: 20,
           },
 
@@ -163,14 +149,14 @@ export default {
             formatter: function(value){
               return value;
             },
-            color: 'rgba(0, 162, 255, 0.712)',
+            color: 'orange',
             
           },
         },
         series: [
           {
             coordinateSystem: 'polar',
-            name: 'Birthdays',
+            name: 'Birthday',
             type: 'scatter',
             showSymbol: true,
             data: initialChartData,
@@ -267,14 +253,34 @@ export default {
   }
 }
 </script>
-  <style lang="scss">
+  <style lang="scss" scoped>
+
+  .all{
+    background: radial-gradient(black,rgb(40,40,40));
+    width: 100vw;
+    height: 105vh;
+    position: relative;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  }
   .dispQ{
-    color: rgba(0, 162, 255, 0.712) !important;
+    color: rgba(0, 162, 255, 1) !important;
     font-size: 50px;
-    margin-top: 0px
+    position: absolute;
+    top: 10px;
+    left: 40px;
+    text-shadow: 0px 0px 5px rgba(255,255,255,.6);
+    background: linear-gradient(rgb(39, 39, 39),black,rgb(39, 39, 39));
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
+    border: 1pt solid rgba(0, 217, 255, 0.87);
+    //margin-top: 10vh;
   }
   .tester{
-    color: rgba(140, 0, 255, 0.452);
+    color: rgba(0, 255, 115, 0.445);
   }
   .phantom{
     position: absolute;
@@ -282,20 +288,20 @@ export default {
     left: 20px;
     color: rgba(0, 162, 255, 0.712);
   }
-
   .visPolar{
-    width: 90vw;
-    height: 90vh;
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    margin: auto;
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    //margin: auto;
+    border-radius: 15px;
+    border: 1pt solid rgba(95, 95, 95, 1);
+    box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
   }
   .echarts{
-    width: 100%;
+    width: 70%;
     height: 100%;
+    margin: auto;
+
   }
   .popUp{
     position: absolute;
@@ -309,14 +315,13 @@ export default {
     justify-content: center;
     background: none;
     z-index: 9999;
-
     p{
       font-size: 80px;
       font-weight: 700;
       color: white;
       margin: auto;
       padding: 20px;
-      background: radial-gradient(rgba(0, 217, 255, 0.5), rgba(0, 217, 255, 0.87));
+      // background: radial-gradient(rgba(0, 217, 255, 0.5), rgba(0, 217, 255, 0.87));
       width: auto;
       border-radius: 10px;
       border: 2px solid rgba(0, 217, 255, 0.87);
@@ -326,32 +331,28 @@ export default {
     filter: blur(2px);
   }
   .stats{
-    height: 100vh;
-    position: relative;
-    color: rgba(0, 217, 255, 0.87);
+    background: linear-gradient(rgb(39, 39, 39),black,rgb(39, 39, 39));
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    color: rgba(0, 162, 255, 1);
+    border: 1pt solid rgba(0, 217, 255, 0.87);
+    border-radius: 5px;
+    padding: 40px;
+    box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
   }
   .statlist{
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    margin: auto;
     list-style: none;
     text-align: left;
     padding: 0px;
     display: block;
-    color:rgba(140, 0, 255, 0.452);
+    color:rgba(0, 162, 255, 1);
     li{
-      padding-top: 30px;
+      
       padding-left:0px ;
       font-size: 20px;
       font-weight: 600;
     }
   }
-
-      
-
-
-
-
 </style>
 

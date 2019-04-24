@@ -2,11 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import RepDisplay from './views/RepDisplay.vue'
-import BivariateHexMap from './views/BivariateHexMap.vue'
-import HorizontalChart from './views/HorizontalChart.vue'
 import Birthdates from './views/Birthdates.vue'
 import Origins from './views/Origins.vue'
 import Emotions from './views/Emotion.vue'
+import Twochart from './views/TwoChart.vue'
 
 
 Vue.use(Router)
@@ -14,6 +13,7 @@ Vue.use(require('vue-moment'))
 
 
 export default new Router({
+  mode: "history",
   routes: [
     {
       path: '/',
@@ -23,16 +23,6 @@ export default new Router({
       path: '/repdisplay',
       name: 'repdisplay',
       component: RepDisplay
-    },
-    {
-      path: '/hexmap',
-      name: 'hexmap',
-      component: BivariateHexMap,
-    },
-    {
-      path: '/horzchart',
-      name:'horzchart',
-      component: HorizontalChart,
     },
     {
       path: '/origins',
@@ -49,5 +39,10 @@ export default new Router({
       name: "emotions",
       component: Emotions,
       },
+      {
+        path: '/twochart',
+        name: "twochart",
+        component: Twochart,
+        },
   ]
 })
