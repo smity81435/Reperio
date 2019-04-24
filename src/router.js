@@ -6,6 +6,7 @@ import Birthdates from './views/Birthdates.vue'
 import Origins from './views/Origins.vue'
 import Emotions from './views/Emotion.vue'
 import Twochart from './views/TwoChart.vue'
+import Expo from './views/Expo.vue'
 
 
 Vue.use(Router)
@@ -20,6 +21,11 @@ export default new Router({
       name: 'home',
       component: Home
     },{
+      path: '/expo',
+      name: 'expo',
+      component: Expo
+    },
+    {
       path: '/repdisplay',
       name: 'repdisplay',
       component: RepDisplay
