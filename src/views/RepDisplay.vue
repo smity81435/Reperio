@@ -38,12 +38,12 @@
         </p>
       </div>
     </div>
-    <h2 class="totalCount">Total Interactions: {{totalInteractions}}</h2>
+    <h2 class="totalCount">User Interactions: {{this.$store.state.commuteData.length}}</h2>
   </div>
 </template>
 <script>
 import D3Network from 'vue-d3-network'
-import * as Api from "@/api/Api.js"
+
 const colors = ['#F54657', '#1CFF88','#28CCB6','#FF58A6','#9332FF','#FFF541'];
 const responses= ['Drive','Walk','Bus','Bike/Skate','Uber/Lyft','Other'];
 export default {
@@ -52,7 +52,6 @@ export default {
   },
   data(){
     return {
-      totalInteractions: 0,
       modalopacity: 1,
       newResponseShow: false,
       responses: responses,
@@ -66,18 +65,11 @@ export default {
   },
   methods: {
     addNode(index) {
-      this.totalInteractions++;
       const nodeList = this.nodeLists[index];
-      this.newResponseShow = true;
-      setTimeout(()=>{
-        this.newResponseShow = false;
-        setTimeout(()=>{
-            nodeList.push({
-              id: nodeList.length,
-              _color: colors[index],
-          });
-        }, 1000);
-      },5000);
+      nodeList.push({
+          id: nodeList.length,
+          _color: colors[index],
+      }); 
     },
     isWinning(index) {
       var winningNumber = Math.max(...this.nodeLists.map(nodeList => nodeList.length));
@@ -96,7 +88,7 @@ export default {
         }
       return {
         force: force,
-        size:{ w: 210, h: 400 },
+        size:{ w: 200, h: 400 },
         nodeSize: nodeSize,
         nodeLabels: false,
         canvas: false,
@@ -108,40 +100,38 @@ export default {
     for (var i = 0; i < this.responses.length; i++) {
       this.nodeLists.push([]);
     }
+    for(var z =0; z < this.$store.state.commuteData.length;z++){
+      var node = this.$store.state.commuteData[z];
+      this.addNode(node.ans);
+    }
     // Update node lists every time an answer is received
-    Api.listenCommute((change) => {
-      //console.log(change);
-      if (change.type === "added") {
-        //console.log("New: ", change.doc.data());
-        var node = change.doc.data();
-        this.addNode(node.ans);
-      }
-      if (change.type === "modified") {
-        //console.log("Modified: ", change.doc.data());
-      }
-      if (change.type === "removed") {
-        //console.log("Removed: ", change.doc.data());
-      }
-    });
+    // Api.listenCommute((change) => {
+    //   //console.log(change);
+    //   if (change.type === "added") {
+    //     //console.log("New: ", change.doc.data());
+    //     var node = change.doc.data();
+    //     this.addNode(node.ans);
+    //   }
+    //   if (change.type === "modified") {
+    //     //console.log("Modified: ", change.doc.data());
+    //   }
+    //   if (change.type === "removed") {
+    //     //console.log("Removed: ", change.doc.data());
+    //   }
+    // });
     //console.log("this is the import list "+this.importList);
+  },
+  beforeDestroy(){
+    this.nodeLists=[];
   }
 }
 </script>
 <style lang="scss">
-.totalCount{
-  color:  rgb(17, 236, 116);
-  position: fixed;
-  bottom: 50px;
-  left: 0px;
-  right: 0px;
 
-}
 .display{
-  background: url('../assets/tabback.png')no-repeat center center;
-  background-size: cover;
-  width: 100vw;
-  height: 100vh;
-  padding-top: 50px;
+  //background: url('../assets/tabback.png')no-repeat center center;
+  width: 95%;
+  height: 100%;
 }
 .nodecount{
   color: rgb(211, 102, 102);
@@ -153,26 +143,27 @@ export default {
   color: white;
   font-size: 50px;
   text-shadow: 0px 0px 10px black;
+  margin-top: 50px;
 }
 .groupname{
   color: white;
-  font-size: 2em;
+  font-size: 1.5em;
+  padding-top: 20px;
   text-shadow: 0px 0px 10px black;
-
 }
 .visualization{
   //background: black;
-  width: 90vw;
+  width: 90%;
   display: flex;
   justify-content: space-around;
-  margin: auto;
+  margin: 50px auto;
 }
 .datagroup{
   background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0));
   border-radius: 5px;
   margin: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .nodegroup{
   animation: rotation 20s infinite linear;
@@ -197,24 +188,11 @@ body{
 .title{
   position:absolute;
   text-align: center;
-  left: 2em;
 }
 h1,a{
   //color: #1aad8d;
   text-decoration: none;
 }
-ul.menu {
-  list-style: none;
-  position: absolute;
-  z-index: 100;
-  min-width: 20em;
-  text-align: left;
-}
-ul.menu li{
-  margin-top: 1em;
-  position: relative;
-}
-
 .nodecount {
   color: rgb(211, 102, 102);
 }
@@ -228,10 +206,9 @@ ul.menu li{
   font-size: 3em;
 }
 .winnit{
-  background: linear-gradient(rgb(41, 223, 102),rgba(0,0,0,0));
+  background: linear-gradient(rgba(111, 253, 158, 0.808),rgba(0,0,0,0));
 }
 .newResponse{
-  
   transition: all 1s;
   z-index: 9999;
   position: absolute;

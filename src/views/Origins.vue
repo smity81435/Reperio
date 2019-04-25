@@ -1,33 +1,21 @@
 <template>
   <div class="allSankey">
-    <p class="phantomTop">REPERIO</p>
-    <h1>Where are you from? <br> &amp; <br> What brought you here?</h1>
-    <h2 class="count">Interactions: {{totalInteractions}}</h2>
-    <transition name="fade" mode="in-out">
-      <div class="newResponse"
-        v-if='newResponseShow'
-        :opacity="modalopacity"
-      >
-        <p>New Response Received!</p>
-      </div>
-    </transition>
+    <h1 class="questionheader">Where are you from and what brought you here?</h1>
+    <h2 class="totalCount">User Interactions: {{this.$store.state.originsData.length}}</h2>
     <div class="vis">
         <GChart
           :settings= "{ packages: ['sankey'] }"
           type= "Sankey"
           :data= "gChartData"
           :options= "chartOptions"
-          :events="chartEvents"
           :resizeDebounce="500"
           @ready="onChartReady"
         />
     </div>
-    <!-- <div class="qr"></div> -->
   </div>
 </template>
 <script>
 import { GChart } from 'vue-google-charts'
-import * as Api from "@/api/Api.js"
 //initialize database for the chart
 var initialChartData = [
   ['category','capacity','count'],
@@ -112,20 +100,17 @@ export default {
   },
   data(){
     return {
-      chartEvents:{
-        select: () => {
-          this.onChartReady();
-        },
-      },
+      // chartEvents:{
+      //   select: () => {
+      //     this.onChartReady();
+      //   },
+      // },
       totalInteractions: 0,
       modalopacity: 1,
       newResponseShow: false,
       chartData: initialChartData.slice(0),
       gChartData: initialChartData.slice(0),
       chartOptions: {
-        chart: {
-          //title: "chart",
-        },
         height: 500,
         sankey: {
           node: {
@@ -153,10 +138,6 @@ export default {
       chart.draw(this.chartData, this.chartOptions);
     },
     addNode(role,origin,reason) {  //ADD NODE FUNCTION 
-      this.totalInteractions++;
-      this.newResponseShow = true;//turn on modal
-      setTimeout(()=>{
-
         this.newResponseShow = false; //turn off modal
         //search for first link and increase link size
         for(var i= 0; i < this.chartData.length; i ++){
@@ -170,95 +151,24 @@ export default {
               this.chartData[z][2]++;
             }
         }
-        this.gChartData = this.chartData.slice(0); //update chart data with this data
-      },5000); //modal delay here
-    },
-  },
-
-  computed:{
-
-  },
-
-  watch: {
-    chartData: () => {
-      //console.log('chartData changed');
+        this.gChartData = this.chartData.slice(0);
     },
   },
   mounted(){
-    // Update node lists every time an answer is received
-    Api.listenOrigins((change) => {  //LISTENER FOR NEW DATA
-      //console.log(change);
-      if (change.type === "added") { //if node is added to Firestore
-        //console.log("New: ", change.doc.data());
-        var node = change.doc.data();
-        this.addNode(node.role, node.origin, node.reason);
-      }
-      // if (change.type === "modified") {
-      // }
-      // if (change.type === "removed") {
-      // }
-    });
+        for(var i = 0;i<this.$store.state.originsData.length;i++){
+          var node = this.$store.state.originsData[i];
+          this.addNode(node.role, node.origin, node.reason);
+        }
   }
 }
 </script>
 <style lang="scss">
-.count{
-  color: rgb(17, 236, 116);
-}
-.phantomTop{
-  font-size: 100px;
-  position:absolute;
-  bottom: 20px;
-  left: 20px;
-  padding: 0;
-  margin: 0;
-  
-
-}
-
-// .qr{
-//   width: 15vw;
-//   height: 15vw;
-//   background: url('../assets/qr.png')no-repeat;
-//   position: absolute;
-//   background-size: contain;
-//   bottom: 0px;
-//   right: 0px;
-// }
-
-
-.allSankey{
-  background: linear-gradient(rgba(0,0,0,.8),black);
-  width: 100vw;
-  height: 100vh;
-  padding-top: 30px;
-  h1{
-    color: white;
-    font-weight: 700;
-  }
-}
-
-
-.vis{
-  width: 90vw;
+.viz{
+  width: 90%;
   margin: auto;
-  margin-top: 10vh;
+  padding-top: 100px;
+  height: 100%;
 }
-
-
-.phantom{
-  width: 100vw;
-  height: 100vh;
-  background:linear-gradient(black, rgba(0,0,0,.8));
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 100px;
-  text-shadow: 0px 0px 3px rgba(118,118,118,.3);
-}
-
-
+  
 </style>
 

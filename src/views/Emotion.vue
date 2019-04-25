@@ -1,13 +1,11 @@
 <template>
   <div class="all">
-    <p class="phantomTitle">REPERIO</p>
-    <h1 class="dispheader">THE FINAL PUSH</h1>
+    
+    <h1 class="questionheader">Our Emotions</h1>
     <div class="vizbox">
       <p class="subtitle">Tracking our Emotions through Spring of 2019</p>
       <div :is="Daychart" :day="day" :dayPick="dayPick">
-       
       </div>
-       <p>Current Display: {{this.$store.state.currentDisplay}} </p>
     </div>
     <div class="quotebox">
       <p class="quotetext"><q>{{this.quote}}</q></p>
@@ -16,7 +14,7 @@
     <div class="bottomStats">
       <div class="statTab">
         <p class="statTitle">Total Interactions</p>
-        <p class="stat">{{this.$store.state.dataCount}}</p>
+        <p class="stat">{{this.$store.state.emotionsData.length}}</p>
       </div>
       <div class="statTab">
         <p class="statTitle">Most Common Emotion</p>
@@ -27,10 +25,7 @@
         <p class="stat">{{this.$store.state.lastResponse}}</p>
       </div>
     </div>
-    <div class="console"></div>
-      
-    
-
+    <!-- <div class="console"></div> -->
     <!-- <transition name="fade" mode="in-out">
       <div class="newResponse" v-if='newResponseShow' :opacity="modalopacity">
         <p>New Response Received!</p>
@@ -83,15 +78,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.console{
-  position: absolute;
-  bottom: 0px;
-  right: 50px;
-  width: 200px;
-  height: 350px;
-  background: url("../assets/console.png")no-repeat center center;
-  background-size: cover;
+.all{
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
+// .console{
+//   position: absolute;
+//   bottom: 0px;
+//   right: 50px;
+//   width: 200px;
+//   height: 350px;
+//   background: url("../assets/console.png")no-repeat center center;
+//   background-size: cover;
+// }
 .statTitle {
   font-size: 16pt;
 }
@@ -111,28 +111,28 @@ export default {
   justify-content: space-between;
   width: 40vw;
   position: absolute;
-  bottom: -20px;
+  bottom: -100px;
   left: 20px;
 }
 .statTab {
-  position: relative;
   padding: 10px;
-  background: white;
+  position: relative;
+  background: linear-gradient(white,rgba(255,255,255,.8));
   height: 200px;
   width: 200px;
   border-radius: 20px;
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, .2);
 }
-.dispheader {
-  z-index: -999;
-  position: absolute;
-  left: 50px !important;
-  top: 100px !important;
-  font-size: 80px;
-  color: rgba(140, 0, 255, 0.2) !important;
-  margin: 0;
-  font-weight: 700 !important;
-}
+// .dispheader {
+//   z-index: -999;
+//   position: absolute;
+//   left: 50px !important;
+//   top: 100px !important;
+//   font-size: 80px;
+//   color: rgba(140, 0, 255, 0.2) !important;
+//   margin: 0;
+//   font-weight: 700 !important;
+// }
 .subtitle {
   font-size: 30px;
   color: rgb(53, 141, 115);
@@ -141,34 +141,25 @@ export default {
   margin-top: 10vh;
   padding-top: 10px;
 }
-.phantomTitle {
-  color: rgb(53, 141, 115);
-  position: absolute;
-  top: 10px;
-  right: 30px;
-  font-weight: 700;
-  opacity: .3;
-  font-size: 100px;
-  margin: 0;
-  padding: 0;
-}
+
 .vizbox {
-  background: white;
+  background: linear-gradient(white,rgb(228, 255, 249));
   box-shadow: 0px 5px 5px 3px rgba(0, 0, 0, .2);
-  margin-top: 250px;
+  width: 100%;
+  margin: auto;
 }
 .quotebox{
   background: white;
   width: 50vw;
   font-weight: 600;
-  font-size: 24px;
-  margin: 60px auto;
+  font-size: 20px;
+  margin: 40px auto;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
 }
 .quotetext{
-  font-size: 28px;
+  font-size: 24px;
   color: rgba(0,0,0,.8);
 }
 .quoteauthor{

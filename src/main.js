@@ -23,6 +23,11 @@ const store = new Vuex.Store({
     currentDisplay:"Today",
     startTime: new moment('2019/04/03/22:22:00'),
     endTime: new moment(),
+    birthData:[],
+    mtvData:[],
+    originsData:[],
+    commuteData:[],
+    emotionsData:[],
   },
   mutations:{
     setViz(state,payload){
@@ -37,12 +42,8 @@ const store = new Vuex.Store({
   
 });
 
-import { mapState } from 'vuex';
 
 new Vue({
-  computed: mapState([
-    'currentViz','day'
-  ]),
   store,
   router,
   render: h => h(App)

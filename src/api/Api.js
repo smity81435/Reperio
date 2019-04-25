@@ -15,12 +15,49 @@ export function initialize() {
       firebase.initializeApp(config);
     db = firebase.firestore();
     db.settings({
-        timestampsInSnapshots: true,
+        // timestampsInSnapshots: true,
     });
 }
+export function fetchData(section){
+    var selection="";
+    var tempCollection=[];
+    switch (section){
+        case "emotions":
+            selection = "emotions";
+            break;
+        case "birthdates":
+            selection = "week4";
+            break;
+        case "origins":
+            selection = "answersweek3";
+            break;
+        case "commute":
+            selection = "answersweek2";
+            break;
+        case "mtv":
+            selection = "answers";
+            break;
+        default:
+            alert("Database name not specified.");
+    }
+    db.collection(selection)
+        .get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                var newNode = doc.data();
+                tempCollection.push(newNode);
+            });
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+    return tempCollection;
+}
+
 export function addAnswer(newAns){
   return db.collection("emotions").add(newAns);
 }
+
 export function changeViz(selection){
     db.collection("dataview").doc("viz").set({
         currentViz: selection,
@@ -30,6 +67,7 @@ export function changeViz(selection){
         console.error("Error writing document: ", error);
     });
 }
+
 export function listenBirthday(callback){
     db.collection("week4").onSnapshot(snapshot => {
         snapshot.docChanges().forEach((change) => {
@@ -47,6 +85,7 @@ export function listenCommute(callback){
         //console.log(importList);
     });
 }
+
 export function listenTwoCharts(callback){
     db.collection("answers").onSnapshot(snapshot => {
         snapshot.docChanges().forEach((change) => {

@@ -15,6 +15,7 @@ Vue.use(require('vue-moment'))
 
 export default new Router({
   mode: "history",
+  linkExactActiveClass: 'is-active',
   routes: [
     {
       path: '/',
@@ -22,32 +23,32 @@ export default new Router({
       component: Home
     },{
       path: '/expo',
-      name: 'expo',
+      name: '2019 ATLAS EXPO',
       component: Expo
     },
     {
       path: '/repdisplay',
-      name: 'repdisplay',
+      name: 'Our Commute',
       component: RepDisplay
     },
     {
       path: '/origins',
-      name: "origins",
+      name: "Our Origins",
       component: Origins,
     },
     {
       path: '/birthdates',
-      name: "birthdates",
+      name: "Our Birthdates",
       component: Birthdates,
     },
     {
       path: '/emotions',
-      name: "emotions",
+      name: "Our Emotions",
       component: Emotions,
       },
       {
         path: '/twochart',
-        name: "twochart",
+        name: "Money Vs. Time",
         component: Twochart,
         },
   ]

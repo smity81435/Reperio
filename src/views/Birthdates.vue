@@ -1,67 +1,46 @@
 <template>
-  <div class="all">
-    <div class="popUp" v-if='newResponseShow' :opacity="modalopacity">
-      <p>New Response Received!</p>
-    </div>
+  <div class="allBD">
+    <h1 class="questionheader">When is your Birthday?</h1>
     <div class="visPolar">
-      <h1 class="dispQ">When is your Birthday?</h1>
-      <v-chart :options="polar" :class="{blur: newResponseShow}"/>
-      <div class="stats">
-        <ul class="statlist">
-          <li class="total">Interactions: {{tempData.length}}</li>
-          <li class="mpm">Most Common Entry: {{moment().dayOfYear(tempData[this.checkHighest(this.tempData)][1]).format("MMMM Do")}}</li>
-          <li class="last">Last Entry: {{moment().dayOfYear(this.mostRecent).format("MMMM Do") + " " + this.mostRecentYear}}</li>
-        </ul>
-      </div>
+      <v-chart :options="polar" />
     </div>
+    <h2 class="totalCount">User Interactions: {{tempData.length}}</h2>
   </div>
 </template>
 <script>
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/scatter'
 import 'echarts/lib/component/polar'
-import * as Api from "@/api/Api.js"
 
 //initialize database for the chart
-var initialChartData = [
-
-];
+var initialChartData=[];
 export default {
   components:{
     'v-chart':ECharts,
   },
+  props:{
+  },
+  watch:{
+    $route(){
+      alert("Fuck!");
+    }
+  },
   data(){
-
-    // for (let i = 0; i <= 360; i++) {
-    //     let t = i / 180 * Math.PI
-    //     let r = Math.sin(2 * t) * Math.cos(2 * t) *100
-    //     data.push([r, i])
-    // }
     var axisData=[];
     for(let i = 0; i <365; i++){
       axisData.push(i);
     }
-    //initialChartData.push([1935,150,10]);
-    for(let o = 0; o < 20; o++){
-      let year = Math.floor(Math.random()*(2002-1970)+1970);
-      let date = Math.floor(Math.random()*(364-1)+1);
-      let v = 5;
-      initialChartData.push([year,date,v]);
-    }
-    
     return {
-
       data: initialChartData.slice(0),
       tempData: initialChartData.slice(0),
       modalopacity: 1,
-      newResponseShow: true,
       maxIndex:0,
       mostRecent: 0,
       mostRecentYear: 1999,
       //chartData: initialChartData.slice(0),
       //gChartData: initialChartData.slice(0),
       polar: {
-        color: ['rgba(0, 255, 115, 0.445)'],
+        color: ['rgba(140,241,85, 0.445)'],
         polar: {
           center: ['50%', '50%']
         },
@@ -69,12 +48,13 @@ export default {
 
         },
         legend:{
+          show: false,
         },
         axisLabel:{
           show: true,
           showMinLabel: true,
           showMaxLabel: false,
-          color: 'pink',
+          color: 'white',
           fontWeight: 'bold',
           fontFamily: 'Avenir',
           fontSize:30,
@@ -84,7 +64,7 @@ export default {
           splitLine:{
             show: true,
             lineStyle: {
-              color: "lavender",
+              color: "white",
               type: 'solid',
             }
           },
@@ -132,7 +112,7 @@ export default {
               }
               return text;
             },
-            color: 'rgba(0, 255, 115, 1)',
+            color: 'white',
             margin: 20,
           },
 
@@ -148,7 +128,7 @@ export default {
             formatter: function(value){
               return value;
             },
-            color: 'orange',
+            color: 'white',
             
           },
         },
@@ -160,8 +140,8 @@ export default {
             showSymbol: true,
             data: initialChartData,
             symbol: 'circle',
-            symbolSize: function(val){
-              return val[2]*3;
+            symbolSize: function(){
+              return 8;
             },
             animationDelay: function(idx){
               return idx*5;
@@ -169,15 +149,11 @@ export default {
 
           }
         ],
-        animationDuration: 2000
+        animationDuration: 500
       }
-
     }
   },
   methods:{
-    // onChartReady(chart){
-    //   chart.draw(this.chartData, this.chartOptions);
-    // },
     checkHighest(arr){
       if (arr.length === 0) {
           return -1;
@@ -193,11 +169,10 @@ export default {
       return maxIndex;
     },
     addNode(julian, year) {  //ADD NODE FUNCTION 
-      this.newResponseShow = true;//turn on modal
+      // this.newResponseShow = true;//turn on modal
       this.mostRecent = julian;
       this.mostRecentYear = year;
-      setTimeout(()=>{
-        this.newResponseShow = false; //turn off modal
+        // this.newResponseShow = false; //turn off modal
         //search for first link and increase link size
         var hit=false;
         //console.log("This is it:" + this.tempData);
@@ -217,138 +192,73 @@ export default {
           //console.log(node);
         }
         this.tempData = initialChartData.slice(0);
-        
-
-      },5000); //modal delay here
-      
     },
   },
-
-  computed:{
-
-  },
-
-  watch: {
-    
-    // chartData: () => {
-    //   //console.log('chartData changed');
-    // },
-  },
   mounted(){
-    
-    // Update node lists every time an answer is received
-    Api.listenBirthday((change) => {  //LISTENER FOR NEW DATA
-      //console.log(change);
-      if (change.type === "added") { //if node is added to Firestore
-        //console.log("New: ", change.doc.data());
-        var node = change.doc.data();
-        this.addNode(node.julian, node.year);
-      }
-      // if (change.type === "modified") {
-      // }
-      // if (change.type === "removed") {
-      // }
-    });
+    for(var i = 0; i < this.$store.state.birthData.length; i++){
+      var node = this.$store.state.birthData[i];
+      this.addNode(node.julian,node.year);
+    }
+  },
+  beforeDestroy(){
+    this.tempData=[];
+    initialChartData=[];
   }
 }
 </script>
   <style lang="scss" scoped>
-
-  .all{
-    background: radial-gradient(black,rgb(40,40,40));
-    width: 100vw;
-    height: 105vh;
+  .allBD{
+    width: 100%;
+    height: 100%;
     position: relative;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
   }
   .dispQ{
-    color: rgba(0, 162, 255, 1) !important;
+    color: white;
     font-size: 50px;
     position: absolute;
-    top: 10px;
-    left: 40px;
-    text-shadow: 0px 0px 5px rgba(255,255,255,.6);
-    background: linear-gradient(rgb(39, 39, 39),black,rgb(39, 39, 39));
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
-    border: 1pt solid rgba(0, 217, 255, 0.87);
-    //margin-top: 10vh;
+    top: 20px;
+    left: 0px;
+    right: 0px;
   }
   .tester{
     color: rgba(0, 255, 115, 0.445);
   }
-  .phantom{
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: rgba(0, 162, 255, 0.712);
-  }
   .visPolar{
-    height: 100%;
     width: 100%;
-    margin-top: 30px;
-    //margin: auto;
-    border-radius: 15px;
-    border: 1pt solid rgba(95, 95, 95, 1);
-    box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
-  }
-  .echarts{
-    width: 70%;
     height: 100%;
     margin: auto;
+    padding: auto;
+  }
+  .echarts{
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    
+  }
 
-  }
-  .popUp{
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    right: 0px;
-    display: flex;
-    justify-content: center;
-    background: none;
-    z-index: 9999;
-    p{
-      font-size: 80px;
-      font-weight: 700;
-      color: white;
-      margin: auto;
-      padding: 20px;
-      // background: radial-gradient(rgba(0, 217, 255, 0.5), rgba(0, 217, 255, 0.87));
-      width: auto;
-      border-radius: 10px;
-      border: 2px solid rgba(0, 217, 255, 0.87);
-    }
-  }
   .blur{
     filter: blur(2px);
   }
   .stats{
-    background: linear-gradient(rgb(39, 39, 39),black,rgb(39, 39, 39));
+    background: linear-gradient(rgba(252, 251, 251, 0.1),rgba(197, 255, 182, 0.24));
     position: absolute;
-    bottom: 50px;
-    right: 50px;
-    color: rgba(0, 162, 255, 1);
-    border: 1pt solid rgba(0, 217, 255, 0.87);
+    bottom: 20px;
+    left: 20px;
+    //color: rgba(0, 162, 255, 1);
+    //border: 1pt solid rgba(0, 217, 255, 0.87);
     border-radius: 5px;
-    padding: 40px;
+    padding: 30px;
     box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
   }
   .statlist{
     list-style: none;
     text-align: left;
     padding: 0px;
+    margin: 0px;
     display: block;
-    color:rgba(0, 162, 255, 1);
+    color:white;
     li{
-      
-      padding-left:0px ;
+      padding-left:0px;
       font-size: 20px;
       font-weight: 600;
     }

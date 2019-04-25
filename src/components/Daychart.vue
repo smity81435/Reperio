@@ -12,7 +12,6 @@ import * as d3 from 'd3'
 global.d3 = d3;
 import eventDrops from 'event-drops'
 import moment from 'moment'
-import * as Api from "@/api/Api.js"
 //import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
 
@@ -170,52 +169,46 @@ export default {
     },
   },
   created() {
-    //d3.select('#eventdrops').data([repositoriesData]).call(chart);
-    Api.listenEmotions((change) => { //LISTENER FOR NEW DATA
-      //console.log("New: ", change.doc.data());
-      var node = change.doc.data();
+    for(var i =0; i < this.$store.state.emotionsData.length;i++){
+      var node = this.$store.state.emotionsData[i];
       var dtg = node.dtg;
       var dateString = dtg[0] + "/" + dtg[1] + "/" + dtg[2] + "/" + dtg[3] + ":" + dtg[4] + ":" + dtg[5]
-      //console.log(dateString);
       var newDateInput = new Date(dateString);
       this.addNode(node.emotion, newDateInput);
-      this.localCount++;
-      this.$store.state.dataCount = this.localCount;
-    });
-    Api.vizListen((change)=>{
-      var startDate;
-      var dispNode = change.data();
-      this.$store.state.currentDisplay = dispNode.currentViz;
-      switch(dispNode.currentViz){
-        case "Today":
-          startDate = new moment().startOf('day').add(8,'hours');
-          break;
-        case "6 Hours":
-          startDate = new moment().subtract(6,'hours');
-          break;
-        case "This Week":
-          startDate = new moment().subtract(6,'days');
-          break;
-        case "This Month":
-          startDate = new moment().startOf('month');
-          break;
-        case "All Data":
-          startDate = new moment('2019/04/03/22:22:00');
-          break;
-        default:
-          //console.log("Date Set Fail");
-      }
+    }
+    // Api.vizListen((change)=>{
+    //   var startDate;
+    //   var dispNode = change.data();
+    //   this.$store.state.currentDisplay = dispNode.currentViz;
+    //   switch(dispNode.currentViz){
+    //     case "Today":
+    //       startDate = new moment().startOf('day').add(8,'hours');
+    //       break;
+    //     case "6 Hours":
+    //       startDate = new moment().subtract(6,'hours');
+    //       break;
+    //     case "This Week":
+    //       startDate = new moment().subtract(6,'days');
+    //       break;
+    //     case "This Month":
+    //       startDate = new moment().startOf('month');
+    //       break;
+    //     case "All Data":
+    //       startDate = new moment('2019/04/03/22:22:00');
+    //       break;
+    //     default:
+    //       //console.log("Date Set Fail");
+    //   }
 
-      // delete existing chart
-      d3.select('#eventchart').html('');
-      
-      // build new chart with updated range
-      var chart = buildChartConfig({
-        start: startDate,
-        end: new moment().add(2,'hours'),
-      });
-      this.redrawChart(chart);
-    });
+    //   // delete existing chart
+    //   d3.select('#eventchart').html('');
+    //   // build new chart with updated range
+    //   var chart = buildChartConfig({
+    //     start: startDate,
+    //     end: new moment().add(2,'hours'),
+    //   });
+    //   this.redrawChart(chart);
+    // });
   },
   mounted(){
     var chartData = this.cloneData(initialChartData);
@@ -225,7 +218,8 @@ export default {
   },
 }
 </script>
-<style lang="scss">g.axis {
+<style lang="scss">
+g.axis {
   font-size: 16px;
 }
 
@@ -243,8 +237,9 @@ export default {
 }
 
 .mainvis {
-  margin: 0;
-  width: 100vw;
+  width: 100%;
+  margin: auto;
+
   // margin: auto;
 }
 
