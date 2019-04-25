@@ -1,14 +1,6 @@
 <template>
   <div class="display">
     <h1 class="questionheader">How do you get to campus every day?</h1>
-    <transition name="fade" mode="in-out">
-      <div class="newResponse"
-        v-if='newResponseShow'
-        :opacity="modalopacity"
-      >
-        <p>New Response Received!</p>
-      </div>
-    </transition>
     <div class="visualization">
       <div
         v-for="(nodeList, index) in nodeLists"
@@ -43,7 +35,6 @@
 </template>
 <script>
 import D3Network from 'vue-d3-network'
-
 const colors = ['#F54657', '#1CFF88','#28CCB6','#FF58A6','#9332FF','#FFF541'];
 const responses= ['Drive','Walk','Bus','Bike/Skate','Uber/Lyft','Other'];
 export default {
@@ -129,8 +120,9 @@ export default {
 <style lang="scss">
 
 .display{
+  position: relative;
   //background: url('../assets/tabback.png')no-repeat center center;
-  width: 95%;
+  width: 100%;
   height: 100%;
 }
 .nodecount{

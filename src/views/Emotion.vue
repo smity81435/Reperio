@@ -1,29 +1,15 @@
 <template>
   <div class="all">
-    
+    <h2 class="totalcount">User Interactions: {{this.$store.state.emotionsData.length}}</h2>
     <h1 class="questionheader">Our Emotions</h1>
     <div class="vizbox">
       <p class="subtitle">Tracking our Emotions through Spring of 2019</p>
-      <div :is="Daychart" :day="day" :dayPick="dayPick">
+      <div :is="Daychart" >
       </div>
     </div>
     <div class="quotebox">
       <p class="quotetext"><q>{{this.quote}}</q></p>
       <p class="quoteauthor">-{{this.author}}</p>
-    </div>
-    <div class="bottomStats">
-      <div class="statTab">
-        <p class="statTitle">Total Interactions</p>
-        <p class="stat">{{this.$store.state.emotionsData.length}}</p>
-      </div>
-      <div class="statTab">
-        <p class="statTitle">Most Common Emotion</p>
-        <p class="stat">{{this.$store.state.mostCommon}}</p>
-      </div>
-      <div class="statTab">
-        <p class="statTitle">Last Response</p>
-        <p class="stat">{{this.$store.state.lastResponse}}</p>
-      </div>
     </div>
     <!-- <div class="console"></div> -->
     <!-- <transition name="fade" mode="in-out">
@@ -31,8 +17,6 @@
         <p>New Response Received!</p>
       </div>
     </transition> -->
-
-
   </div>
 </template>
 <script>
@@ -50,6 +34,7 @@ export default {
   },
   components:{
     Daychart,
+    
 
   },
   data(){

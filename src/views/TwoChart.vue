@@ -13,7 +13,7 @@
         <h2>{{nodeListTwo.length}}</h2>
       </div>
     </div>
-    <h2 class="totalCount">User Interactions: {{totalInteractions}}</h2>
+    <h2 class="totalCount">User Interactions: {{this.$store.state.mtvData.length}}</h2>
   </div>
 </template>
 <script>
@@ -86,6 +86,7 @@ export default {
 <style lang="scss" scoped>
 .twoall{
   //color:rgb(223, 85, 241);
+  position: relative;
   width: 100%;
   height: 100%;
   color: white;

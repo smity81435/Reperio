@@ -1,12 +1,15 @@
 <template>
   <div class="expo">
+    <h1 class="questionheader">What is your favorite project in the ATLAS EXPO?</h1>
   </div>
 </template>
 <script>
 export default {
   name: "expo",
   data(){
+    return{
 
+    }
   },
   methods:{
 

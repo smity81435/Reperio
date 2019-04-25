@@ -27,6 +27,8 @@
 </template>
 <script>
 import * as Api from "@/api/Api.js";
+import * as d3 from 'd3'
+
 Api.initialize();
 export default {
   data(){
@@ -57,14 +59,19 @@ export default {
   color: white;
   font-size: 50px;
   text-shadow: 0px 0px 10px black;
-  margin-top: 50px;
+  width: 50%;
+  margin: 20px auto;
 }
 .totalCount{
   position: absolute;
   color:  rgb(17, 236, 116);
-  width: 30%;
   margin: auto;
-  bottom: 50px;
+  top: 50px;
+  left: 30px;
+  background: linear-gradient(rgba(255,255,255,.05),rgba(156, 255, 172, 0.1));
+  box-shadow: 0px 3px 3px 3px rgba(0,0,0,.2);
+  border-radius: 10px;
+  padding: 20px 10px;
   
 }
 .router-link-exact-active{

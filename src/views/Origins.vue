@@ -7,8 +7,9 @@
           :settings= "{ packages: ['sankey'] }"
           type= "Sankey"
           :data= "gChartData"
+          :events= "chartEvents"
           :options= "chartOptions"
-          :resizeDebounce="500"
+          :resizeDebounce= "500"
           @ready="onChartReady"
         />
     </div>
@@ -16,7 +17,6 @@
 </template>
 <script>
 import { GChart } from 'vue-google-charts'
-//initialize database for the chart
 var initialChartData = [
   ['category','capacity','count'],
   ['Staff','West Coast',2],
@@ -91,7 +91,6 @@ var initialChartData = [
   ['International','Location',1],
   ['International','Convenience',1],
   ['International','Other Reason',1]
-
 ];
 
 export default {
@@ -100,17 +99,17 @@ export default {
   },
   data(){
     return {
-      // chartEvents:{
-      //   select: () => {
-      //     this.onChartReady();
-      //   },
-      // },
-      totalInteractions: 0,
-      modalopacity: 1,
-      newResponseShow: false,
+      chartEvents:{
+        select: () => {
+          this.onChartReady();
+        },
+      },
       chartData: initialChartData.slice(0),
       gChartData: initialChartData.slice(0),
       chartOptions: {
+        chart:{
+          title: "chart",
+        },
         height: 500,
         sankey: {
           node: {
@@ -133,8 +132,11 @@ export default {
       }
     }
   },
+  watch:{
+
+  },
   methods:{
-    onChartReady(chart){
+    onChartReady(chart,google){
       chart.draw(this.chartData, this.chartOptions);
     },
     addNode(role,origin,reason) {  //ADD NODE FUNCTION 
@@ -155,19 +157,23 @@ export default {
     },
   },
   mounted(){
-        for(var i = 0;i<this.$store.state.originsData.length;i++){
+        for(var i = 0; i < this.$store.state.originsData.length ; i++){
           var node = this.$store.state.originsData[i];
           this.addNode(node.role, node.origin, node.reason);
         }
+
   }
 }
 </script>
 <style lang="scss">
-.viz{
-  width: 90%;
-  margin: auto;
-  padding-top: 100px;
+.allSankey{
+  position: relative;
+  width: 100%;
   height: 100%;
+}
+.vis{
+  width: 100%;
+
 }
   
 </style>
