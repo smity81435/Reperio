@@ -1,21 +1,22 @@
 <template>
   <div class="mainvis">
-      <vue-snotify></vue-snotify>
       <!-- <h2>{{today}}</h2> -->
       <div id="eventchart" style="width: 100%"></div>
     </div>
 </template>
 <script>
 //imports
-require('echarts-gl');
-import * as d3 from 'd3'
-global.d3 = d3;
-import { select,event } from 'd3-selection'
+//require('echarts-gl');
+// import * as d3 from 'd3'
+// global.d3 = d3
+// import { select,event } from 'd3'
+
+var d3 = require('d3');
+global.d3= d3;
 import eventDrops from 'event-drops'
 import moment from 'moment'
-import * as Api from "@/api/Api.js"
-import Snotify from 'vue-snotify'
-import 'vue-snotify/styles/material.css'
+import * as Api from '@/api/Api.js'
+
 var initialChartData = [{
     name: 'Amazing',
     data: [{
@@ -75,7 +76,7 @@ const defaultRange = {
 // Build chart configuration object
 const buildChartConfig = function(range = defaultRange) {
   return eventDrops({
-    color: d3.schemeSet1,
+    //color: d3.schemeSet1,
     axis: {
       fontSize: 16,
     },
@@ -116,7 +117,7 @@ export default {
     redrawChart(chartConfig) {
       d3.select('#eventchart').data([this.cloneData(this.chartData)]).call(chartConfig);
     },
-    findLargest(obj) {
+    findLargest() {
       var highest = -1;
       var highIndex = -1;
       for (var i = 0; i < 4; i++) {
@@ -150,59 +151,90 @@ export default {
       });
       return newChartData;
     },
+
+    
   },
-  created() {
+  created(){
     //d3.select('#eventdrops').data([repositoriesData]).call(chart);
-    Api.listenEmotions((change) => { //LISTENER FOR NEW DATA
-      //console.log("New: ", change.doc.data());
-      var node = change.doc.data();
-      var dtg = node.dtg;
-      var dateString = dtg[0] + "/" + dtg[1] + "/" + dtg[2] + "/" + dtg[3] + ":" + dtg[4] + ":" + dtg[5]
-      //console.log(dateString);
-      var newDateInput = new Date(dateString);
-      this.addNode(node.emotion, newDateInput);
-      this.localCount++;
-      this.$store.state.dataCount = this.localCount;
-    });
-    Api.vizListen((change)=>{
-      var startDate;
-      var dispNode = change.data();
-      this.$store.state.currentDisplay = dispNode.currentViz;
-      switch(dispNode.currentViz){
-        case "Today":
-          startDate = new moment().startOf('day');
-          break;
-        case "6 Hours":
-          startDate = new moment().subtract(6,'hours');
-          break;
-        case "This Week":
-          startDate = new moment().startOf('week');
-          break;
-        case "This Month":
-          startDate = new moment().startOf('month');
-          break;
-        case "All Data":
-          startDate = new moment('2019/04/03/22:22:00');
-        default:
-          console.log("Date Set Fail");
-      }
-      // delete existing chart
-      d3.select('#eventchart').html('');
+
+
+    // Api.listenEmotions((change) => { //LISTENER FOR NEW DATA
+    //   var node = change.doc.data();
+    //   var dtg = node.dtg;
+    //   var dateString = dtg[0] + "/" + dtg[1] + "/" + dtg[2] + "/" + dtg[3] + ":" + dtg[4] + ":" + dtg[5]
+    //   //console.log(dateString);
+    //   var newDateInput = new Date(dateString);
+    //   this.addNode(node.emotion, newDateInput);
+    //   this.localCount++;
+    //   this.$store.state.dataCount = this.localCount;
+    // });
+    // Api.listenEmotions((change) => { //LISTENER FOR NEW DATA
+    //   //console.log("New: ", change.doc.data());
+    //   var node = change.doc.data();
+    //   var dtg = node.dtg;
+    //   var dateString = dtg[0] + "/" + dtg[1] + "/" + dtg[2] + "/" + dtg[3] + ":" + dtg[4] + ":" + dtg[5]
+    //   //console.log(dateString);
+    //   var newDateInput = new Date(dateString);
+    //   this.addNode(node.emotion, newDateInput);
+    //   this.localCount++;
+    //   this.$store.state.dataCount = this.localCount;
+    // });
+
+
+    // Api.vizListen((change)=>{
+    //   var startDate;
+    //   var dispNode = change.data();
+    //   this.$store.state.currentDisplay = dispNode.currentViz;
+    //   switch(dispNode.currentViz){
+    //     case "Today":
+    //       startDate = new moment().startOf('day');
+    //       break;
+    //     case "6 Hours":
+    //       startDate = new moment().subtract(6,'hours');
+    //       break;
+    //     case "This Week":
+    //       startDate = new moment().startOf('week');
+    //       break;
+    //     case "This Month":
+    //       startDate = new moment().startOf('month');
+    //       break;
+    //     case "All Data":
+    //       startDate = new moment('2019/04/03/22:22:00');
+    //       break;
+    //     default:
+    //       //console.log("Date Set Fail");
+          
+    //   }
+    //   // delete existing chart
+    //   d3.select('#eventchart').html('');
       
-      // build new chart with updated range
-      var chart = buildChartConfig({
-        start: startDate,
-        end: new moment(),
-      });
-      this.redrawChart(chart);
-    });
+    //   // build new chart with updated range
+    //   var chart = buildChartConfig({
+    //     start: startDate,
+    //     end: new moment(),
+    //   });
+    //   this.redrawChart(chart);
+    // });
   },
   mounted(){
     var chartData = this.cloneData(initialChartData);
     d3.select("#eventchart").data([chartData]);
     var chart = buildChartConfig();
     this.redrawChart(chart);
+        var inList =  this.$store.state.emotionsData;
+    for(var i = 0; i < inList.length; i++){
+      var node= inList[i];
+      var dtg = node.dtg;
+      var dateString = dtg[0] + "/" + dtg[1] + "/" + dtg[2] + "/" + dtg[3] + ":" + dtg[4] + ":" + dtg[5]
+      var newDateInput = new Date(dateString);
+      this.addNode(node.emotion, newDateInput);
+    }
   },
+  beforeDestroy(){
+    this.chartData=[];
+    var chart = buildChartConfig();
+    this.redrawChart(chart);
+  }
 }
 </script>
 <style lang="scss">g.axis {

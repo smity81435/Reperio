@@ -13,10 +13,13 @@
         <h2>{{nodeListTwo.length}}</h2>
       </div>
     </div>
+    <p class="snippet">This was the first visualization to be run on Reperio. By this point, the proof of concept had been validated. Two D3.js Force Node Networks being populated from a remote real-time server to give instantaneous feedback from changes to that server.</p>
+
     <h2 class="totalCount">User Interactions: {{this.$store.state.mtvData.length}}</h2>
   </div>
 </template>
 <script>
+
 import D3Network from 'vue-d3-network'
 
 export default {
@@ -80,10 +83,12 @@ export default {
         this.lastAns= "Live For 500 Years!";
       }
     }
+    this.$store.state.loading=false;
   }
 }
 </script>
 <style lang="scss" scoped>
+
 .twoall{
   //color:rgb(223, 85, 241);
   position: relative;

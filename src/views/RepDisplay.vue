@@ -30,7 +30,9 @@
         </p>
       </div>
     </div>
+    <p class="snippet">The Commute display was a test of Vue's ability to multiply advanced components with dynamic data assignments. An array is constructed to house the information about all of the charts, then each component is rendered programatically rather than being called individually. </p>
     <h2 class="totalCount">User Interactions: {{this.$store.state.commuteData.length}}</h2>
+
   </div>
 </template>
 <script>
@@ -70,16 +72,18 @@ export default {
       var numNodes = this.nodeLists[index].length;
       var nodeSize=30;
       var force= 500;
-      if(numNodes >= 10 && numNodes <= 30){
-          nodeSize = 25;
-          force = 200;
-        }else if(numNodes > 30){
-          nodeSize= 100/(numNodes/10);
-          force = 200/(numNodes/25);
-        }
+      // if(numNodes >= 10 && numNodes <= 30){
+      //     nodeSize = 25;
+      //     force = 200;
+      //   }else if(numNodes > 30){
+      //     nodeSize= 100/(numNodes/10);
+      //     force = 200/(numNodes/25);
+      //   }
+      nodeSize=5;
+      force=20;
       return {
         force: force,
-        size:{ w: 200, h: 400 },
+        size:{ w: 190, h: 400 },
         nodeSize: nodeSize,
         nodeLabels: false,
         canvas: false,
@@ -111,6 +115,7 @@ export default {
     //   }
     // });
     //console.log("this is the import list "+this.importList);
+    this.$store.state.loading=false;
   },
   beforeDestroy(){
     this.nodeLists=[];
@@ -145,7 +150,7 @@ export default {
 }
 .visualization{
   //background: black;
-  width: 90%;
+  width: 80%;
   display: flex;
   justify-content: space-around;
   margin: 50px auto;
@@ -154,8 +159,9 @@ export default {
   background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0));
   border-radius: 5px;
   margin: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+
 }
 .nodegroup{
   animation: rotation 20s infinite linear;

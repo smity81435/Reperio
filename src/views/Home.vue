@@ -1,156 +1,75 @@
 <template>
-<div class="home" >
-    
-    <h2 class="pageIdentifier">{{currentPage}}</h2>
-    <div class="bottomButtons" 
-      v-if="buttonShow" 
-      :disabled="this.$store.state.controlsDisabled">
-      <p class="about" 
-        @click="aboutClicked()"
-        :onGoBack="()=>goBackHome()"
-      >About Reperio</p>
-      <p class="dispcontrols" @click="onControlClick()">Display Controls</p>
+  <div class="welcome">
+    <header>
+      <video autoplay muted loop id="repVideo">
+      <source src="@/assets/reperio.mp4" type="video/mp4">
+      </video>
+      <div class="headertext">
+      <h1>Reperio</h1>
+      <span>Where Data Visualization Meets Community</span>
+      </div>
+    </header>
+    <div class="repInfo">
+      <h2>What is it?</h2>
+      <p>Reperio is first and foremost an attempt to use data visualization to give us insight into our community, and perhaps more importantly to spark conversation, laughs, and serious consideration about our surroundings. The project uses the powerful <a href="https://vuejs.org/" target="_blank"> Vue.js</a> famework coupled with reknown data visualization tools like <a href="http://www.d3js.org" target="_blank">D3.js</a> and ECharts to create an interactive web application to be installed in any public area and collect user inputs. Those inputs are fed to a real-time <a href="https://firebase.google.com/" target="_blank">Firestore Database</a>, which inturn is read by the web app and updates the visualization.</p>
+      <p>Reperio is designed to be scalabe, so it can be installed in almost any setting and accommodate thousands of user interactions. The visualizations showed here were part of a 10-week installation in the <a href="https://www.colorado.edu/atlas/" target="_blank">ATLAS Institute</a> at the University of Colorado Boulder.</p>
+      <h2><router-link to="/inquiries">Installation Inquiries</router-link></h2>
     </div>
-    <transition name="fade">
-      <component 
-      :class="{blur: isBlurred}"
-      :is="pageContent"
-      :v-show="visible"
-      :currentPage="currentPage"
-      :currentAns="currentAns"
-      :onGoBack="()=>goBackHome()"
-      :onControlClick="()=>onControlClick()"
-      :onAnswerClick="(newAns)=>answerClicked(newAns)"
-      />
-    </transition>
-      
-    <!-- <vue-snotify></vue-snotify> -->
+    
+    
+    
   </div>
 </template>
-
 <script>
-// @ is an alias to /src
-import About from '@/components/About.vue'
-import Question from '@/components/Question.vue'
-import DisplayControl from '@/components/DisplayControl.vue'
-import * as Api from "@/api/Api.js"
 export default {
-  name: 'home',
-  components: {
-    About,
-    Question,
-    DisplayControl,
-    
+  name:"Inquiries",
+  mounted(){
+    this.$store.state.loading=false;
   },
-  props:{
-
-  },
-  data() {
-    return {
-      currentAns: "",
-      currentPage: "TODAY'S QUESTION",
-      pageContent: 'Question',
-      visible: true,
-      isBlurred: false,
-      buttonShow: true,
-      // isBlurred: false,
-    };
-  },
-  methods: {
-    onControlClick(){
-      this.buttonShow = !this.buttonShow;
-      this.currentPage = this.currentPage ==  "TODAY'S QUESTION" ? "DISPLAY CONTROLS" : "TODAY'S QUESTION";
-      this.pageContent = this.pageContent == "Question" ? "DisplayControl" : "Question";
-    },
-    goBackHome(){
-      this.buttonShow=true;
-      this.pageContent="Question";
-      this.currentPage="TODAY'S QUESTION";
-    },
-    aboutClicked(){
-      this.buttonShow=false;
-      // Click test
-       //alert("About Clicked");
-      this.currentPage="ABOUT";
-      this.pageContent = "About";
-    },
-    answerClicked(newAns){
-      //console.log("answer clicked: "+newAns);
-      Api.addAnswer(newAns).then(()=>{
-        // console.log("answer pushed to firebase");
-      }).catch(function(){
-        //console.log(error);
-      });
-      //Click Test
-      //alert(newAns);
-    },
-  },
-  created(){
-
-  },
+  
 }
 </script>
 <style lang="scss" scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+#repVideo{
+  width: 80%;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-.pageIdentifier{
-  //@debugtext-shadow: 0px 0px 15px black;
-  color: rgba(140, 0, 255, 0.2);
-  font-size: 75px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-weight: 900;
-  opacity: 20%;
-}
-.about{
 
-  color: rgba(140, 0, 255, 0.452);
-  border: 3px solid rgba(140, 0, 255, 0.452);
-  opacity: 1;
-  background: white;
-  padding: 10px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 20px;
+.welcome{
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
-.dispcontrols {
-  font-size: 20px;
-  box-shadow: none;
-  padding: 10px;
-  background: white;;
-  color: rgb(73, 184, 121);
-  font-weight: 700;
-  border-radius: 10px;
-  border: 3px solid rgb(73, 184, 121);
-}
-.bottomButtons{
-  transition: all 1s;
-  z-index: 999;
-  display: flex;
-  justify-content: space-around;
+.headertext{
   position: absolute;
-  bottom: 80px;
-  left: 0px;
-  right: 0px;
-  width: 80vw;
-  margin: auto;
-  p{
-    box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
+  bottom: 0px;
+  width: 100%;
+  height: 20%;
+  background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.8),black);
+  color: white;
+  h1{
+    font-weight: 300;
+    font-size: 50px;
   }
 }
-@media only screen and (max-width: 600px){
-  .bottomButtons{
-    display: none;
-  }
-  .about{
-    display: none;
-  }
-  
-}
+header{
+  position: relative;
+  width: 100%;
+  box-shadow: 0px 0px 5px 5px rgba(0,0,0,.2);
+  background: black;
 
+}
+.repInfo{
+  width: 80%;
+  color: white;
+  margin: auto;
+  a{
+    transition: all .2s;
+    color: white;
+    text-decoration: underline;
+    &:hover{
+      color: rgb(141,241,85);
+    }
+  }
+}
   
 </style>

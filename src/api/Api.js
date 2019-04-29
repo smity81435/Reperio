@@ -126,6 +126,16 @@ export function vizListen(callback){
     });
 }
 
+export function pushMessage(name,email,){
+    var newAns={
+        name:name,
+        email:email,
+        subject:subject,
+        message:message,
+    }
+    return db.collection("inquiries").add()
+}
+
 export var db;
 // exports.updateUser = functions.firestore
 //     .document('users/{userId}')

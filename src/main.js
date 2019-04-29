@@ -3,16 +3,17 @@ import Vuex from 'vuex'
 import App from './App.vue'
 import router from './router'
 import moment from 'moment'
-import Snotify from 'vue-snotify'
+//import * as d3 from 'd3'
 
 Vue.prototype.moment = moment
 Vue.config.productionTip = false
 
 Vue.use(Vuex);
-Vue.use(Snotify);
+
 
 const store = new Vuex.Store({
   state:{
+    loading: false,
     currentViz: 'Daychart',
     day: 0,
     dataCount: 666,

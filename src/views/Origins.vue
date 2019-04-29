@@ -1,6 +1,6 @@
 <template>
   <div class="allSankey">
-    <h1 class="questionheader">Where are you from and what brought you here?</h1>
+    <h1 class="questionheader">Where are you from<br> and what brought you here?</h1>
     <h2 class="totalCount">User Interactions: {{this.$store.state.originsData.length}}</h2>
     <div class="vis">
         <GChart
@@ -13,6 +13,7 @@
           @ready="onChartReady"
         />
     </div>
+    <p class="snippet">The Sankey diagram is widely known (at least visually), and largely overlooked. While the data structure required is complex, the final visualization requires a minute to process. This visualization was perhaps the most controversial of them all, leading to many conversations about different options that could (or should) have been represented.</p>
   </div>
 </template>
 <script>
@@ -157,10 +158,11 @@ export default {
     },
   },
   mounted(){
-        for(var i = 0; i < this.$store.state.originsData.length ; i++){
-          var node = this.$store.state.originsData[i];
-          this.addNode(node.role, node.origin, node.reason);
-        }
+    for(var i = 0; i < this.$store.state.originsData.length ; i++){
+      var node = this.$store.state.originsData[i];
+      this.addNode(node.role, node.origin, node.reason);
+    }
+    this.$store.state.loading=false;
 
   }
 }
@@ -172,7 +174,8 @@ export default {
   height: 100%;
 }
 .vis{
-  width: 100%;
+  width: 90%;
+  margin: 50px auto;
 
 }
   
