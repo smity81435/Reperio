@@ -22,10 +22,7 @@
 </template>
 <script>
 //imports
-
-
 import Daychart from '@/components/Daychart'
-
 import moment from 'moment'
 
 //export
@@ -55,7 +52,6 @@ export default {
   },
   mounted(){
     this.$store.state.loading=false;
-    
   }
 }
 </script>

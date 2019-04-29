@@ -68,8 +68,8 @@ export default {
       var winningNumber = Math.max(...this.nodeLists.map(nodeList => nodeList.length));
       return winningNumber ===  this.nodeLists[index].length;
     },
-    getOptions(index) {
-      var numNodes = this.nodeLists[index].length;
+    getOptions() {
+      //var numNodes = this.nodeLists[index].length;
       var nodeSize=30;
       var force= 500;
       // if(numNodes >= 10 && numNodes <= 30){

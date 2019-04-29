@@ -23,6 +23,10 @@ export default new Router({
   linkExactActiveClass: 'is-active',
   routes: [
     {
+      path: '/',
+      redirect: '/home'
+    },
+    {
       path: '/interface',
       name: 'User Interface',
       component: Interface
@@ -67,6 +71,10 @@ export default new Router({
       name: "About Reperio",
       component: AboutRep,
       },
+      {
+        path:'*',
+        redirect:'/home'
+      }
 
   ]
 })

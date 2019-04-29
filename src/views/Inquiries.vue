@@ -8,8 +8,7 @@
   </div>
 </template>
 <script>
-import pushMessage from '@/api/Api.js'
-import install from '@/assets/install.png'
+
 export default {
   name: "Inquiries",
   data(){
@@ -46,11 +45,13 @@ export default {
   border: 1pt solid rgba(255,255,255,.6);
   box-shadow: none;
   background: linear-gradient(rgba(255,255,255,.2),rgba(255,255,255,.3),rgba(255,255,255,.1)) !important;
+  font-weight: 600;
   &:hover{
     cursor: pointer;
     transform: translateY(-10px);
     box-shadow: 0px 5px 5px 3px rgba(0,0,0,.2);
-    background: linear-gradient(rgba(109, 235, 176, 0.5),rgba(109, 235, 176,.7),rgba(109, 235, 176,.5)) !important;
+    background: linear-gradient(rgba(109, 235, 176, 0.7),rgba(109, 235, 176,.8),rgba(109, 235, 176,.7)) !important;
+    
   }
   margin-top: 20px;
 }
@@ -64,9 +65,15 @@ export default {
   margin: auto;
 }
 .content{
-  background: linear-gradient(black,rgba(0,0,0,.8),rgba(0,0,0,0));
+  position: absolute;
+  width: 50%;
+  left: 40px;
+  top: 30%;
+  background: linear-gradient(black,rgba(0,0,0,.8),rgba(0,0,0,.6));
+  border-radius: 15px;
   padding-top: 40px;
   p{
+    font-size: 20px;
     width: 60%;
     margin: auto;
   }

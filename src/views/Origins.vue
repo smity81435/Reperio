@@ -137,7 +137,7 @@ export default {
 
   },
   methods:{
-    onChartReady(chart,google){
+    onChartReady(chart){
       chart.draw(this.chartData, this.chartOptions);
     },
     addNode(role,origin,reason) {  //ADD NODE FUNCTION 

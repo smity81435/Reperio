@@ -4,7 +4,7 @@
     <div class="visPolar">
       <v-chart :options="polar" />
     </div>
-    <p class="snippet">This Polar-Plor of birthdates (all input by users into the terminal) is an interesting measure of public honesty. While most people put their actual birthday, some people would answer the same birthday every time they passed the visualization, or put outlandish answers. While usually this would be frowned upon in data visualization, Reperio was built with the primary intention of creating human emotions and conversations. In this regard, they tend to help it accomplish its goal.</p>
+    <p class="snippet">This Polar-Plot of birthdates (all input by users into the terminal) is an interesting measure of public honesty. While most people put their actual birthday, some people would answer the same birthday every time they passed the visualization, or put outlandish answers. While usually this would be frowned upon in data visualization, Reperio was built with the primary intention of creating human emotions and conversations. In this regard, they tend to help it accomplish its goal.</p>
     <h2 class="totalCount">User Interactions: {{tempData.length}}</h2>
 
   </div>

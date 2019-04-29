@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <div class="sidebar">
-      
+    <div class="warning" v-show="windowW < 800">
+
+    </div>
+    <div class="sidebar" v-show="windowW > 800">
       <h1 class="ghost">REPERIO</h1>
       <div class="logobox" :class="{spinning: this.$store.state.loading}"></div>
       <h2>{{path}}</h2>
@@ -23,14 +25,14 @@
         <li class="gothere" ><a href="http://dpower3.wordpress.com" target="_blank">Process</a></li>
       </ul>
     </div>
-
     <transition name="component-fade" mode="out-in">
-      <router-view />
+      <router-view v-show="windowW > 800"/>
     </transition>
   </div>
 </template>
 <script>
 import logo from '@/assets/logo.png';
+import stop from '@/assets/stop.png';
 import * as Api from "@/api/Api.js";
 //import * as d3 from 'd3'
 //var d3 = require('d3');
@@ -42,23 +44,35 @@ export default {
     return{
       path: this.$route.name,
       loading: false,
+      desktop: true,
+      windowW: 900,
     }
   },
   methods:{
 
   },
   beforeCreate(){
-    this.$store.state.birthData = Api.fetchData("birthdates");
-    this.$store.state.mtvData = Api.fetchData("mtv");
-    this.$store.state.originsData = Api.fetchData("origins");
-    this.$store.state.commuteData = Api.fetchData("commute");
-    this.$store.state.emotionsData = Api.fetchData("emotions");
+    
+    if(this.windowW > 900){
+      this.$store.state.birthData = Api.fetchData("birthdates");
+      this.$store.state.mtvData = Api.fetchData("mtv");
+      this.$store.state.originsData = Api.fetchData("origins");
+      this.$store.state.commuteData = Api.fetchData("commute");
+      this.$store.state.emotionsData = Api.fetchData("emotions");
+    }else{
+      this.desktop=false;
+    }
   },
   created(){
     document.documentElement.style.overflow = 'hidden';
     
   },
   mounted(){
+    this.$nextTick(() => {
+      window.addEventListener('resize', () => {
+        this.windowW = window.innerWidth
+      });
+    });
     this.$router.beforeResolve((to,from,next)=>{
       this.$store.state.loading=true;
       next()
@@ -72,18 +86,32 @@ export default {
 }
 </script>
 <style lang="scss">
+.warning{
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  height: 50%;
+  width: 90%;
+  text-align: center;
+  border-radius: 10px;
+  margin: auto;
+  background: url('./assets/stop.png')no-repeat center center;
+  background-size: cover;
+  
+  }
+
 .logobox{
   
   width: 100px;
   height: 100px;
   margin:20px auto;
- 
-  
   background: url('./assets/logo.png')no-repeat center center;
   background-size: cover;
 }
 .component-fade-enter-active, .component-fade-leave-active {
-  transition: all .5s ease-in-out;
+  transition: all .7s ease-in-out;
 }
 .component-fade-enter, .component-fade-leave-to
 /* .component-fade-leave-active for <2.1.8 */ {

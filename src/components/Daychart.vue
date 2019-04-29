@@ -114,6 +114,50 @@ export default {
     };
   },
   methods: {
+    clearChart(){
+      initialChartData = [{
+          name: 'Amazing',
+          data: [{
+            date: new Date('2019/04/03/22:22:31')
+          }, ],
+          drop: {
+            color: 'green',
+          }
+        },
+        {
+          name: 'Good',
+          data: [{
+            date: new Date('2019/04/03/22:22:31')
+          }, ],
+          eventColor: 'green',
+        },
+        {
+          name: 'OK',
+          data: [{
+            date: new Date('2019/04/03/22:22:31')
+          }, ],
+          eventColor: 'yellow',
+        },
+        {
+          name: 'Not Great',
+          data: [{
+            date: new Date('2019/04/03/22:22:31')
+          }, ],
+          eventColor: 'orange',
+        },
+        {
+          name: 'Awful',
+          data: [{
+            date: new Date('2019/04/03/22:22:31')
+          }, ],
+        },
+      ];
+      this.chartData = [];
+      d3.select('#eventchart').html('');
+      var chart = buildChartConfig();
+      this.redrawChart(chart);
+      
+    },
     redrawChart(chartConfig) {
       d3.select('#eventchart').data([this.cloneData(this.chartData)]).call(chartConfig);
     },
@@ -140,9 +184,9 @@ export default {
       this.$store.state.mostCommon = this.findLargest(this.chartData);
       //console.log('adding one in ' + emotion);
       //console.log(this.chartData);
-      d3.select('#eventchart').html('');
-      var chart = buildChartConfig();
-      this.redrawChart(chart);
+      // d3.select('#eventchart').html('');
+      // var chart = buildChartConfig();
+      // this.redrawChart(chart);
     },
     cloneData(chartData) {
       var newChartData = [];
@@ -229,15 +273,15 @@ export default {
       var newDateInput = new Date(dateString);
       this.addNode(node.emotion, newDateInput);
     }
+    this.redrawChart(chart);
   },
   beforeDestroy(){
-    this.chartData=[];
-    var chart = buildChartConfig();
-    this.redrawChart(chart);
+    this.clearChart();
   }
 }
 </script>
-<style lang="scss">g.axis {
+<style lang="scss">
+g.axis {
   font-size: 16px;
 }
 #eventcharts {
