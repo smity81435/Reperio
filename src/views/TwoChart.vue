@@ -1,5 +1,5 @@
 <template>
-  <div class="twoall">
+  <div class="twoall page">
     <h1 class="questionheader">Would you rather?</h1>
     <div class="bichart">
       <div class="chartbase one">
@@ -13,8 +13,19 @@
         <h2>{{nodeListTwo.length}}</h2>
       </div>
     </div>
-    <p class="snippet">This was the first visualization to be run on Reperio. By this point, the proof of concept had been validated. Two D3.js Force Node Networks being populated from a remote real-time server to give instantaneous feedback from changes to that server.</p>
-
+    <div class="snippet">
+      <h2>The First Visualization: the D3 Node Network</h2>
+      <p>
+        For the first visualization, I wanted to break the ice. No one had heard of my project yet, and if it was to be displayed in public, I wanted their first reaction to be a good one. I thought over lots of possible questions &#40;including the nipple-fingers or finger-nipples question&#41; but decided on the time-tested money vs. longevity. I was pleasantly surpised to find that people would answer this question through the terminal even before I was able to get the visualization working. From that moment, I knew Reperio would succeed.
+        <br>
+        C.R.E.A.M.
+        <br><br>
+        <strong>Technical Notes:</strong>
+        <br>
+        Before I could begin to pull interesting emotional data from the community using Reperio, I had to first discover how to intertwine <a href="http://d3js.org" target="_blank">D3.js</a> with the <a href="http://www.vuejs.org" target="_blank">Vue.js</a> framework. If you are familiar with D3, then you probably know how crazy the data update cycle is. If you are not, imagine giving a letter to your friend to give to the post office to give back to your mother just to have it show up in your mailbox with a stamp that says &quot;INVALID RETURN ADDRESS&quot;. It can be confusing. This is compounded by the fact that I was new to Vue and how it manages its data via lifecycle hooks. <br><br>
+      I quickly discovered that Vue would be a powerful tool, but it would also require me to do some out-of-the-box thinking to get everything working. So, for this first visualization, I decided to keep it simple. 
+      </p>
+    </div>
     <h2 class="totalCount">User Interactions: {{this.$store.state.mtvData.length}}</h2>
   </div>
 </template>
@@ -91,9 +102,6 @@ export default {
 
 .twoall{
   //color:rgb(223, 85, 241);
-  position: relative;
-  width: 100%;
-  height: 100%;
   color: white;
 }
 .bichart{
@@ -102,6 +110,7 @@ export default {
   margin: 50px auto;
   display: flex;
   justify-content: space-around;
+  overflow: visible;
 }
 .chartbase{
   background: linear-gradient(rgba(255,255,255,.05),rgba(156, 255, 172, 0.1));

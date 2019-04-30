@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div class="warning" v-show="windowW < 800">
-
     </div>
+    <h1 class="ghost">REPERIO</h1>
     <div class="sidebar" v-show="windowW > 800">
-      <h1 class="ghost">REPERIO</h1>
+      
       <div class="logobox" :class="{spinning: this.$store.state.loading}"></div>
       <h2>{{path}}</h2>
       <br>
@@ -26,13 +26,13 @@
       </ul>
     </div>
     <transition name="component-fade" mode="out-in">
-      <router-view v-show="windowW > 800"/>
+      <router-view class="therest"/>
     </transition>
   </div>
 </template>
 <script>
-import logo from '@/assets/logo.png';
-import stop from '@/assets/stop.png';
+// import logo from '@/assets/logo.png';
+// import stop from '@/assets/stop.png';
 import * as Api from "@/api/Api.js";
 //import * as d3 from 'd3'
 //var d3 = require('d3');
@@ -52,27 +52,22 @@ export default {
 
   },
   beforeCreate(){
-    
-    if(this.windowW > 900){
       this.$store.state.birthData = Api.fetchData("birthdates");
       this.$store.state.mtvData = Api.fetchData("mtv");
       this.$store.state.originsData = Api.fetchData("origins");
       this.$store.state.commuteData = Api.fetchData("commute");
       this.$store.state.emotionsData = Api.fetchData("emotions");
-    }else{
-      this.desktop=false;
-    }
   },
   created(){
     document.documentElement.style.overflow = 'hidden';
     
   },
   mounted(){
-    this.$nextTick(() => {
-      window.addEventListener('resize', () => {
-        this.windowW = window.innerWidth
-      });
-    });
+    // this.$nextTick(() => {
+    //   window.addEventListener('resize', () => {
+    //     this.windowW = window.innerWidth
+    //   });
+    // });
     this.$router.beforeResolve((to,from,next)=>{
       this.$store.state.loading=true;
       next()
@@ -86,7 +81,69 @@ export default {
 }
 </script>
 <style lang="scss">
-.warning{
+//menu
+.sidebar {
+  position: fixed;
+  left: 0px;
+  height: 100vh;
+  width: 100vw/7;
+  background: linear-gradient(rgba(255, 255, 255, .05), rgba(156, 255, 172, 0.1));
+  width: 15vw;
+  h2 {
+    font-size: 18px;
+    color: white;
+  }
+  ul {
+    list-style: none;
+    padding: 0px;
+    li {
+      color: rgba(255, 255, 255, .4);
+      a {
+        color: rgba(255, 255, 255, .4);
+        &:hover {
+          color: white;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+.gothere {
+  transition: all .5s;
+  &:hover {
+    color: white;
+    background: rgb(104, 77, 103);
+    cursor: pointer;
+    box-shadow: inset 0px 0px 3px 3px rgba(0, 0, 0, .1);
+  }
+  border-radius: 15px;
+  width: 80%;
+  margin: 10px auto;
+}
+.router-link-active {
+  color: white !important;
+  font-weight: 600;
+}
+
+//content
+#app {
+  // background: linear-gradient(rgb(135,92,123),rgb(54,57,77));
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  height: 100vh;
+  text-align: center;
+  // background: linear-gradient(rgb(135, 92, 123), rgb(54, 57, 77));
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: scroll;
+  //background: linear-gradient(rgba(255,255,255,.6),rgba(96, 155, 114, 0.507));
+  // color: #2c3e50;
+}
+
+//mobile warning
+.warning {
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -99,142 +156,105 @@ export default {
   margin: auto;
   background: url('./assets/stop.png')no-repeat center center;
   background-size: cover;
-  
-  }
 
-.logobox{
-  
+}
+
+//logospinner
+.logobox {
   width: 100px;
   height: 100px;
-  margin:20px auto;
+  margin: 20px auto;
   background: url('./assets/logo.png')no-repeat center center;
   background-size: cover;
 }
-.component-fade-enter-active, .component-fade-leave-active {
+
+.spinning {
+  -webkit-animation: rotate 2s infinite linear;
+}
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotateY(0deg);
+  }
+  to {
+    -webkit-transform: rotateY(359deg);
+  }
+}
+
+//component transition
+.component-fade-enter-active,
+.component-fade-leave-active {
   transition: all .7s ease-in-out;
 }
-.component-fade-enter, .component-fade-leave-to
-/* .component-fade-leave-active for <2.1.8 */ {
+.component-fade-enter,
+.component-fade-leave-to
+/* .component-fade-leave-active for <2.1.8 */
+  {
   transform: translateY(50px);
   opacity: 0;
 }
 
-
-.snippet{
-  width: 80%;
+//app-wide styling
+.snippet {
+  background: rgba(0,0,0,.8);
+  width: 100%;
   margin: auto;
   color: white;
+  h2{
+    padding: 40px;
+  }
+  p{
+    padding-bottom: 100px;
+    width: 60%;
+    margin: auto;
+    text-align: left;
+  }
+  a{
+    color: white;
+    text-decoration: underline;
+    font-weight: bold;
+  }
 }
-.questionheader{
+
+.questionheader {
   color: white;
   //position: absolute;
   font-size: 50px;
   text-shadow: 0px 0px 10px black;
   width: 100%;
-  
-
 }
-.totalCount{
+
+.totalCount {
   position: absolute;
-  color:  rgb(17, 236, 116);
+  top: 0px;
+  right: 0px;
+  width: 200px;
+  color: rgb(17, 236, 116);
   margin: auto;
-  top: 50px;
-  left: 30px;
-  background: linear-gradient(rgba(255,255,255,.05),rgba(156, 255, 172, 0.1));
-  box-shadow: 0px 3px 3px 3px rgba(0,0,0,.2);
+  background: rgba(0,0,0,.8);
+  box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, .2);
   border-radius: 10px;
   padding: 20px 10px;
-  
+  font-size: 18px;
 }
-.router-link-exact-active{
-  color: white;
-}
-.winning{
-  color: rgb(140,241,85);
+
+.winning {
+  color: rgb(140, 241, 85);
   font-size: 2em;
 }
-.ghost{
-  position: absolute;
+
+.ghost {
+  z-index: 999;
+  position: fixed;
   bottom: 0px;
   right: 20px;
-  color: rgba(255,255,255,.1);
+  color: rgba(255, 255, 255, .1);
   font-size: 50px;
-
-
 }
-.spinning{
-  -webkit-animation: rotate 2s infinite linear;
-}
-@-webkit-keyframes rotate {
-		from {
-				-webkit-transform: rotateY(0deg);
-		}
-		to {
-				-webkit-transform: rotateY(359deg);
-		}
-}
-.sidebar{
-  h2{
-    
-    font-size: 18px;
-    color: white;
-  }
-  background: linear-gradient(rgba(255,255,255,.05),rgba(156, 255, 172, 0.1));
-  width: 15vw;
-  ul{
-    list-style: none;
-    padding: 0px;
-    li{
-      color: rgba(255,255,255,.4);
-      a{
-        color: rgba(255,255,255,.4);
-        &:hover{
-          color: white;
-          cursor: pointer;
-        }
-      }
-    }
-
-  }
-}
-.gothere{
-  transition: all .5s;
-  &:hover{
-    color: white;
-    background: rgb(104,77,103);
-    cursor: pointer;
-    box-shadow: inset 0px 0px 3px 3px rgba(0,0,0,.1);
-    
-  }
-
-  border-radius: 15px;
-  width: 80%;
-  margin: 10px auto;
-}
-
-#app {
-   // background: linear-gradient(rgb(135,92,123),rgb(54,57,77));
-
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.page{
+  left: 15%;
+  width: calc(100% - 15%);
+  height: 100%;
   position: relative;
-  height: 100vh;
-  text-align: center;
-  background: linear-gradient(rgb(135,92,123),rgb(54,57,77));
-  background-size: cover;
-  background-attachment:fixed;
-  display: grid;
-  grid-template-columns: 1fr 6fr;
-  //background: linear-gradient(rgba(255,255,255,.6),rgba(96, 155, 114, 0.507));
- // color: #2c3e50;
-}
-.router-link-active{
-  color: white !important;
-  font-weight: 600;
-}
-
-.totalCount{
-  font-size: 18px;
+  overflow-y: scroll;
 }
 </style>

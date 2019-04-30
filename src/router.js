@@ -10,14 +10,8 @@ import Twochart from './views/TwoChart.vue'
 import AboutRep from './views/Aboutrep.vue'
 import Inquiries from './views/Inquiries.vue'
 
-//import { app } from 'firebase';
-
-
-
 Vue.use(Router)
 Vue.use(require('vue-moment'))
-
-
 export default new Router({
   mode: "history",
   linkExactActiveClass: 'is-active',
@@ -71,10 +65,5 @@ export default new Router({
       name: "About Reperio",
       component: AboutRep,
       },
-      {
-        path:'*',
-        redirect:'/home'
-      }
-
   ]
 })

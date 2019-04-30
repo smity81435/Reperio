@@ -1,10 +1,19 @@
 <template>
-  <div class="allBD">
+  <div class="allBD page">
     <h1 class="questionheader">When is your Birthday?</h1>
     <div class="visPolar">
       <v-chart :options="polar" />
     </div>
-    <p class="snippet">This Polar-Plot of birthdates (all input by users into the terminal) is an interesting measure of public honesty. While most people put their actual birthday, some people would answer the same birthday every time they passed the visualization, or put outlandish answers. While usually this would be frowned upon in data visualization, Reperio was built with the primary intention of creating human emotions and conversations. In this regard, they tend to help it accomplish its goal.</p>
+    <div class="snippet">
+      <h2>The Polar-Plot: Visualizing Age Rings</h2>
+      <p>
+      This Polar-Plot of birthdates (all input by users into the terminal) is an interesting measure of public honesty. While most people put their actual birthday, some people would answer the same birthday every time they passed the visualization, or put outlandish answers. While usually this would be frowned upon in data visualization, they tend to help Reperio accomplish its goal. If a user experiences joy from putting in erroneous entries, that is ok. Reperio was built with the primary intention of fostering human emotions and conversations. In fact, these abstract answers can lead to even more conversations later on.  
+      <br><br>
+      <strong>Technical Notes:</strong>  
+      <br>
+      While the <a href="">ECharts</a> library has an impressive number of different visualizations, I found out the hard way that most of the higher-lever documentation is in Chinese. For this reason, I spent many hours plugging different variables into the chart options to try to get it to behave as I wanted. Another challenge of this chart was getting time to be plotted in a spiral. The dates move around the visualization like a clock, and the further away from the center of the visualization, the closer you get to the present year. This took a bit of math to get down, but luckily I had already worked out some of it in an <a href="http://creative.colorado.edu/~dosm6711/web/projects/asteroid/asteroid.html" target="_blank">Asteroid Mining Game</a> I made a few years back for a class project.
+      </p>
+      </div>
     <h2 class="totalCount">User Interactions: {{tempData.length}}</h2>
 
   </div>
@@ -126,6 +135,7 @@ export default {
           axisLabel:{
             showMaxLabel: true,
             fontWeight: 'bold',
+            
             fontSize: 20,
             formatter: function(value){
               return value;
@@ -210,17 +220,6 @@ export default {
 }
 </script>
   <style lang="scss" scoped>
-  .snippet{
-    position: absolute;
-    bottom: 20px;
-    left: 0px;
-    right: 0px;
-  }
-  .allBD{
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
   .dispQ{
     color: white;
     font-size: 50px;
@@ -234,13 +233,14 @@ export default {
   }
   .visPolar{
     width: 100%;
-    height: 100%;
-    margin: auto;
-    padding: auto;
+    height: 80%;
+    overflow: visible;
+
+
   }
   .echarts{
     width: 80%;
-    height: 80%;
+    height: 100%;
     margin: auto;
     
   }

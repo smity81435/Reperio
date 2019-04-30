@@ -1,5 +1,5 @@
 <template>
-<div class="home" >
+<div class="home page" >
     
     <h2 class="pageIdentifier">{{currentPage}}</h2>
     <div class="bottomButtons" 

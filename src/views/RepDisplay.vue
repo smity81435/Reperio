@@ -1,6 +1,6 @@
 <template>
-  <div class="display">
-    <h1 class="questionheader">How do you get to campus every day?</h1>
+  <div class="display page">
+    <h1 class="questionheader thisOne">How do you get to campus every day?</h1>
     <div class="visualization">
       <div
         v-for="(nodeList, index) in nodeLists"
@@ -30,7 +30,15 @@
         </p>
       </div>
     </div>
-    <p class="snippet">The Commute display was a test of Vue's ability to multiply advanced components with dynamic data assignments. An array is constructed to house the information about all of the charts, then each component is rendered programatically rather than being called individually. </p>
+    <div class="snippet">
+      <h2>The Commute: Getting Specific</h2>
+      <p>
+        I first became interested in how people got to campus everyday when my neighbor &#40;who also lives two blocks from campus&#41; told me that she took a Lyft or an Uber to class most days. This completely blew my mind, and I figured it would be interesting to see what everyone else was doing. While walking obviously came in first place, probably because so many kids actually live on campus, I was surprised to see that a large portion of the community did use a ride-sharing app to get to class everyday. I did some rough math, and discovered that the average student taking an Uber to class everyday would likely pay &#36;5 a day for the 73 days in the Spring 2019 semester would pay roughly &#36;365. If they also took a ride home from class at the end of every day, that is &#36;730 a semester, &#36;1460 a year, adding up to a whopping &#36;5840 over the course of four years. That is without summer classes or if they go home during the day for lunch. That also happens to be worth about three as much as a quality mountain bike, or the price of a fairly nice car.
+        <br><br>
+        <strong>Technical Notes:</strong>
+        <br>
+        The Commute display was a test of Vue's ability to multiply advanced components with dynamic data assignments. An array is constructed to house the information about all of the charts, then each component is rendered programatically rather than being called individually. This powerful feature allowed me to render hundreds of data points instananeously.</p>
+    </div>
     <h2 class="totalCount">User Interactions: {{this.$store.state.commuteData.length}}</h2>
 
   </div>
@@ -79,11 +87,11 @@ export default {
       //     nodeSize= 100/(numNodes/10);
       //     force = 200/(numNodes/25);
       //   }
-      nodeSize=5;
-      force=20;
+      nodeSize=3;
+      force=5;
       return {
         force: force,
-        size:{ w: 190, h: 400 },
+        size:{ w: 150, h: 150 },
         nodeSize: nodeSize,
         nodeLabels: false,
         canvas: false,
@@ -123,13 +131,10 @@ export default {
 }
 </script>
 <style lang="scss">
-
-.display{
-  position: relative;
-  //background: url('../assets/tabback.png')no-repeat center center;
-  width: 100%;
-  height: 100%;
+.thisOne{
+  margin-top: 10% !important;
 }
+
 .nodecount{
   color: rgb(211, 102, 102);
   font-size: 36px;
@@ -176,12 +181,6 @@ export default {
 		to {
 				-webkit-transform: rotate(359deg);
 		}
-}
-
-
-body{
-  font-family: 'PT Sans', sans-serif;
-  background-color: #eee;
 }
 .title{
   position:absolute;

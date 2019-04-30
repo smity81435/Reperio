@@ -1,9 +1,9 @@
 <template>
-  <div class="inquiries">
+  <div class="inquiries page">
     <div class="content">
-      <h1>Installation Inqueries</h1>
-      <p>Reperio is designed to be scalable, and installed in virtually any public setting. If you feel like you want to get to know your community a little more, or get them to know themselves, fill out the form below and let us know what you have in mind!</p>
-      <button id="emailButt" v-on:click="sendIt()">Email Douglas Smith</button>
+      <h1>Installing Reperio</h1>
+      <p>Reperio is designed to be scalable, and installed in virtually any public setting. If you feel like you want to get to know your community a little more, or get them to know themselves, please send me an email with some details!</p>
+      <button id="emailButt" v-on:click="sendIt()">Let's Do This!</button>
     </div>
   </div>
 </template>
@@ -56,13 +56,10 @@ export default {
   margin-top: 20px;
 }
 .inquiries{
+  height: 100%;
   color: white;
   background: url("../assets/install.png")no-repeat center center;
   background-size: cover;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin: auto;
 }
 .content{
   position: absolute;
@@ -73,6 +70,7 @@ export default {
   border-radius: 15px;
   padding-top: 40px;
   p{
+    //text-align: left;
     font-size: 20px;
     width: 60%;
     margin: auto;

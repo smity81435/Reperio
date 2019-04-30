@@ -11,7 +11,18 @@
       <p class="quotetext"><q>{{this.quote}}</q></p>
       <p class="quoteauthor">-{{this.author}}</p>
     </div>
-    <p class="snippet">The most recent visualization displayed in the ATLAS building was a live emotional-health tracker of the people passing through the lobby. I realized that this data could be potentially saddening on occasion, so I added a random funny/motivational quote generator to make it a little less daunting. The chart element used in this visualiztion was especially <em>not</em> meant to be used in framework like Vue, so there was a lot of guesswork and jerry-rigging to get the data and chart to communicate properly.</p>
+    <div class="snippet">
+      <h2>Live Event-Dropping of Community Emotional Status</h2>
+        <p>
+          Have you ever noticed that, when you are overwhelmed, it brings you relief to see that other people around you are also struggling? Misery loves company. In fact, I made this visualization with that in mind. As the end of the Spring semester approached, and everyone began losing their minds, I installed the Emotions chart in the ATLAS lobby for everyone to see. This public outward display of individual internal conditions, challenges us to see ourselves in our peers. As Abraham Lincoln once said, &quot;Tact is the ability to describe others as they see themselves&quot;.
+          <br><br>
+          <strong>Technical Notes:</strong>  
+          <br>
+        The chart element used in this visualiztion was especially difficult to implement in this app. This is primarily because all of the dependencies used for this chart element were of the same libraries as some of the other charts. The base library &#40;<a href="http://www.d3js.org" target="_blank">D3.js</a>&#41; for all of these visualizations has a number of smaller libraries used to augment the main library, and they tend to conflict with eachother if seperate versions of the same library exist within one application. I should also note that I placed a random motivational quote generator at the bottom of the visualization to curb the depressing effects of observing the emotional state of hundreds of college students.
+        <br><br>
+        On a scientific note, I noticed an interesting trend &#40;which I implore you to investigate yourself using the above visualization&#41; that early-risers tend to get a better start to the day. I cannot conclude that they have an overall better day from the data presented, but it does seem that there are considerably more &quot;Amazing&quot; and &quot;Good&quot; answers in the beginning of the morning. Curious, no? You can even begin to see waves of emotion throughout the day, probably correlating with eating schedules... but I can't be sure.
+        </p>
+      </div>
     <!-- <div class="console"></div> -->
     <!-- <transition name="fade" mode="in-out">
       <div class="newResponse" v-if='newResponseShow' :opacity="modalopacity">
@@ -58,10 +69,9 @@ export default {
 
 <style lang="scss" scoped>
 .allEmo{
+  left: 15%;
+  width: calc(100% - 15%);
   position: relative;
-  width: 85vw;
-
-
 }
 // .console{
 //   position: absolute;
@@ -118,8 +128,8 @@ export default {
   color: rgb(53, 141, 115);
   font-weight: 700;
   margin: 50px auto;
-  margin-top: 10vh;
-  padding-top: 10px;
+  margin-top: 20px;
+  
 }
 
 .vizbox {

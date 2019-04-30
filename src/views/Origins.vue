@@ -1,5 +1,5 @@
 <template>
-  <div class="allSankey">
+  <div class="allSankey page">
     <h1 class="questionheader">Where are you from<br> and what brought you here?</h1>
     <h2 class="totalCount">User Interactions: {{this.$store.state.originsData.length}}</h2>
     <div class="vis">
@@ -13,8 +13,20 @@
           @ready="onChartReady"
         />
     </div>
-    <p class="snippet">The Sankey diagram is widely known (at least visually), and largely overlooked. While the data structure required is complex, the final visualization requires a minute to process. This visualization was perhaps the most controversial of them all, leading to many conversations about different options that could (or should) have been represented.</p>
+    
+    <div class="snippet">
+      <h2>The Sankey Diagram: Analyzing Origins</h2>
+      <p>Personally, I feel like the Sankey Diagram is one of the most visually pleasing data visualizations. The colorful flow of the weighted lines make it hard not to stare. This chart was designed to map the reasons that different groups of people come to campus, and I must admit it was hard to separate myself from the categories. The most common gripe about this chart was &quot;Well I don't really think I fit into any of these categories&quot;. While I feel like I made them as broad as possible, it became apparent that there might not be a perfect way to show this data without letting people put in their own answer.
+      <br><br>
+      <strong>Technical Notes:</strong>
+      <br>
+      From a technical perspective, the Sankey can be a little tricky to get set up, but it works pretty flawlessly once you get it going. The initial data required is immense, and an object is required for every possible link. For example, you need an object for Student from International with an associated count, and another object for International for Education. So there are two necessary objects for every single possible combination. For this particular diagram, that meant 70 hard-coded objects into an array just to start the visualization. Phew.
+      <br>
+      This library came from <a href="https://developers.google.com/chart/" target="_blank">GChart</a> &#40;Google's Data Visualization Library&#41;, and I was surprised to find that most of their code was written in D3.js. I figured that a company like Google would be writing their own visualization libraries, but I suppose not! 
+      </p>
+    </div>
   </div>
+
 </template>
 <script>
 import { GChart } from 'vue-google-charts'
@@ -163,16 +175,11 @@ export default {
       this.addNode(node.role, node.origin, node.reason);
     }
     this.$store.state.loading=false;
-
   }
 }
 </script>
 <style lang="scss">
-.allSankey{
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+
 .vis{
   width: 90%;
   margin: 50px auto;

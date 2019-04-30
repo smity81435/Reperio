@@ -1,5 +1,5 @@
 <template>
-  <div class="expo">
+  <div class="expo page">
     <h1 class="questionheader">What is your favorite project in the ATLAS EXPO?</h1>
     <vue-word-cloud
       :words="words"
@@ -46,10 +46,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.expo{
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
 
 </style>
