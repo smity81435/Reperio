@@ -10,6 +10,7 @@ import Twochart from './views/TwoChart.vue'
 import AboutRep from './views/Aboutrep.vue'
 import Inquiries from './views/Inquiries.vue'
 
+
 Vue.use(Router)
 Vue.use(require('vue-moment'))
 export default new Router({
@@ -17,8 +18,14 @@ export default new Router({
   linkExactActiveClass: 'is-active',
   routes: [
     {
+        path: '*',
+        redirect: '/home',
+        component: Home,
+    },
+    {
       path: '/',
-      redirect: '/home'
+      redirect: '/home',
+      component: Home,
     },
     {
       path: '/interface',
@@ -33,7 +40,7 @@ export default new Router({
     {
       path: '/home',
       name: 'Welcome to Reperio',
-      component: Home
+      component: Home,
     },
     {
       path: '/repdisplay',

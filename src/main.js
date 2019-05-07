@@ -3,12 +3,16 @@ import Vuex from 'vuex'
 import App from './App.vue'
 import router from './router'
 import moment from 'moment'
+import VueAnalytics from 'vue-analytics'
 //import * as d3 from 'd3'
 
 Vue.prototype.moment = moment
 Vue.config.productionTip = false
 
 Vue.use(Vuex);
+Vue.use(VueAnalytics,{
+  id:'UA-115721916-5',
+});
 
 
 const store = new Vuex.Store({
